@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  height: 100%;
+  --foreground-rgb: 0,0,0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb:  #f4f4f4 242, 243, 255;
+  --cff-green-700: 114, 197, 113;/* #72c571 */
+  --cff-green-600: 225,225,225, 02; /* #a1d3a1 */
+  /* --cff-green-700: #72c571;#72c571 */
+  --cff-green-500: #99fd98;/* #72c571 */
+  --cff-blue-800: #1c1f72ad;/* #72c571 */
+  --cff-blue-700: 60, 68, 219;/* #72c571 */  
+  --cff-grey-700: #333333;/* #72c571 */
+  --cff-gray-600: #444444;/* #72c571 */
+  --cff-gray-400: #f5f5f5;/* #72c571 */
+  --cff-gray-300: #e0e0e0;/* #72c571 */
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -17,6 +29,7 @@
 }
 
 body {
+  height: 100%;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -29,5 +42,59 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  .cff-flex-row-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .cff-border-1 {
+    border-width: 1px;
+    border-style: solid; 
+    border-radius: 0.5rem
+  }
+  .cff-button, button {
+    cursor: pointer;
+    box-shadow: 0px 2px 4px -1px rgba(225, 225, 225, 0.2), 0px 4px 5px 0px rgba(225, 225, 225,0.14), 0px 1px 10px 0px rgba(225, 225, 225,0.12);
+  }
+  .cff-button:hover, button:hover {
+    box-shadow: 0px 1px 4px 1px rgb(var( --cff-green-600)), 0px 1px 0px 1px rgba(60, 68, 219, 0.2), 0px 1px 5px 0px rgb(var( --cff-green-700));
+  }
+  .cff-border-gray-700 {
+    border-color: var(--cff-gray-700)
+  }
+  .cff-border-gray-600 {
+    border-color: var(--cff-gray-600)
+  }
+  .cff-border-gray-400 {
+    border-color: var(--cff-gray-400)
+  }
+  .cff-border-gray-300 {
+    border-color: var(--cff-gray-300)
+  }
+
+  .cff-bg-color-blue-800 {
+    background-color: var(--cff-blue-800);
+  }
+
+  .cff-bg-color-green-700 {
+    background-color: var(--cff-green-700);
+  }
+
+  .cff-bg-color-green-600 {
+    background-color: var(--cff-green-500);
+  }
+
+  .cff-bg-color-gray-600 {
+    background-color: var(--cff-gray-600);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .cff-button, button {
+      box-shadow: 0px 2px 4px -1px rgba(225, 225, 225, 0.2), 0px 4px 5px 0px rgba(225, 225, 225,0.14), 0px 1px 10px 0px rgba(225, 225, 225,0.12);
+    }
+    .cff-button:hover, button:hover {
+      box-shadow: 0px 1px 4px 1px rgba(var( --cff-blue-700),0.2), 0px 1px 0px 1px rgba(60, 68, 219, 0.2), 0px 1px 5px 0px rgba(var( --cff-blue-700),1.12);
+    }
   }
 }

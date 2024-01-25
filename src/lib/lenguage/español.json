@@ -1,0 +1,7 @@
+{
+  "register": "registrar",
+  "continue": "continuar",
+  "successLogin": "Inicio de sesión exitoso:",
+  "failLogin": "Error al iniciar sesión:",
+  "SomethingIsWrong": "Por favor revisa el campo:"
+}

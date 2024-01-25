@@ -29,8 +29,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     addUser: (state, action) => {
-      // const { product } = action.payload;
-      // state.products?.push(product);
+      const { id, email, imgUser, username} = action.payload;
+      state.id = id;
+      state.email = email;
+      state.imgUser = imgUser;
+      state.username = username;
     },
   }
 });

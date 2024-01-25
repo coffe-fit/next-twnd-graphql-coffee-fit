@@ -20,7 +20,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log(process.env.NEXT_PUBLIC_FR_API_KEY);
 
 const auth = getAuth(app);
 

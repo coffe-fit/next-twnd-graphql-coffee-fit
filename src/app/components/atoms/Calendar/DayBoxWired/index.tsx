@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-// import "wired-elements/";
+import "wired-elements/";
+import styles from './styles.module.css';
+
 
 interface props {
   numberDay: number,
@@ -10,36 +12,38 @@ interface props {
   disabled?: boolean
 }
 
-export const DayBox = ({
+export const DayBoxWired = ({
   numberDay,
   arrayColors,
   disabled
 }:props) => {
-  const [email, setEmail] = useState<string>(arrayColors[0]);
   const lengthC = arrayColors.length;
   
   return (
-    <div id="div_content" className="
+    <wired-card>
+      <div id="div_content" className="
       cff-flex-row-center
       flex-row
-      border-2
-      sm:h-20 sm:w-20
-      h-12 w-12
+      md:h-16 md:w-16
+      h-8 w-8
       relative
     ">
       <span className="
         absolute
-        left-3
-        top-0.5
+        lg:left-3
+        left-1
+        md:top-0.5
+        -top-1
         text-lg
       ">{numberDay}</span>
       <span className="
         flex
         flex-row
         absolute
-        bottom-2
+        md:bottom-0.5
+        bottom-0
         w-4/5
-        sm:h-9
+        md:h-9
         h-3
         ml-2
         mr-2
@@ -61,5 +65,6 @@ export const DayBox = ({
         
       </span>
     </div>
+    </wired-card>
   );
 };

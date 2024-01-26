@@ -10,7 +10,7 @@ interface props {
   disabled?: boolean
 }
 
-export const DayBox = ({
+export const DayCircule = ({ 
   numberDay,
   arrayColors,
   disabled
@@ -20,6 +20,7 @@ export const DayBox = ({
   
   return (
     <div id="div_content" className="
+      rounded-full
       cff-flex-row-center
       flex-row
       border-2
@@ -29,7 +30,7 @@ export const DayBox = ({
     ">
       <span className="
         absolute
-        left-3
+        cff-flex-row-center
         top-0.5
         text-lg
       ">{numberDay}</span>
@@ -44,7 +45,7 @@ export const DayBox = ({
         ml-2
         mr-2
       ">
-        {arrayColors.map((item, index)=>(
+        {/* {arrayColors.map((item, index)=>(
           <div 
             key={index}
             className={`
@@ -57,7 +58,7 @@ export const DayBox = ({
                 'bg-slate-500'
               }
           `}></div>
-        ))}
+        ))} */}
         
       </span>
     </div>

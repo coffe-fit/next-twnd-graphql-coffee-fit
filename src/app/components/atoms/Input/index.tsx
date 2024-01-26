@@ -3,15 +3,15 @@ import { Placeholder } from './Placeholder';
 
 interface props {
   onenter?: () => void,
-  handleOnchange?: () => void, 
+  onChange?: (e:any) => void, 
   bg_color?: boolean,
   className?: string;
   size?: 'sm' | 'lg';
   placeholder?: string;
-  value?: string,
+  value?: any,
   name: string,
   id: string,
-  type?: 'text' | 'password',
+  type?: 'text' | 'password' | 'number',
   autoComplete?: 'off' | string 
 }
 
@@ -22,7 +22,7 @@ export const Input = ({
   className,
   placeholder,
   value,
-  handleOnchange,
+  onChange,
   name,
   id,
   type,
@@ -35,6 +35,7 @@ export const Input = ({
         id={id}
         name={name}
         type={type ? type : 'text'}
+        onChange={onChange}
         autoComplete={autoComplete ? autoComplete : 'off'}
         placeholder={placeholder}
         className={

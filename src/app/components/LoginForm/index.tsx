@@ -27,13 +27,14 @@ export const LoginForm = ({}:props) => {
     e.preventDefault();
     setEmail(e.target.elements.email.value);
     const password = e.target.elements.password.value;
-    validateInput();
+    validateInput(password);
     if (messageError === '') await userRegister(email, password);
   }
 
-  const validateInput = () => {
+  const validateInput = (password: string) => {
     let validate = '';
-    if(!/^\S*@\S*\.\S*$/.test(email)) validate = 'email'
+    if(!/^\S*@\S*\.\S*$/.test(email)) validate = 'email';
+    if(!/[0-9]{7}$/.test(password)) validate = 'password';
     if(validate !== '') setMessageError(`${_language.SomethingIsWrong} ${validate}.`)
     if(validate === '') setMessageError('');
   }
@@ -54,7 +55,7 @@ export const LoginForm = ({}:props) => {
       }));
       router.push('/pages/dashboard')
     } catch (error) {
-      // router.push('/');
+      alert(error)
     }
   }
 

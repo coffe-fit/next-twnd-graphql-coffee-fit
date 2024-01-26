@@ -1,0 +1,14 @@
+.dayboxContent{
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+  width: 50px;
+  position: relative;
+};
+.dayboxSpan {
+  position: absolute;
+  left: 12px;
+  top: 2px;
+  font-size: 1.125rem/* 18px */;
+  line-height: 1.75rem/* 28px */;
+}

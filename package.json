@@ -11,12 +11,14 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "firebase": "^10.7.2",
+    "lit": "^3.1.1",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.1.0",
     "sass": "^1.70.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "wired-elements": "^3.0.0-rc.6"
   },
   "devDependencies": {
     "@types/node": "^20",

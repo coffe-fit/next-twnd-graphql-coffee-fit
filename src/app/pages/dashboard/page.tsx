@@ -1,10 +1,10 @@
-import { Calendar } from "@/app/components/atoms/Calendar";
+import { redirect } from "next/navigation";
 
 export default function dashboard() {
-  return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      hola desde dashboard
-      <Calendar></Calendar>
-    </div>
-  );
+  redirect('/pages/dashboard/user')
+  // return (
+  //   <div className="">
+  //     Hola desde Dashboard
+  //   </div>
+  // );
 }

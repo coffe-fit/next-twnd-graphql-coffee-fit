@@ -1,3 +1,4 @@
+import { language } from '../lenguage';
 // interface DayInfo {
 //   dayNumber: number;
 //   dayName: string;
@@ -45,6 +46,6 @@ export const getDaysInMonth = (month: number, year: number) =>{
 }
 
 function getDayName(dayIndex: number): string {
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const daysOfWeek = language('español').daysArray;
   return daysOfWeek[dayIndex];
 }

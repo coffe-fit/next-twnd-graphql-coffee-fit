@@ -43,9 +43,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .border-1 {
+    border-width: 1px;
+    border-style: solid; 
+  }
   .cff-flex-row-center {
     display: flex;
     justify-content: center;
+    align-items: center;
+  }
+  .cff-flex-row-end {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+  }
+  .cff-flex-row-between {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
   }
   .cff-border-1 {

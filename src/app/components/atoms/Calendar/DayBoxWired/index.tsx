@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import "wired-elements/";
+// import "wired-elements/";
 import styles from './styles.module.css';
 
 
@@ -20,7 +20,7 @@ export const DayBoxWired = ({
   const lengthC = arrayColors.length;
   
   return (
-    <wired-card>
+    // <wired-card>
       <div id="div_content" className="
       cff-flex-row-center
       flex-row
@@ -65,6 +65,6 @@ export const DayBoxWired = ({
         
       </span>
     </div>
-    </wired-card>
+    // </wired-card>
   );
 };

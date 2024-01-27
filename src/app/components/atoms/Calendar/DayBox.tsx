@@ -1,32 +1,30 @@
-'use client'
-
-import { useState } from "react";
-
-// import "wired-elements/";
 
 interface props {
   numberDay: number,
   arrayColors: string[],
-  disabled?: boolean
+  disabled?: boolean,
+  partyDay?: boolean
 }
 
 export const DayBox = ({
   numberDay,
   arrayColors,
-  disabled
+  disabled,
+  partyDay
 }:props) => {
-  const [email, setEmail] = useState<string>(arrayColors[0]);
   const lengthC = arrayColors.length;
   
   return (
-    <div id="div_content" className="
-      cff-flex-row-center
-      flex-row
-      border-2
-      sm:h-20 sm:w-20
-      h-12 w-12
-      relative
-    ">
+    <div id="div_content" className={`
+    cff-flex-row-center
+    flex-row
+    cff-border-1
+    md:h-20 md:w-20
+    h-12 w-12
+    relative
+    ${partyDay && partyDay === true && 'bg-gray-300 dark:bg-neutral-800'}
+    ${disabled && disabled === true && 'text-neutral-200 dark:text-neutral-800'}
+    `}>
       <span className="
         absolute
         left-3
@@ -37,7 +35,7 @@ export const DayBox = ({
         flex
         flex-row
         absolute
-        bottom-2
+        bottom-1
         w-4/5
         sm:h-9
         h-3

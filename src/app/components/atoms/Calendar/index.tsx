@@ -1,8 +1,8 @@
 'use client'
 import { getDaysInMonth } from "@/lib/util";
-import { DayCircule as DayBox } from "./DayCircule";
-// import { DayBoxWired as DayBox } from "./DayBoxWired";
-// import { DayBox } from "./DayBox";
+//import { DayCircule as DayBox } from "./DayCircule";
+//import { DayBoxWired as DayBox } from "./DayBoxWired";
+import { DayBox } from "./DayBox";
 import { useState } from "react";
 import { Input } from "../Input";
 import { language } from '@/lib/lenguage';
@@ -53,7 +53,10 @@ export const Calendar = ({}:props) => {
               md:text-lg
               text-xs
             "
-            >{day}</span>
+            >
+              <span className="max-sm:hidden">{day}</span>
+              <span className="sm:hidden">{day.split('')[0]}</span>
+            </span>
             ))
           }
         </div>
@@ -71,9 +74,13 @@ export const Calendar = ({}:props) => {
               <div
                 key={`day_${indexD}`}
               >
-                <DayBox numberDay={day.dayNumber} arrayColors={[
-                  (mont%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
-                  (mont%2 === 0 ? 'blue' : 'blue'),
+                <DayBox 
+                  numberDay={day.dayNumber}
+                  partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
+                  disabled={!day.isCurrentMonth}
+                  arrayColors={[
+                  // (mont%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
+                  // (mont%2 === 0 ? 'blue' : 'blue'),
                   // (mont%2 === 0 ? 'red' : 'green'),
                   ]}></DayBox>
               </div> 

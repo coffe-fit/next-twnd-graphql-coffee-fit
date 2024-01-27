@@ -32,6 +32,7 @@ export const Input = ({
   return (
     <span className='relative'>
       <input
+        value={value}
         id={id}
         name={name}
         type={type ? type : 'text'}
@@ -49,8 +50,9 @@ export const Input = ({
             p-3
             border-gray-400
             dark:border-gray-700
+            dark:text-slate-100
             relative
-            // placeholder:text-gray-600
+            placeholder:text-gray-600
             dark:placeholder:text-gray-400
             ${className} 
           `

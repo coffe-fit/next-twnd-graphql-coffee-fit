@@ -16,7 +16,7 @@ export const DashboardHeader = ({}:props) => {
         dark:cff-bg-color-gray-600
         z-50
       ">
-        <Button size="xs">_</Button>
+        <Button size="xs">☰</Button>
         <Button size="xs">{`${_language.singOut}`}</Button>
       </header>
   );

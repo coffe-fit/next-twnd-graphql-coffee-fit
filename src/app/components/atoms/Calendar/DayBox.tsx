@@ -1,5 +1,6 @@
 
 interface props {
+  size: 'sm' | 'lg' | 'xl',
   numberDay: number,
   arrayColors: string[],
   disabled?: boolean,
@@ -7,6 +8,7 @@ interface props {
 }
 
 export const DayBox = ({
+  size,
   numberDay,
   arrayColors,
   disabled,
@@ -19,7 +21,9 @@ export const DayBox = ({
     cff-flex-row-center
     flex-row
     cff-border-1
-    md:h-20 md:w-20
+    ${size === 'lg' && 'md:h-16 md:w-16'}
+    ${size === 'sm' && 'md:h-12 md:w-12'}
+    ${size === 'xl' && 'md:h-20 md:w-20'}
     h-12 w-12
     relative
     ${partyDay && partyDay === true && 'bg-gray-300 dark:bg-neutral-800'}

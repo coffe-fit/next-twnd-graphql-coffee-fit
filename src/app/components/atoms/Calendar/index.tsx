@@ -6,27 +6,42 @@ import { DayBox } from "./DayBox";
 import { useState } from "react";
 import { Input } from "../Input";
 import { language } from '@/lib/lenguage';
+import { HeaderMonths } from "./HeaderMonths";
+import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 
 
-interface props {}
+interface props {
+  size: 'sm' | 'lg' | 'xl',
+  onclick?: (e: CalendarDayInterface)=>void
+}
 
-export const Calendar = ({}:props) => {
-  const [mont, setMont] = useState<number>(1);
+export const Calendar = ({size, onclick}:props) => {
+  const [month, setmonth] = useState<number>(new Date().getMonth()+1);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
   const _language = language('español');
 
 
-  const matrizDays: any[][] = getDaysInMonth(mont, 2024);
-  // console.log(arrayDays);
+  const matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
+  // console.log(matrizDays);
+
+  const handleChangemonth = (m: number) => setmonth(m);
+  const handleChangeYear = (y: number) => setYear(y);
+
+  const onClickDay = (day: CalendarDayInterface)=>{
+    try {
+      onclick && onclick(day)
+    } catch (error) {
+      
+    }
+  }
   
   return (
     <>
-      <br />Calendar {mont}
-      <Input
-        type="number"
-        value={mont}
-        onChange={(e) => setMont(+e.target.value)}
-        name={"ss"} id={"sss"} bg_color={true}
-      ></Input>
+      <HeaderMonths
+        month={month}
+        year={year}
+        onChangemonth={handleChangemonth}
+        onChangeYear={handleChangeYear}/>
       <div
         id="1"
         className="
@@ -45,17 +60,19 @@ export const Calendar = ({}:props) => {
             <span 
             id="2"
             key={`week_${index}`}
-            className="
-              cff-flex-row-center
-              flex-col
-              md:h-10 md:w-20
-              h-6 w-12
-              md:text-lg
-              text-xs
-            "
+            className={`
+            cff-flex-row-center
+            flex-col
+            ${size === 'lg' && 'md:h-10 md:w-16'}
+            ${size === 'sm' && 'md:h-6 md:w-12'}
+            ${size === 'xl' && 'md:h-10 md:w-20'}
+            h-6 w-12
+            md:text-lg
+            text-xs
+            `}
             >
-              <span className="max-sm:hidden">{day}</span>
-              <span className="sm:hidden">{day.split('')[0]}</span>
+              <span className={`${size === 'xl' ? 'max-sm:hidden': 'hidden'}`}>{day}</span>
+              <span className={`${size === 'xl' ? 'sm:hidden': ''}`}>{day.split('')[0]}</span>
             </span>
             ))
           }
@@ -73,15 +90,17 @@ export const Calendar = ({}:props) => {
             {week.map((day, indexD)=>(
               <div
                 key={`day_${indexD}`}
+                onClick={()=>onClickDay(day)}
               >
-                <DayBox 
+                <DayBox
+                  size={size} 
                   numberDay={day.dayNumber}
                   partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
                   disabled={!day.isCurrentMonth}
                   arrayColors={[
-                  // (mont%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
-                  // (mont%2 === 0 ? 'blue' : 'blue'),
-                  // (mont%2 === 0 ? 'red' : 'green'),
+                  // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
+                  // (month%2 === 0 ? 'blue' : 'blue'),
+                  // (month%2 === 0 ? 'red' : 'green'),
                   ]}></DayBox>
               </div> 
             ))}

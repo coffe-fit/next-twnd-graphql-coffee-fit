@@ -6,5 +6,9 @@ export {
 export {
   userRegister,
   FacebookAuthProvider,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  sendVerificationEmail,
+  handleVerification,
+  handleAuthStateChanged,
+  handleSignInWithPopup
 } from '../firebase/userRegister.service';

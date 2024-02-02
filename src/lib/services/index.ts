@@ -3,6 +3,11 @@ export {
   // db,
   userRegister,
   FacebookAuthProvider,
-  GoogleAuthProvider
+  GoogleAuthProvider,
+  sendVerificationEmail,
+  handleVerification,
+  handleAuthStateChanged,
+  handleSignInWithPopup
+
  } from './auth';
 // export { getImages } from './firebase/images.service';

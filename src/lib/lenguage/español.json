@@ -2,9 +2,25 @@
   "register": "registrar",
   "continue": "continuar",
   "successLogin": "Inicio de sesión exitoso:",
-  "failLogin": "Error al iniciar sesión:",
+  
   "SomethingIsWrong": "Por favor revisa el campo:",
   "daysArray":["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
   "monthsArray":["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-  "singOut": "salir"
+  "singOut": "salir",
+  "error": {
+    "code": {
+      "0": "Error del servidor, consulte con el admin del sistema.",
+      "auth/invalid-email": "Email Invalido",
+      "auth/quota-exceeded": "Número de intentos excedido.",
+      "auth/unauthorized-domain": "Dominio no autorizado",
+      "auth/fail-session": "Error al iniciar sesión:"
+    }
+  },
+  "success": {
+    "code": {
+      "auth/success-session": "Inicio de sesión exitoso:",
+      "auth/email-sending": "Correo de verificación enviado. Revise su bandeja de entrada.",
+      "100": "Correo de verificación enviado. Revise su bandeja de entrada."
+    }
+  }
 }

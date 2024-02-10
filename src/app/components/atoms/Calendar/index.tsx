@@ -22,7 +22,6 @@ export const Calendar = ({size, onclick}:props) => {
 
 
   const matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
-  // console.log(matrizDays);
 
   const handleChangemonth = (m: number) => setmonth(m);
   const handleChangeYear = (y: number) => setYear(y);
@@ -31,7 +30,7 @@ export const Calendar = ({size, onclick}:props) => {
     try {
       onclick && onclick(day)
     } catch (error) {
-      
+      console.log('Calendar', error);
     }
   }
   

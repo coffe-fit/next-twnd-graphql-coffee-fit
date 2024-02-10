@@ -9,13 +9,14 @@ import { language } from '@/lib/lenguage';
 import { ButonsSocialMedia } from '../';
 import { SendEmail } from './SendEmail';
 import useAuth from '@/app/hooks/useAuth';
+import { format } from 'url';
 
 interface props {}
 
 export const LoginForm = ({}:props) => {
   const [messageError, setMessageError] = useState('');
   const [successText, setSuccessText] = useState('');
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const dispatch =  useDispatch();
   const router = useRouter();
 
@@ -42,7 +43,8 @@ export const LoginForm = ({}:props) => {
   const reduxUser = (user: {
     uid: any,
     email: string,
-    photoURL: string,
+    photoUrl?: string,
+    photoURL?: string,
     displayName?: string,
     accessToken: string
   })=>{
@@ -51,11 +53,15 @@ export const LoginForm = ({}:props) => {
       dispatch(addUser({
         id: user.uid,
         email: user.email,
-        imgUser: user.photoURL,
+        imgUser: user.photoUrl || user.photoURL,
         username: user.displayName || user.email
       }));
+      const url = format({
+        pathname: '/pages/dashboard',
+        query: {id: sessionStorage.getItem('auth_token')}
+      });
       
-      router.push('/pages/dashboard')
+      router.push(url)
     } catch (error) {
       setMessageError('servidor 2')
       console.error(error);
@@ -68,7 +74,7 @@ export const LoginForm = ({}:props) => {
       reduxUser(user)
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  }, [token]);
 
   return (
     <>

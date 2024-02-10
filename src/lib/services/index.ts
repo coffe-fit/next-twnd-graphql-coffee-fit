@@ -1,6 +1,7 @@
+export { RutineFindAllByUserId } from './graphql/rutines/findAllByUserId.service';
+
 export { 
   auth,
-  // db,
   userRegister,
   FacebookAuthProvider,
   GoogleAuthProvider,
@@ -10,4 +11,3 @@ export {
   handleSignInWithPopup
 
  } from './auth';
-// export { getImages } from './firebase/images.service';

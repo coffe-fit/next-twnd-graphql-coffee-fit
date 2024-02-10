@@ -4,23 +4,36 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { auth, handleSignInWithPopup, handleVerification } from '../../../lib/services';
 import { onAuthStateChanged } from 'firebase/auth';
+import { AuthForanyToken, input as inputAuthService } from '@/lib/services/graphql/auth/signInForanyToken.service';
 
 const useAuth = () => {
   const searchParams = useSearchParams();
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState<string>(searchParams.get('email') || '');
   const router = useRouter();
 
+  const sendUser = async (data: inputAuthService) =>{
+    return await AuthForanyToken(data);
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user: any) => {
-      debugger
       if (email !== '' && user === null) {
         user = await handleVerification(email);
       };
       setUser(user);
       setLoading(false);
-      sessionStorage.setItem('auth_token', user?.accessToken);
+      const ownToken = await sendUser({
+        email: user.email,
+        token: user?.accessToken,
+        name: user.displayName || ''
+      })
+
+      sessionStorage.setItem('auth_token', ownToken.token);
+      setToken(ownToken.token)
+
     });
 
     return () => unsubscribe();
@@ -43,9 +56,13 @@ const useAuth = () => {
     }
   };
 
-  return { user, loading, signInWithGoogle, signOut };
+  return {
+    user,
+    loading,
+    token,
+    signInWithGoogle,
+    signOut
+  };
 };
 
 export default useAuth;
-// como implementarloe
-// const { use, loading, signInWithGoogle, signOut } = useAuth();

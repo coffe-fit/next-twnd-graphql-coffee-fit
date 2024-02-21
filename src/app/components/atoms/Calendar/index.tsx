@@ -19,9 +19,12 @@ export const Calendar = ({size, onclick}:props) => {
   const [month, setmonth] = useState<number>(new Date().getMonth()+1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const _language = language('español');
-
+  const today = new Date().toLocaleString("en-ZA", {timeZone: "America/Bogota"}).replaceAll('/','-').split(',')[0];
+  const monthString = `${month.toString().length === 1 ? `0${month}`: month}`
+  
 
   const matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
+  
 
   const handleChangemonth = (m: number) => setmonth(m);
   const handleChangeYear = (y: number) => setYear(y);
@@ -52,7 +55,7 @@ export const Calendar = ({size, onclick}:props) => {
           flex
           flex-row
           cff-border-1
-          dark:cff-bg-color-blue-800
+          dark:bg-green-500
           cff-bg-color-green-600
         ">
           {_language.daysArray.map((day, index)=>(
@@ -96,6 +99,7 @@ export const Calendar = ({size, onclick}:props) => {
                   numberDay={day.dayNumber}
                   partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
                   disabled={!day.isCurrentMonth}
+                  borderColor={`${year}-${monthString}-${day.dayNumber.toString().length === 1 ? `0${day.dayNumber}`: day.dayNumber}` === today ? 'cff-bg-color-green-600' : null}
                   arrayColors={[
                   // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
                   // (month%2 === 0 ? 'blue' : 'blue'),

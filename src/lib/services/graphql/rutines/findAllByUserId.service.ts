@@ -5,6 +5,7 @@ export const  RUTINE_FIND_ALL_BY_USSERID = gql`
   query ExampleQuery {
     rutine_findAllByUserId {
       rutineTypeId
+      days
       rutines {
         id
         rutineType {

@@ -1,10 +1,12 @@
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import useCustomRouter from '@/app/hooks/useCustomRouter';
+import { useSearchParams } from 'next/navigation';
 
 import { auth, handleSignInWithPopup, handleVerification } from '../../../lib/services';
 import { onAuthStateChanged } from 'firebase/auth';
 import { AuthForanyToken, input as inputAuthService } from '@/lib/services/graphql/auth/signInForanyToken.service';
+import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 
 const useAuth = () => {
   const searchParams = useSearchParams();
@@ -12,7 +14,8 @@ const useAuth = () => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState<string>(searchParams.get('email') || '');
-  const router = useRouter();
+  const customSessionStorage = CustomSessionStorage();
+  const router = useCustomRouter();
 
   const sendUser = async (data: inputAuthService) =>{
     return await AuthForanyToken(data);
@@ -30,8 +33,7 @@ const useAuth = () => {
         token: user?.accessToken,
         name: user.displayName || ''
       })
-
-      sessionStorage.setItem('auth_token', ownToken.token);
+      customSessionStorage.setItem('auth_token', ownToken.token);
       setToken(ownToken.token)
 
     });

@@ -1,3 +1,4 @@
+import { valitateToken } from "@/lib/util/jwt";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -6,12 +7,13 @@ export default function dashboard({
 }: {
   searchParams: { id: string }
 }) {
-  redirect(`/pages/dashboard/user/home?id=${id}`)
-  return (
-    <Suspense fallback={<>cargando ...</>}>
-      <div className="">
-        Hola desde Dashboard
-      </div>
-    </Suspense>
-  );
+  const decodeToken = valitateToken(id);
+  const role = decodeToken?.roleName
+  console.log(decodeToken?.roleName);
+
+  if (role === "TRAIN") {
+    redirect(`/pages/dashboard/train/usersList?id=${id}`)
+  } else {
+    redirect(`/pages/dashboard/user/home?id=${id}`)
+  }
 }

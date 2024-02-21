@@ -1,4 +1,6 @@
 import request, { GraphQLClient } from 'graphql-request';
+import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
+
 
 const uri = process.env.NEXT_PUBLIC_APP_GRAPH_URI;
 console.log(uri, 'uri');
@@ -13,7 +15,8 @@ export const requestGrap: (query: string) => PromiseLike<any>= (query: string) =
 }
 
 export const requestClient: any = async (query: string, data?: any, token?: string) => {
-  const _token = token || sessionStorage?.getItem('auth_token') || null
+  const customSessionStorage = CustomSessionStorage();
+  const _token = token || customSessionStorage?.getItem('auth_token') || null
   if (_token) setAuthToken(_token)
   return await graphQLClient.request(
       query,

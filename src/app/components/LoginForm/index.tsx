@@ -1,15 +1,17 @@
 'use client'
 import { Suspense, useEffect, useState }from 'react';
 import { useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import { format } from 'url';
+import useCustomRouter from '@/app/hooks/useCustomRouter';
 
 import { addUser } from '@/provider/redux/userSlice';
+import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 import { language } from '@/lib/lenguage';
 
 import { ButonsSocialMedia } from '../';
 import { SendEmail } from './SendEmail';
 import useAuth from '@/app/hooks/useAuth';
-import { format } from 'url';
+
 
 interface props {}
 
@@ -17,8 +19,10 @@ export const LoginForm = ({}:props) => {
   const [messageError, setMessageError] = useState('');
   const [successText, setSuccessText] = useState('');
   const { user, token } = useAuth();
+  const customSessionStorage = CustomSessionStorage();
+  
   const dispatch =  useDispatch();
-  const router = useRouter();
+  const router = useCustomRouter();
 
   const _language = language('español');
   
@@ -58,7 +62,7 @@ export const LoginForm = ({}:props) => {
       }));
       const url = format({
         pathname: '/pages/dashboard',
-        query: {id: sessionStorage.getItem('auth_token')}
+        query: {id: customSessionStorage.getItem('auth_token')}
       });
       
       router.push(url)

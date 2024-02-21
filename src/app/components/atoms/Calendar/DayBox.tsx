@@ -4,7 +4,8 @@ interface props {
   numberDay: number,
   arrayColors: string[],
   disabled?: boolean,
-  partyDay?: boolean
+  partyDay?: boolean,
+  borderColor?: 'cff-bg-color-green-600' | null,
 }
 
 export const DayBox = ({
@@ -12,7 +13,8 @@ export const DayBox = ({
   numberDay,
   arrayColors,
   disabled,
-  partyDay
+  partyDay,
+  borderColor
 }:props) => {
   const lengthC = arrayColors.length;
   
@@ -26,8 +28,10 @@ export const DayBox = ({
     ${size === 'xl' && 'md:h-20 md:w-20'}
     h-12 w-12
     relative
-    ${partyDay && partyDay === true && 'bg-gray-300 dark:bg-neutral-800'}
-    ${disabled && disabled === true && 'text-neutral-200 dark:text-neutral-800'}
+    ${borderColor ? `${borderColor} dark:bg-green-500`: ''}
+    ${partyDay && !borderColor && partyDay === true && 'bg-gray-300 dark:bg-neutral-800'}
+    ${disabled && !borderColor && disabled === true && 'text-neutral-200 dark:text-neutral-800'}
+    cff-button
     `}>
       <span className="
         absolute
@@ -45,6 +49,7 @@ export const DayBox = ({
         h-3
         ml-2
         mr-2
+        bg-color-3
       ">
         {arrayColors.map((item, index)=>(
           <div 

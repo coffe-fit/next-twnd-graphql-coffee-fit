@@ -11,4 +11,5 @@ export interface UserInterface {
   phone: string,
   username: string,
   imgUser: string,
+  rutines?: any,
 }

@@ -1,27 +1,45 @@
 'use client'
 
-import { ExerciseType } from "@/app/components";
-import { RutineType } from "@/app/components/RutineType";
-import { Calendar } from "@/app/components/atoms";
-import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
-import { useRouter } from 'next/navigation';
+import useCustomRouter  from '@/app/hooks/useCustomRouter';
 import { format } from "url";
+import { useDispatch } from "react-redux"; 
+
+import { ExerciseType } from "@/app/components";
+import { RutineTypeBox } from "@/app/components/RutineTypeBox";
+import { Calendar } from "@/app/components/atoms";
+
+import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
+
+import { addRutineSelected } from "@/provider/redux/userSlice";
+import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 
 export const ClientHome = ({
-  rutineType
+  rutineType, rutineDay
 }:any) => {
 
-  const router = useRouter();
-  
-  console.log(rutineType);
-  const handleClickCalendar = (day: CalendarDayInterface) => {
+  const router = useCustomRouter();
+  const dispatch = useDispatch();
+  const todayreal = new Date().toLocaleString("en-ZA", {timeZone: "America/Bogota"}).replaceAll('/','-').split(',')[0]
+  const todayNum = new Date(todayreal).getUTCDay();
 
+  
+  const customSessionStorage = CustomSessionStorage();
+
+  const handleClickCalendar = (day: CalendarDayInterface) => {
+    dispatch(addRutineSelected({
+      rutines: rutineDay 
+    }));
     const url = format({
       pathname: '/pages/dashboard/user/rutine_day',
-      query: {id: day.dayName}
-    })
-    router.push(url)
+      query: {
+        id: customSessionStorage.getItem('auth_token'),
+        day:  day.dayName
+      }
+    });
+    router.push(url);
   }
+
+  
   
   return (
     <div className="flex flex-col items-center h-full">
@@ -35,19 +53,28 @@ export const ClientHome = ({
         </span>
         <span className="
           flex
-          justify-center
+          justify-start
           h-full
-          md:justify-end
           flex-row
           md:flex-col
           flex-wrap
         ">
-          {rutineType.slice(0,2).map((item:any, index: number)=>(
+          <span className="
+            max-sm:hidden
+            h-20
+          ">
+
+          </span>
+          {rutineType.slice(0,3).map((item:any, index: number)=>(
             <span className="max-sm:hidden" key={index}>
-              <RutineType rutines={item.rutines} name={item.rutines[0].rutineType.name} id="123" key={index}/>
+              <RutineTypeBox
+                rutines={item.exercises}
+                name={item.rutineTypeName}
+                id="123"
+                bgColor={item.days.includes(todayNum) ? 'cff-bg-color-green-600': '' }
+                keyProp={0}/>
             </span>
           ))}
-          
         </span>
       </span>
       <span className="
@@ -57,9 +84,15 @@ export const ClientHome = ({
         flex-wrap
         max-sm:hidden
       ">
-        {rutineType.slice(2).map((item:any, index: number)=>(
+        {rutineType.slice(3).map((item:any, index: number)=>(
           <span key={index}>
-            <RutineType rutines={item.rutines} name={item.rutines[0].rutineType.name} id="123" key={index}/>
+            <RutineTypeBox
+              rutines={item.exercises}
+              name={item.rutineTypeName}
+              id="123"
+              bgColor={item.days.includes(todayNum) ? 'cff-bg-color-green-600': '' }
+              keyProp={index}
+            />
           </span>
         ))}
         <ExerciseType name="Pierna" id="123"/>
@@ -75,7 +108,13 @@ export const ClientHome = ({
       ">
         {rutineType.map((item:any, index: number)=>(
           <span key={index}>
-            <RutineType rutines={item.rutines} name={item.rutines[0].rutineType.name} id="123" key={index}/>
+            <RutineTypeBox
+              rutines={item.exercises}
+              name={item.rutineTypeName}
+              id="123"
+              bgColor={item.days.includes(todayNum) ? 'cff-bg-color-green-600': '' }
+              keyProp={index}
+            />
           </span>
         ))}
         <ExerciseType name="Pierna" id="123"/>

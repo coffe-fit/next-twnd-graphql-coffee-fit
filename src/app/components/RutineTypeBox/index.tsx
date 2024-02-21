@@ -1,15 +1,19 @@
+'use client'
 interface props {
   name: string,
   id: string,
   rutines?: any[]
+  keyProp: number,
+  bgColor: string
 }
-export const RutineType = ({
+export const RutineTypeBox = ({
   name,
   id,
-  rutines
+  rutines,
+  bgColor
 }:props) => {
   return (
-    <div className="
+    <div className={`
       h-auto
       w-40
       cff-bg-color-green-700
@@ -17,7 +21,9 @@ export const RutineType = ({
       flex-col
       pl-6 pr-1
       relative
-    ">
+      cff-button
+      ${bgColor ? `cff-bg-color-green-600 dark:bg-green-500`: ''}
+    `}>
       <span className="cff-flex-row-center"id='title'>
         {name}
       </span>

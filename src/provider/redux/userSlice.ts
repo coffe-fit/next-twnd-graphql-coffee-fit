@@ -21,7 +21,8 @@ const initialState: UserInterface = {
   phone: '',
   role: '',
   username: '',
-  imgUser: ''
+  imgUser: '',
+  rutines: ''
 }
 
 export const userSlice = createSlice({
@@ -35,10 +36,15 @@ export const userSlice = createSlice({
       state.imgUser = imgUser;
       state.username = username;
     },
+    addRutineSelected: (state, action) => {
+      const { rutines } = action.payload;
+      state.rutines = rutines;
+    },
   }
 });
 
 export const {
-  addUser
+  addUser,
+  addRutineSelected
 } = userSlice.actions;
 export default userSlice.reducer;

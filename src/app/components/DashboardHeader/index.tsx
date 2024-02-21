@@ -1,10 +1,34 @@
 'use client'
-import { Button } from "@/app/components/atoms";
 import { useSelector } from "react-redux";
+import useCustomRouter from '@/app/hooks/useCustomRouter';
+
+import { Button } from "@/app/components/atoms";
+import { useEffect, useState } from "react";
 
 interface props {}
 export const DashboardHeader =  ({}:props) => {
+  const [showBack, setShowBack] = useState<boolean>(false);
   const userData = useSelector((state: any) => state.user);
+  const router = useCustomRouter();
+  // const path = usePathname();
+  
+  const handleButtonBack = () =>{
+    router.back();
+  }
+
+
+  // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
+  useEffect(() => {
+    const lastPath = router.history[router.history.length - 1];
+    if (lastPath === '/pages/dashboard/user/home') {
+      setShowBack(false)
+    } else {
+      setShowBack(true)
+    }
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.history]);
+  
   
 
   return (
@@ -19,7 +43,11 @@ export const DashboardHeader =  ({}:props) => {
         dark:cff-bg-color-gray-600
         z-50
       ">
-        <Button size="xs">☰</Button>
+        {/* <Button size="xs">☰</Button> */}
+        {showBack && showBack === true && (
+          <Button size="xs" onclick={handleButtonBack}>{`<`}</Button>
+        )}
+        
         <Button size="xs" >{`${userData.username}`}</Button>
         
         <img 

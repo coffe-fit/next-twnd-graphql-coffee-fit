@@ -1,12 +1,4 @@
 {
-  "register": "registrar",
-  "continue": "continuar",
-  "successLogin": "Inicio de sesión exitoso:",
-  
-  "SomethingIsWrong": "Por favor revisa el campo:",
-  "daysArray":["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
-  "monthsArray":["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-  "singOut": "salir",
   "error": {
     "code": {
       "0": "Error del servidor, consulte con el admin del sistema.",
@@ -22,5 +14,17 @@
       "auth/email-sending": "Correo de verificación enviado. Revise su bandeja de entrada.",
       "100": "Correo de verificación enviado. Revise su bandeja de entrada."
     }
-  }
+  },
+
+  "register": "registrar",
+  "continue": "continuar",
+  "successLogin": "Inicio de sesión exitoso:",
+  
+  "SomethingIsWrong": "Por favor revisa el campo:",
+  "daysArray":["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+  "monthsArray":["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+  "singOut": "salir",
+  "series": "Series",
+  "amountMax": "Repeticiones",
+  "break": "Descanso"
 }

@@ -83,6 +83,23 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
     const dateEnd = new Date(selectedOptions[selectedOptions.length-1]);
     return dateIni <= dayDate && dateEnd >= dayDate
   };
+
+  const handleTouchStart = (day: CalendarDayInterface) => {
+    handleMouseDown(day)
+    // Lógica para manejar el inicio del toque en un día
+  };
+
+  const handleTouchMove = (day: CalendarDayInterface) => {
+    handleMouseMove(day)
+    // Lógica para manejar el movimiento del toque en un día
+  };
+
+  const handleTouchEnd = (day: CalendarDayInterface) => {
+    handleMouseUp()
+
+    // Lógica para manejar el final del toque en un día
+    onClickDay(day);
+  };
   return (
     <div className="md:flex md:flex-row flex-col ">
     <div className="md:pr-4 md:pb-0 pb-3">
@@ -148,6 +165,10 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
                   onMouseDown={()=>{handleMouseDown(day)}}
                   onMouseUp={()=>{ handleMouseUp()}}
                   onMouseMove={()=>{handleMouseMove(day)}}
+                  
+                  onTouchStart={() => handleTouchStart(day)}
+                  onTouchMove={() => handleTouchMove(day)}
+                  onTouchEnd={() => handleTouchEnd(day)}
                   // onMouseEnter={()=>{return console.log(day)}}
                   selected={selectedColor && isSelected(day)}
                   numberDay={day.dayNumber}

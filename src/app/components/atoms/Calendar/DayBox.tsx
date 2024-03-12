@@ -14,6 +14,9 @@ interface Props {
   onMouseUp?: () => void;
   onMouseMove?: () => void;
   onMouseEnter?: () => void;
+  onTouchStart?: () => void
+  onTouchMove?: () => void
+  onTouchEnd?: () => void
 }
 
 export const DayBox: React.FC<Props> = ({
@@ -28,7 +31,10 @@ export const DayBox: React.FC<Props> = ({
   onMouseDown,
   onMouseUp,
   onMouseMove,
-  onMouseEnter
+  onMouseEnter,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
 }) => {
   const lengthC = arrayColors.length;
 
@@ -58,6 +64,10 @@ export const DayBox: React.FC<Props> = ({
       onMouseEnter={onMouseEnter}
       onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
+
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
       <span className="absolute left-3 top-0.5 text-lg">{numberDay}</span>
       <span

@@ -132,6 +132,7 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
   return (
     <div className="md:flex md:flex-row flex-col ">
     <div className="md:pr-4 md:pb-0 pb-3">
+      {selectedOptions}
     <HeaderMonths
         month={actualMonth}
         year={actualYear}

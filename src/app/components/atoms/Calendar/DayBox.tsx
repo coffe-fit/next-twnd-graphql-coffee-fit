@@ -59,7 +59,7 @@ export const DayBox: React.FC<Props> = ({
         cff-button
         
       `}
-      style={{ userSelect: 'none'}}
+      style={{ userSelect: 'none' , touchAction: 'none' }}
       onMouseDown={onMouseDown}
       onMouseEnter={onMouseEnter}
       onMouseUp={onMouseUp}

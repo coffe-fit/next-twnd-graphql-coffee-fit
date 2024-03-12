@@ -28,6 +28,7 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
 
   const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
   const [isSelecting, setIsSelecting] = useState(false);
+  const touchStartPosition = useRef<number | null>(null);
   const startOptionRef = useRef<any>(null);
 
   let actualMatrizDays: CalendarDayInterface[][] = getDaysInMonth(actualMonth, actualYear);
@@ -39,9 +40,22 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
   const handleChangemonth = (m: number) => setmonth(m);
   const handleChangeYear = (y: number) => setYear(y);
 
+const pushDaySelected = (dayFull: any)=> {
+  const dayDate = new Date(dayFull);
+  const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
+  _selectedOptions.push(dayDate);
+
+  const _compareDate = (date1: Date, date2: Date) => {
+    return date1.getTime() - date2.getTime();
+  };
+  _selectedOptions.sort(_compareDate);
+  const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
+  setSelectedOptions(orderDates);
+}
   const onClickDay = (day: CalendarDayInterface)=>{
     try {
       onclick && onclick(day)
+      // pushDaySelected(day)
     } catch (error) {
       console.log('Calendar', error);
     }
@@ -56,16 +70,7 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
   const handleMouseMove = (option: any) => {
     if (isSelecting && startOptionRef.current) {
       if(selectedOptions && !selectedOptions?.includes(option.dayFull)){
-        const dayDate = new Date(option.dayFull);
-        const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-        _selectedOptions.push(dayDate);
-
-        const _compareDate = (date1: Date, date2: Date) => {
-          return date1.getTime() - date2.getTime();
-        };
-        _selectedOptions.sort(_compareDate);
-        const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-        setSelectedOptions(orderDates);
+        pushDaySelected(option.dayFull)
       }
     }
   };
@@ -84,55 +89,91 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
     return dateIni <= dayDate && dateEnd >= dayDate
   };
 
-  const handleTouchStart = (day: CalendarDayInterface) => {
-    setIsSelecting(true);
+  // const handleTouchStart = (day: CalendarDayInterface) => {
+  //   // setIsSelecting(true);
+  //   setSelectedOptions([day.dayFull]);
+  //   // Lógica para manejar el inicio del toque en un día
+  // };
+
+  // const handleTouchMove = (day: CalendarDayInterface) => {
+
+  //   console.log(day);
+  //   if (isSelecting) {
+  //     if(selectedOptions && !selectedOptions?.includes(day.dayFull)){
+  //       console.log(selectedOptions);
+        
+  //       const dayDate = new Date(day.dayFull);
+  //       const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
+  //       _selectedOptions.push(dayDate);
+
+  //       const _compareDate = (date1: Date, date2: Date) => {
+  //         return date1.getTime() - date2.getTime();
+  //       };
+  //       _selectedOptions.sort(_compareDate);
+  //       const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
+  //       setSelectedOptions(orderDates);
+  //     }
+  //   }
+  //   // Lógica para manejar el movimiento del toque en un día
+  // };
+
+  // const handleTouchEnd = (day: CalendarDayInterface) => {
+  //   // setIsSelecting(false);
+        
+  //       const dayDate = new Date(day.dayFull);
+  //       const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
+  //       _selectedOptions.push(dayDate);
+
+  //       const _compareDate = (date1: Date, date2: Date) => {
+  //         return date1.getTime() - date2.getTime();
+  //       };
+  //       _selectedOptions.sort(_compareDate);
+  //       const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
+  //       setSelectedOptions(orderDates);
+
+  //   console.log(orderDates);
+  //   // Lógica para manejar el final del toque en un día
+  //   // onClickDay(day);
+  // };
+  const handleTouchStart = (day: CalendarDayInterface, e: TouchEvent) => {
+    touchStartPosition.current = e.touches[0].clientY;
+    console.log('handleTouchStart');
     setSelectedOptions([day.dayFull]);
+    // console.log(day.dayFull);
+    // handleMouseDown(day)
     // Lógica para manejar el inicio del toque en un día
   };
 
-  const handleTouchMove = (day: CalendarDayInterface) => {
-    if (isSelecting) {
-      console.log(day);
-      if(selectedOptions && !selectedOptions?.includes(day.dayFull)){
-        console.log(selectedOptions);
-        
-        const dayDate = new Date(day.dayFull);
-        const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-        _selectedOptions.push(dayDate);
-
-        const _compareDate = (date1: Date, date2: Date) => {
-          return date1.getTime() - date2.getTime();
-        };
-        _selectedOptions.sort(_compareDate);
-        const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-        setSelectedOptions(orderDates);
+  const handleTouchMove = (day: CalendarDayInterface, e: TouchEvent) => {
+    const touch = e.touches[0];
+    const targetElement = document.elementFromPoint(touch.clientX, touch.clientY)as HTMLElement | null;;
+    
+    const getParentDayElement = (element: HTMLElement | null): HTMLElement | null => {
+      let parent = element?.parentNode as HTMLElement | null;
+      while (parent && !parent.title.includes('day')) {
+        parent = parent.parentNode as HTMLElement | null;
       }
+      return parent;
+    };
+  
+    if (targetElement) {
+      const dayElement = getParentDayElement(targetElement)
+      if(dayElement) pushDaySelected(dayElement?.getAttribute('id'))
+      // Aquí puedes hacer lo que necesites con el elemento del día (dayElement)
     }
-    // Lógica para manejar el movimiento del toque en un día
   };
 
-  const handleTouchEnd = (day: CalendarDayInterface) => {
-    setIsSelecting(false);
-        
-        const dayDate = new Date(day.dayFull);
-        const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-        _selectedOptions.push(dayDate);
-
-        const _compareDate = (date1: Date, date2: Date) => {
-          return date1.getTime() - date2.getTime();
-        };
-        _selectedOptions.sort(_compareDate);
-        const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-        setSelectedOptions(orderDates);
-
-    console.log(orderDates);
+  const handleTouchEnd = (day: CalendarDayInterface) => () => {
+    if (touchStartPosition.current !== null) {
+    console.log('handleTouchEnd');
+    console.log(day);
+    }
     // Lógica para manejar el final del toque en un día
-    onClickDay(day);
+    // onClickDay(day);
   };
   return (
     <div className="md:flex md:flex-row flex-col ">
     <div className="md:pr-4 md:pb-0 pb-3">
-      {selectedOptions}
     <HeaderMonths
         month={actualMonth}
         year={actualYear}
@@ -189,6 +230,12 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
               <div
                 key={`day_${indexD}`}
                 onClick={()=>onClickDay(day)}
+
+                onTouchStart={(e:any) => handleTouchStart(day, e)}
+                onTouchMove={(e:any) => handleTouchMove(day,e)}
+                onTouchEnd={handleTouchEnd(day)}
+                id={day.dayFull}
+                title="day"
               >
                 <DayBox
                   size={size}
@@ -196,9 +243,6 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
                   onMouseUp={()=>{ handleMouseUp()}}
                   onMouseMove={()=>{handleMouseMove(day)}}
                   
-                  onTouchStart={() => handleTouchStart(day)}
-                  onTouchMove={() => handleTouchMove(day)}
-                  onTouchEnd={() => handleTouchEnd(day)}
                   // onMouseEnter={()=>{return console.log(day)}}
                   selected={selectedColor && isSelected(day)}
                   numberDay={day.dayNumber}
@@ -275,6 +319,11 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
               <div
                 key={`day_${indexD}`}
                 onClick={()=>onClickDay(day)}
+                onTouchStart={(e:any) => handleTouchStart(day, e)}
+                onTouchMove={(e:any) => handleTouchMove(day,e)}
+                onTouchEnd={handleTouchEnd(day)}
+                id={day.dayFull}
+                title="day"
               >
                 <DayBox
                   size={size}
@@ -282,9 +331,6 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
                   onMouseUp={()=>{ handleMouseUp()}}
                   onMouseMove={()=>{handleMouseMove(day)}}
                   
-                  onTouchStart={() => handleTouchStart(day)}
-                  onTouchMove={() => handleTouchMove(day)}
-                  onTouchEnd={() => handleTouchEnd(day)}
                   // onMouseEnter={()=>{return console.log(day)}}
                   selected={selectedColor && isSelected(day)}
                   numberDay={day.dayNumber}

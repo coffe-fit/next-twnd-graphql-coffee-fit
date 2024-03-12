@@ -14,8 +14,8 @@ interface Props {
   onMouseUp?: () => void;
   onMouseMove?: () => void;
   onMouseEnter?: () => void;
-  onTouchStart?: () => void
-  onTouchMove?: () => void
+  onTouchStart?: (e: any) => void
+  onTouchMove?: (e: any) => void
   onTouchEnd?: () => void
 }
 
@@ -59,7 +59,7 @@ export const DayBox: React.FC<Props> = ({
         cff-button
         
       `}
-      style={{ userSelect: 'none' }}
+      style={{ userSelect: 'none'}}
       onMouseDown={onMouseDown}
       onMouseEnter={onMouseEnter}
       onMouseUp={onMouseUp}
@@ -67,7 +67,8 @@ export const DayBox: React.FC<Props> = ({
 
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
-      onTouchEnd={onTouchEnd}
+      // onTouchEnd={onTouchEnd}
+      onTouchEndCapture={onTouchEnd}
     >
       <span className="absolute left-3 top-0.5 text-lg">{numberDay}</span>
       <span

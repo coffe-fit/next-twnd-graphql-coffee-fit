@@ -26,5 +26,13 @@
   "singOut": "salir",
   "series": "Series",
   "amountMax": "Repeticiones",
-  "break": "Descanso"
+  "break": "Descanso",
+  "new": "Nuevo",
+  "seekEmail": "Buscar Email",
+  "client": "Clientes",
+  "users": "Usuarios",
+  "days": "Días",
+  "selectOption": "Seleccione una opción.", 
+  "select": "Seleccione", 
+  "rutineTime": "Tiempo de Rutina"
 }

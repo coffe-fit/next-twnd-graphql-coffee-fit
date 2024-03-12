@@ -1,9 +1,13 @@
 'use client'
+import Image from 'next/image';
 import { useSelector } from "react-redux";
 import useCustomRouter from '@/app/hooks/useCustomRouter';
 
 import { Button } from "@/app/components/atoms";
 import { useEffect, useState } from "react";
+import urlArrow from '@/app/images/icons/flecha-izquierda-99-80s.png';
+import urlArrowWhite from '@/app/images/icons/flecha-izquierda-white-99-80s.png';
+import { getConfiPages } from '@/lib/util';
 
 interface props {}
 export const DashboardHeader =  ({}:props) => {
@@ -20,7 +24,7 @@ export const DashboardHeader =  ({}:props) => {
   // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
   useEffect(() => {
     const lastPath = router.history[router.history.length - 1];
-    if (lastPath === '/pages/dashboard/user/home') {
+    if (getConfiPages.pagesIni.includes(lastPath)) {
       setShowBack(false)
     } else {
       setShowBack(true)
@@ -45,7 +49,10 @@ export const DashboardHeader =  ({}:props) => {
       ">
         {/* <Button size="xs">☰</Button> */}
         {showBack && showBack === true && (
-          <Button size="xs" onclick={handleButtonBack}>{`<`}</Button>
+          <Button size="xs" onclick={handleButtonBack}>
+            <Image className={"block dark:hidden"} src={urlArrow} alt={'alt'} width={20} height={20}/>
+            <Image className={"hidden dark:block"} src={urlArrowWhite} alt={'alt'} width={20} height={20}/>
+          </Button>
         )}
         
         <Button size="xs" >{`${userData.username}`}</Button>

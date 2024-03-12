@@ -15,16 +15,17 @@ export const getDaysInMonth = (month: number, year: number) =>{
   for (let i = startDate.getDay(); i > 0; i--) {
     const dayNumber = prevMonthLastDay - (i - 1);
     const dayName = getDayName(new Date(year, month - 2, dayNumber).getDay());
+    const dayFull = new Date(year, month - 2, dayNumber);
 
-    daysInMonth.push({ dayNumber, dayName, isCurrentMonth: false });
+    daysInMonth.push({ dayNumber, dayName, isCurrentMonth: false,dayFull });
   }
 
   // Rellenar días del mes actual
   for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
     const dayNumber = date.getDate();
     const dayName = getDayName(date.getDay());
-
-    daysInMonth.push({ dayNumber, dayName, isCurrentMonth: true });
+    const dayFull = `${dayNumber}-${date.getUTCMonth()+1}-${date.getFullYear()}`;
+    daysInMonth.push({ dayNumber, dayName, isCurrentMonth: true, dayFull });
   }
 
   // Rellenar días del próximo mes
@@ -32,8 +33,9 @@ export const getDaysInMonth = (month: number, year: number) =>{
   for (let i = 1; i <= 7 - nextMonthFirstDay; i++) {
     const dayNumber = i;
     const dayName = getDayName(new Date(year, month, dayNumber).getDay());
+    const dayFull = new Date(year, month, dayNumber);
 
-    daysInMonth.push({ dayNumber, dayName, isCurrentMonth: false });
+    daysInMonth.push({ dayNumber, dayName, isCurrentMonth: false, dayFull });
   }
 
   // Dividir el array en subarrays de 7 días

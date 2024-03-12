@@ -14,6 +14,9 @@ export const  USERS_BY_ROLE_CLIENT = gql`
       gender
       document
       age
+      rutines {
+        rutineTypeName
+      }
     }
   }
 `;

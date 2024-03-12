@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+*:focus-visible {
+  outline: none;
+}
 :root {
   height: 100%;
   --foreground-rgb: 0,0,0;
@@ -109,13 +111,16 @@ body {
   .cff-bg-color-gray-600 {
     background-color: var(--cff-gray-600);
   }
+  .cff-bg-color-gray-400 {
+    background-color: var(--cff-gray-700);
+  }
 
   @media (prefers-color-scheme: dark) {
     .cff-button, button {
       box-shadow: 0px 2px 4px -1px rgba(225, 225, 225, 0.2), 0px 4px 5px 0px rgba(225, 225, 225,0.14), 0px 1px 10px 0px rgba(225, 225, 225,0.12);
     }
     .cff-button:hover, button:hover {
-      box-shadow: 0px 1px 4px 1px rgba(var( --cff-blue-700),0.2), 0px 1px 0px 1px rgba(60, 68, 219, 0.2), 0px 1px 5px 0px rgba(var( --cff-blue-700),1.12);
+      box-shadow: 0px 1px 4px 1px rgba(var( --cff-green-700),0.2), 0px 1px 0px 1px rgba(60, 68, 219, 0.2), 0px 1px 5px 0px rgba(var( --cff-green-700),1.12);
     }
   }
 }

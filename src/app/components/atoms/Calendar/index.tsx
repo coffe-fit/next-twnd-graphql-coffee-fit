@@ -3,7 +3,7 @@ import { getDaysInMonth } from "@/lib/util";
 //import { DayCircule as DayBox } from "./DayCircule";
 //import { DayBoxWired as DayBox } from "./DayBoxWired";
 import { DayBox } from "./DayBox";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "../Input";
 import { language } from '@/lib/lenguage';
 import { HeaderMonths } from "./HeaderMonths";
@@ -23,9 +23,15 @@ export const Calendar = ({size, onclick}:props) => {
   const monthString = `${month.toString().length === 1 ? `0${month}`: month}`
   
 
-  const matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
-  
+  const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const startOptionRef = useRef<any>(null);
 
+  let matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
+    // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
+    useEffect(() => {
+      matrizDays= getDaysInMonth(month, year);
+    }, [selectedOptions]);
   const handleChangemonth = (m: number) => setmonth(m);
   const handleChangeYear = (y: number) => setYear(y);
 
@@ -36,7 +42,34 @@ export const Calendar = ({size, onclick}:props) => {
       console.log('Calendar', error);
     }
   }
+
+  const handleMouseDown = (option: any) => {
+    setIsSelecting(true);
+    startOptionRef.current = option;
+    setSelectedOptions([option]);
+  };
+
+  const handleMouseMove = (option: any) => {
+
+    if (isSelecting && startOptionRef.current) {
+      if(selectedOptions && !selectedOptions?.includes(option)){
+        selectedOptions.push(option)
+        setSelectedOptions(selectedOptions);
+      }
+console.log(matrizDays);
+console.log(selectedOptions);
+      // const startIndex = options.findIndex((opt) => opt.id === startOptionRef.current!.id);
+      // const endIndex = options.findIndex((opt) => opt.id === option.id);
+      // const selectedOpts = options.slice(Math.min(startIndex, endIndex), Math.max(startIndex, endIndex) + 1);
+      // setSelectedOptions(selectedOpts);
+    }
+  };
   
+
+  const handleMouseUp = () => {
+    setIsSelecting(false);
+    startOptionRef.current = null;
+  };
   return (
     <>
       <HeaderMonths
@@ -95,7 +128,12 @@ export const Calendar = ({size, onclick}:props) => {
                 onClick={()=>onClickDay(day)}
               >
                 <DayBox
-                  size={size} 
+                  size={size}
+                  onMouseDown={()=>{handleMouseDown(day)}}
+                  onMouseUp={()=>{ handleMouseUp()}}
+                  onMouseMove={()=>{handleMouseMove(day)}}
+                  // onMouseEnter={()=>{return console.log(day)}}
+                  selected={selectedOptions.includes(day)}
                   numberDay={day.dayNumber}
                   partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
                   disabled={!day.isCurrentMonth}
@@ -104,7 +142,9 @@ export const Calendar = ({size, onclick}:props) => {
                   // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
                   // (month%2 === 0 ? 'blue' : 'blue'),
                   // (month%2 === 0 ? 'red' : 'green'),
-                  ]}></DayBox>
+                  ]}
+                  
+                  ></DayBox>
               </div> 
             ))}
           </div>

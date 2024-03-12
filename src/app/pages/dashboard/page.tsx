@@ -8,8 +8,7 @@ export default function dashboard({
   searchParams: { id: string }
 }) {
   const decodeToken = valitateToken(id);
-  const role = decodeToken?.roleName
-  console.log(decodeToken?.roleName);
+  const role = decodeToken?.roleName;
 
   if (role === "TRAIN") {
     redirect(`/pages/dashboard/train/usersList?id=${id}`)

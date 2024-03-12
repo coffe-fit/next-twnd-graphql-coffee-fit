@@ -54,6 +54,7 @@ export const Input = ({
             relative
             placeholder:text-gray-600
             dark:placeholder:text-gray-400
+            focus-visible:border-green-500
             ${className} 
           `
         }

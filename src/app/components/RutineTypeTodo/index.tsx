@@ -12,6 +12,8 @@ interface props {
 
 import Image from 'next/image';
 import video from '@/app/images/icons/videocam.png';
+import urlVideoImg from '@/app/images/icons/camara-de-video-con-boton-de-reproduccion-99.png';
+import urlVideoWhiteImg from '@/app/images/icons/camara-de-video-con-boton-de-reproduccion-white-99.png';
 import { useState } from "react";
 
 export const RutineTypeTodo = ({
@@ -47,7 +49,8 @@ export const RutineTypeTodo = ({
           <div>{_language.series}: {serie}</div>
           <div>{_language.amountMax}: {amountMax.map((item, index)=><span key={index}>{item} </span>)}</div>
           <div>{_language.break}: {breakOwn}</div>
-          <Image className={"absolute right-0 -top-2 pl-1 pr-1 cff-button"} src={video} alt={'alt'} width={40} height={40} onClick={handleButton}/>
+          <Image className={"absolute right-0 -top-2 pl-1 pr-1 cff-button block dark:hidden"} src={urlVideoImg} alt={'alt'} width={40} height={40} onClick={handleButton}/>
+          <Image className={"absolute right-0 -top-2 pl-1 pr-1 cff-button hidden dark:block"} src={urlVideoWhiteImg} alt={'alt'} width={40} height={40} onClick={handleButton}/>
         </span>
         
       </div>

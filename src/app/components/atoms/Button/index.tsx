@@ -28,6 +28,7 @@ export const Button = ({
       disabled={disabled}
       className={
         `
+          ${className} 
           ${bg_color ? 'cff-bg-color-green-600 dark:cff-bg-color-gray-600' : ''}
           ${!size && 'h-9 w-40'}
           ${size === 'sm' && 'h-9 w-40'}
@@ -38,7 +39,6 @@ export const Button = ({
           border-gray-400
           dark:border-gray-700
           relative
-          ${className} 
         `
       }
       onClick={onclick}

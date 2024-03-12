@@ -25,7 +25,7 @@ export const Client = ({ user
 
   return (
     <div className={`
-      flex flex-col items-center h-full pt-20
+      flex flex-col items-center h-full md:pt-20
     `}>
       <span className="flex flex-col items-center w-full text-2xl pt-4 pb-4">
         {_language.users}

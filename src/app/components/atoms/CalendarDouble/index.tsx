@@ -85,18 +85,47 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
   };
 
   const handleTouchStart = (day: CalendarDayInterface) => {
-    handleMouseDown(day)
+    setIsSelecting(true);
+    setSelectedOptions([day.dayFull]);
     // Lógica para manejar el inicio del toque en un día
   };
 
   const handleTouchMove = (day: CalendarDayInterface) => {
-    handleMouseMove(day)
+    if (isSelecting) {
+      console.log(day);
+      if(selectedOptions && !selectedOptions?.includes(day.dayFull)){
+        console.log(selectedOptions);
+        
+        const dayDate = new Date(day.dayFull);
+        const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
+        _selectedOptions.push(dayDate);
+
+        const _compareDate = (date1: Date, date2: Date) => {
+          return date1.getTime() - date2.getTime();
+        };
+        _selectedOptions.sort(_compareDate);
+        const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
+        setSelectedOptions(orderDates);
+      }
+    }
     // Lógica para manejar el movimiento del toque en un día
   };
 
   const handleTouchEnd = (day: CalendarDayInterface) => {
-    handleMouseUp()
+    setIsSelecting(false);
+        
+        const dayDate = new Date(day.dayFull);
+        const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
+        _selectedOptions.push(dayDate);
 
+        const _compareDate = (date1: Date, date2: Date) => {
+          return date1.getTime() - date2.getTime();
+        };
+        _selectedOptions.sort(_compareDate);
+        const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
+        setSelectedOptions(orderDates);
+
+    console.log(orderDates);
     // Lógica para manejar el final del toque en un día
     onClickDay(day);
   };
@@ -251,6 +280,10 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
                   onMouseDown={()=>{handleMouseDown(day)}}
                   onMouseUp={()=>{ handleMouseUp()}}
                   onMouseMove={()=>{handleMouseMove(day)}}
+                  
+                  onTouchStart={() => handleTouchStart(day)}
+                  onTouchMove={() => handleTouchMove(day)}
+                  onTouchEnd={() => handleTouchEnd(day)}
                   // onMouseEnter={()=>{return console.log(day)}}
                   selected={selectedColor && isSelected(day)}
                   numberDay={day.dayNumber}

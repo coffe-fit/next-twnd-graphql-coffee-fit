@@ -15,7 +15,7 @@ export const getDaysInMonth = (month: number, year: number) =>{
   for (let i = startDate.getDay(); i > 0; i--) {
     const dayNumber = prevMonthLastDay - (i - 1);
     const dayName = getDayName(new Date(year, month - 2, dayNumber).getDay());
-    const dayFull = new Date(year, month - 2, dayNumber);
+    const dayFull = new Date(year, month - 2, dayNumber).toISOString().split('T')[0];;
 
     daysInMonth.push({ dayNumber, dayName, isCurrentMonth: false,dayFull });
   }
@@ -24,7 +24,7 @@ export const getDaysInMonth = (month: number, year: number) =>{
   for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
     const dayNumber = date.getDate();
     const dayName = getDayName(date.getDay());
-    const dayFull = `${dayNumber}-${date.getUTCMonth()+1}-${date.getFullYear()}`;
+    const dayFull = date.toISOString().split('T')[0];
     daysInMonth.push({ dayNumber, dayName, isCurrentMonth: true, dayFull });
   }
 
@@ -33,7 +33,7 @@ export const getDaysInMonth = (month: number, year: number) =>{
   for (let i = 1; i <= 7 - nextMonthFirstDay; i++) {
     const dayNumber = i;
     const dayName = getDayName(new Date(year, month, dayNumber).getDay());
-    const dayFull = new Date(year, month, dayNumber);
+    const dayFull = new Date(year, month, dayNumber).toISOString().split('T')[0];;
 
     daysInMonth.push({ dayNumber, dayName, isCurrentMonth: false, dayFull });
   }

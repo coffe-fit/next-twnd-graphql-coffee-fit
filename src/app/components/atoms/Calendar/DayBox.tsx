@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 
 interface Props {
-  size: 'sm' | 'lg' | 'xl';
+  size: 'sm' | 'md'| 'lg' | 'xl';
   numberDay: number;
   arrayColors: string[];
   disabled?: boolean;
@@ -40,16 +40,20 @@ export const DayBox: React.FC<Props> = ({
         flex-row
         cff-border-1
         ${size === 'lg' && 'md:h-16 md:w-16'}
-        ${size === 'sm' && 'md:h-12 md:w-12'}
+        ${size === 'sm' && 'sm:h-10 sm:w-10'}
+        ${size === 'md' && 'md:h-12 md:w-12'}
         ${size === 'xl' && 'md:h-20 md:w-20'}
-        h-12 w-12
+        h-10 w-10
+        md:h-12 md:w-12
         relative
         ${borderColor ? `${borderColor} dark:bg-green-500` : ''}
-        ${selected && !borderColor && selected === true && 'bg-green-200 dark:bg-green-500'}
+        ${selected && !borderColor && selected === true && 'bg-green-200 dark:bg-green-300'}
         ${partyDay && !borderColor && partyDay === true && 'bg-gray-300 dark:bg-neutral-800'}
         ${disabled && !borderColor && disabled === true && 'text-neutral-200 dark:text-neutral-800'}
         cff-button
+        
       `}
+      style={{ userSelect: 'none' }}
       onMouseDown={onMouseDown}
       onMouseEnter={onMouseEnter}
       onMouseUp={onMouseUp}

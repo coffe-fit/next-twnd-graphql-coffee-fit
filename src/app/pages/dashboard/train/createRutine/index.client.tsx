@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Image from 'next/image';
 
 import { language } from '@/lib/lenguage';
-import { Calendar, DropdownList } from "@/app/components/atoms";
+import { CalendarDouble, DropdownList } from "@/app/components/atoms";
 import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 import { Option } from "@/app/components/atoms/DropdownList";
 
@@ -32,7 +32,7 @@ export const Client = ({ user
       </span>
 
       <span>
-        <Calendar onclick={handleClickCalendar} size="lg" />
+        <CalendarDouble onclick={handleClickCalendar} size="sm" selectedColor={true}/>
       </span>
       <span className="pt-4 w-48">
         <DropdownList 

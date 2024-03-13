@@ -20,9 +20,12 @@ export const Client = ({ user
 
   const handleClickDropDownList= (option: Option) => {
     console.log(option);
-    
   }
 
+  const handleNumDays= (numDays: number) => {
+    if(numDays) {setDays(numDays)}
+    else setDays(0)
+  }
   return (
     <div className={`
       flex flex-col items-center h-full md:pt-20
@@ -32,11 +35,16 @@ export const Client = ({ user
       </span>
 
       <span>
-        <CalendarDouble onclick={handleClickCalendar} size="sm" selectedColor={true}/>
+        <CalendarDouble
+          onclick={handleClickCalendar}
+          size="sm"
+          selectedColor={true}
+          numDaysSelected={handleNumDays}
+        />
       </span>
       <span className="pt-4 w-48">
         <DropdownList 
-          textIni= {_language.rutineTime}
+          textIni= {`${days === 0 ? _language.rutineTime : days + ' ' +_language.days}`} 
           classNameInput="w-48"
           onSelect={handleClickDropDownList}
           options = {

@@ -1,8 +1,10 @@
 'use client'
-import { getDaysInMonth } from "@/lib/util";
-import { DayBox } from "@/app/components/atoms/Calendar/DayBox";
 import { useEffect, useRef, useState } from "react";
+
+import { getDaysInMonth } from "@/lib/util";
 import { language } from '@/lib/lenguage';
+
+import { DayBox } from "@/app/components/atoms/Calendar/DayBox";
 import { HeaderMonths } from "@/app/components/atoms/Calendar/HeaderMonths";
 import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 
@@ -10,10 +12,18 @@ import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 interface props {
   size: 'sm' | 'md' | 'lg' | 'xl',
   selectedColor?: boolean,
-  onclick?: (e: CalendarDayInterface)=>void
+  onclick?: (e: CalendarDayInterface)=>void,
+  selectedDates?: (dates:any)=> void ,
+  numDaysSelected?: (numDays: number)=> void,
 }
 
-export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
+export const CalendarDouble = ({
+  size,
+  selectedColor,
+  onclick,
+  selectedDates,
+  numDaysSelected
+}:props) => {
 
   const actualMonth = new Date().getMonth()+1
   const actualYear = new Date().getFullYear()
@@ -25,33 +35,55 @@ export const CalendarDouble = ({size, selectedColor, onclick}:props) => {
   const monthString = `${month.toString().length === 1 ? `0${month}`: month}`
   const actualMonthString = `${actualMonth.toString().length === 1 ? `0${actualMonth}`: actualMonth}`
   
-
-  const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [isSelecting, setIsSelecting] = useState(false);
   const touchStartPosition = useRef<number | null>(null);
   const startOptionRef = useRef<any>(null);
 
+
+  const numDays = ()=>{
+    const fechaInicial = new Date(selectedOptions[0]);
+    const fechaFinal = new Date(selectedOptions[selectedOptions.length-1]);
+
+    // Calcular la diferencia en milisegundos
+    const diferenciaEnMS = fechaFinal.getTime() - fechaInicial.getTime();
+
+    // Calcular el número de días redondeando hacia abajo
+    return Math.floor(diferenciaEnMS / (1000 * 60 * 60 * 24));
+  }
+
+  useEffect(() => {
+    if( selectedDates ) selectedDates(selectedOptions);
+    if( numDaysSelected ) numDaysSelected(numDays()+1);
+  }, [selectedOptions]);
+  
   let actualMatrizDays: CalendarDayInterface[][] = getDaysInMonth(actualMonth, actualYear);
   let matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
-    // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
-    useEffect(() => {
-      actualMatrizDays= getDaysInMonth(month, year);
-    }, [selectedOptions]);
-  const handleChangemonth = (m: number) => setmonth(m);
-  const handleChangeYear = (y: number) => setYear(y);
 
-const pushDaySelected = (dayFull: any)=> {
-  const dayDate = new Date(dayFull);
-  const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-  _selectedOptions.push(dayDate);
+  // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
+  const handleChangemonth = (m: number) => {
+    // if (year > actualYear || (year === actualYear && m >= actualMonth)) {
+    setmonth(m)
+  }
+  const handleChangeYear = (y: number) => {
+    setYear(y);
+  }
 
-  const _compareDate = (date1: Date, date2: Date) => {
-    return date1.getTime() - date2.getTime();
-  };
-  _selectedOptions.sort(_compareDate);
-  const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-  setSelectedOptions(orderDates);
-}
+  const pushDaySelected = (dayFull: string)=> {
+    const dayDate = new Date(dayFull);
+    const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
+    _selectedOptions[1] = dayDate;
+
+    const _compareDate = (date1: Date, date2: Date) => {
+      return date1.getTime() - date2.getTime();
+    };
+    _selectedOptions.sort(_compareDate);
+    const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
+    const newDates = [orderDates[0], orderDates[orderDates.length-1]];
+    
+    setSelectedOptions(newDates);
+  }
+
   const onClickDay = (day: CalendarDayInterface)=>{
     try {
       onclick && onclick(day)
@@ -61,87 +93,29 @@ const pushDaySelected = (dayFull: any)=> {
     }
   }
 
-  const handleMouseDown = (option: any) => {
+  const handleMouseDown = (day: CalendarDayInterface) => {
     setIsSelecting(true);
-    startOptionRef.current = option;
-    setSelectedOptions([option.dayFull]);
+    startOptionRef.current = day;
+    setSelectedOptions([day.dayFull]);
   };
 
-  const handleMouseMove = (option: any) => {
+  const handleMouseMove = (day: CalendarDayInterface) => {
     if (isSelecting && startOptionRef.current) {
-      if(selectedOptions && !selectedOptions?.includes(option.dayFull)){
-        pushDaySelected(option.dayFull)
+      if(selectedOptions && !selectedOptions?.includes(day.dayFull)){
+        pushDaySelected(day.dayFull)
       }
     }
   };
   
-
-  const handleMouseUp = () => {
+  const handleMouseUp = (day: any) => {
     setIsSelecting(false);
     startOptionRef.current = null;
   };
 
-  const isSelected = (day: any) => {
-    // console.log(selectedOptions);
-    const dayDate = new Date(day.dayFull);
-    const dateIni = new Date(selectedOptions[0]);
-    const dateEnd = new Date(selectedOptions[selectedOptions.length-1]);
-    return dateIni <= dayDate && dateEnd >= dayDate
-  };
-
-  // const handleTouchStart = (day: CalendarDayInterface) => {
-  //   // setIsSelecting(true);
-  //   setSelectedOptions([day.dayFull]);
-  //   // Lógica para manejar el inicio del toque en un día
-  // };
-
-  // const handleTouchMove = (day: CalendarDayInterface) => {
-
-  //   console.log(day);
-  //   if (isSelecting) {
-  //     if(selectedOptions && !selectedOptions?.includes(day.dayFull)){
-  //       console.log(selectedOptions);
-        
-  //       const dayDate = new Date(day.dayFull);
-  //       const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-  //       _selectedOptions.push(dayDate);
-
-  //       const _compareDate = (date1: Date, date2: Date) => {
-  //         return date1.getTime() - date2.getTime();
-  //       };
-  //       _selectedOptions.sort(_compareDate);
-  //       const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-  //       setSelectedOptions(orderDates);
-  //     }
-  //   }
-  //   // Lógica para manejar el movimiento del toque en un día
-  // };
-
-  // const handleTouchEnd = (day: CalendarDayInterface) => {
-  //   // setIsSelecting(false);
-        
-  //       const dayDate = new Date(day.dayFull);
-  //       const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-  //       _selectedOptions.push(dayDate);
-
-  //       const _compareDate = (date1: Date, date2: Date) => {
-  //         return date1.getTime() - date2.getTime();
-  //       };
-  //       _selectedOptions.sort(_compareDate);
-  //       const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-  //       setSelectedOptions(orderDates);
-
-  //   console.log(orderDates);
-  //   // Lógica para manejar el final del toque en un día
-  //   // onClickDay(day);
-  // };
   const handleTouchStart = (day: CalendarDayInterface, e: TouchEvent) => {
     touchStartPosition.current = e.touches[0].clientY;
     console.log('handleTouchStart');
     setSelectedOptions([day.dayFull]);
-    // console.log(day.dayFull);
-    // handleMouseDown(day)
-    // Lógica para manejar el inicio del toque en un día
   };
 
   const handleTouchMove = (day: CalendarDayInterface, e: TouchEvent) => {
@@ -158,8 +132,7 @@ const pushDaySelected = (dayFull: any)=> {
   
     if (targetElement) {
       const dayElement = getParentDayElement(targetElement)
-      if(dayElement) pushDaySelected(dayElement?.getAttribute('id'))
-      // Aquí puedes hacer lo que necesites con el elemento del día (dayElement)
+      if(dayElement) pushDaySelected(dayElement?.getAttribute('id') || '');
     }
   };
 
@@ -168,188 +141,112 @@ const pushDaySelected = (dayFull: any)=> {
     console.log('handleTouchEnd');
     console.log(day);
     }
-    // Lógica para manejar el final del toque en un día
-    // onClickDay(day);
   };
+
+
+  const isSelected = (day: CalendarDayInterface) => {
+    const dayDate = new Date(day.dayFull);
+    const dateIni = new Date(selectedOptions[0]);
+    const dateEnd = new Date(selectedOptions[selectedOptions.length-1]);
+    return dateIni <= dayDate && dateEnd >= dayDate
+  };
+
+  const customCalendar = (
+    matriz: CalendarDayInterface[][],
+    month: number, year: number,
+    monthString: string,
+    monthFixed: boolean
+  ) => {
+    return (
+      <div className="md:pr-4 md:pb-0 pb-3">
+        <HeaderMonths
+          month={month}
+          year={year}
+          onChangemonth={!monthFixed ? handleChangemonth : ()=>{}}
+          onChangeYear={!monthFixed ? handleChangeYear : ()=>{}}/>
+        <div
+          id="1"
+          className="
+            flex
+            flex-col
+          "
+        >
+          <div className="
+            flex
+            flex-row
+            cff-border-1
+            dark:bg-green-500
+            cff-bg-color-green-600
+          ">
+            {_language.daysArray.map((day, index)=>(
+              <span 
+              id="2"
+              key={`week_${index}`}
+              className={`
+              cff-flex-row-center
+              flex-col
+              ${size === 'lg' && 'md:h-10 md:w-16'}
+              ${size === 'md' && 'md:h-6 md:w-12'}
+              ${size === 'sm' && 'sm:h-4 sm:w-10'}
+              ${size === 'xl' && 'md:h-10 md:w-20'}
+              h-6 w-10
+              md:h-6 md:w-12
+              md:text-lg
+              text-xs
+              `}
+              >
+                <span className={`${size === 'xl' ? 'max-sm:hidden': 'hidden'}`}>{day}</span>
+                <span className={`${size === 'xl' ? 'sm:hidden': ''}`}>{day.split('')[0]}</span>
+              </span>
+              ))
+            }
+          </div>
+          
+          {matriz.map((week: CalendarDayInterface[], indexW: number)=>(
+            <div 
+              id="2"
+              key={`week_${indexW}`}
+              className="
+                flex
+                flex-row
+              "
+            >
+              {week.map((day:CalendarDayInterface, indexD: number)=>(
+                <div
+                  key={`day_${indexD}`}
+                  id={day.dayFull}
+                  title="day"
+                  onClick={()=>onClickDay(day)}
+
+                  onMouseDown={()=>{handleMouseDown(day)}}
+                  onMouseUp={()=>{ handleMouseUp(day)}}
+                  onMouseMove={()=>{handleMouseMove(day)}}
+
+                  onTouchStart={(e:any) => handleTouchStart(day, e)}
+                  onTouchMove={(e:any) => handleTouchMove(day,e)}
+                  onTouchEnd={handleTouchEnd(day)}
+                >
+                  <DayBox
+                    size={size}
+                    selected={selectedColor && isSelected(day)}
+                    numberDay={day.dayNumber}
+                    partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
+                    disabled={!day.isCurrentMonth}
+                    borderColor={`${year}-${monthString}-${day.dayNumber.toString().length === 1 ? `0${day.dayNumber}`: day.dayNumber}` === today ? 'cff-bg-color-green-600' : null}
+                    arrayColors={[]}
+                    ></DayBox>
+                </div> 
+              ))}
+            </div>
+          ))} 
+        </div>
+      </div>
+    )
+  }
   return (
     <div className="md:flex md:flex-row flex-col ">
-    <div className="md:pr-4 md:pb-0 pb-3">
-    <HeaderMonths
-        month={actualMonth}
-        year={actualYear}
-        onChangemonth={handleChangemonth}
-        onChangeYear={handleChangeYear}/>
-      <div
-        id="1"
-        className="
-          flex
-          flex-col
-        "
-      >
-        <div className="
-          flex
-          flex-row
-          cff-border-1
-          dark:bg-green-500
-          cff-bg-color-green-600
-        ">
-          {_language.daysArray.map((day, index)=>(
-            <span 
-            id="2"
-            key={`week_${index}`}
-            className={`
-            cff-flex-row-center
-            flex-col
-            ${size === 'lg' && 'md:h-10 md:w-16'}
-            ${size === 'md' && 'md:h-6 md:w-12'}
-            ${size === 'sm' && 'sm:h-4 sm:w-10'}
-            ${size === 'xl' && 'md:h-10 md:w-20'}
-            h-6 w-10
-            md:h-6 md:w-12
-            md:text-lg
-            text-xs
-            `}
-            >
-              <span className={`${size === 'xl' ? 'max-sm:hidden': 'hidden'}`}>{day}</span>
-              <span className={`${size === 'xl' ? 'sm:hidden': ''}`}>{day.split('')[0]}</span>
-            </span>
-            ))
-          }
-        </div>
-        
-        {actualMatrizDays.map((week, indexW)=>(
-          <div 
-            id="2"
-            key={`week_${indexW}`}
-            className="
-              flex
-              flex-row
-            "
-          >
-            {week.map((day, indexD)=>(
-              <div
-                key={`day_${indexD}`}
-                onClick={()=>onClickDay(day)}
-
-                onTouchStart={(e:any) => handleTouchStart(day, e)}
-                onTouchMove={(e:any) => handleTouchMove(day,e)}
-                onTouchEnd={handleTouchEnd(day)}
-                id={day.dayFull}
-                title="day"
-              >
-                <DayBox
-                  size={size}
-                  onMouseDown={()=>{handleMouseDown(day)}}
-                  onMouseUp={()=>{ handleMouseUp()}}
-                  onMouseMove={()=>{handleMouseMove(day)}}
-                  
-                  // onMouseEnter={()=>{return console.log(day)}}
-                  selected={selectedColor && isSelected(day)}
-                  numberDay={day.dayNumber}
-                  partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
-                  disabled={!day.isCurrentMonth}
-                  borderColor={`${actualYear}-${actualMonthString}-${day.dayNumber.toString().length === 1 ? `0${day.dayNumber}`: day.dayNumber}` === today ? 'cff-bg-color-green-600' : null}
-                  arrayColors={[
-                  // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
-                  // (month%2 === 0 ? 'blue' : 'blue'),
-                  // (month%2 === 0 ? 'red' : 'green'),
-                  ]}
-                  
-                  ></DayBox>
-              </div> 
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-    <div className="md:pl-4 md:pt-0 pt-3">
-    <HeaderMonths
-        month={month}
-        year={year}
-        onChangemonth={handleChangemonth}
-        onChangeYear={handleChangeYear}/>
-      <div
-        id="1"
-        className="
-          flex
-          flex-col
-        "
-      >
-        <div className="
-          flex
-          flex-row
-          cff-border-1
-          dark:bg-green-500
-          cff-bg-color-green-600
-        ">
-          {_language.daysArray.map((day, index)=>(
-            <span 
-            id="2"
-            key={`week_${index}`}
-            className={`
-            cff-flex-row-center
-            flex-col
-            ${size === 'lg' && 'md:h-10 md:w-16'}
-            ${size === 'md' && 'md:h-6 md:w-12'}
-            ${size === 'sm' && 'sm:h-6 sm:w-10'}
-            ${size === 'xl' && 'md:h-10 md:w-20'}
-            h-6 w-10
-            md:w-12
-            md:text-lg
-            text-xs
-            `}
-            >
-              <span className={`${size === 'xl' ? 'max-sm:hidden': 'hidden'}`}>{day}</span>
-              <span className={`${size === 'xl' ? 'sm:hidden': ''}`}>{day.split('')[0]}</span>
-            </span>
-            ))
-          }
-        </div>
-        
-        {matrizDays.map((week, indexW)=>(
-          <div 
-            id="2"
-            key={`week_${indexW}`}
-            className="
-              flex
-              flex-row
-            "
-          >
-            {week.map((day, indexD)=>(
-              <div
-                key={`day_${indexD}`}
-                onClick={()=>onClickDay(day)}
-                onTouchStart={(e:any) => handleTouchStart(day, e)}
-                onTouchMove={(e:any) => handleTouchMove(day,e)}
-                onTouchEnd={handleTouchEnd(day)}
-                id={day.dayFull}
-                title="day"
-              >
-                <DayBox
-                  size={size}
-                  onMouseDown={()=>{handleMouseDown(day)}}
-                  onMouseUp={()=>{ handleMouseUp()}}
-                  onMouseMove={()=>{handleMouseMove(day)}}
-                  
-                  // onMouseEnter={()=>{return console.log(day)}}
-                  selected={selectedColor && isSelected(day)}
-                  numberDay={day.dayNumber}
-                  partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
-                  disabled={!day.isCurrentMonth}
-                  borderColor={`${year}-${monthString}-${day.dayNumber.toString().length === 1 ? `0${day.dayNumber}`: day.dayNumber}` === today ? 'cff-bg-color-green-600' : null}
-                  arrayColors={[
-                  // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
-                  // (month%2 === 0 ? 'blue' : 'blue'),
-                  // (month%2 === 0 ? 'red' : 'green'),
-                  ]}
-                  
-                  ></DayBox>
-              </div> 
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
+      {customCalendar(actualMatrizDays, actualMonth, actualYear, actualMonthString, true)}
+      {customCalendar(matrizDays, month, year, monthString, false)}
     </div>
   );
 };

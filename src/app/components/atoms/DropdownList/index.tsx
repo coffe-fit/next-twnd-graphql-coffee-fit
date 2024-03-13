@@ -65,12 +65,12 @@ export const DropdownList: React.FC<DropdownListProps> = ({
         </svg>
       </button>
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded-md shadow-lg`}>
+        <div className={`absolute top-full left-0 mt-1  border bg-gray-300 dark:bg-neutral-700 rounded-md shadow-lg`}>
           {options.map((option, index) => (
             <div
               key={index}
               className={` ${classNameOption} px-4 py-2 cursor-pointer w-48 ${
-                hoveredOption && option.id === hoveredOption.id ? 'bg-gray-100' : ''
+                hoveredOption && option.id === hoveredOption.id ? 'bg-gray-300 dark:bg-neutral-800' : ''
               }`}
               onClick={() => handleOptionClick(option)}
               onMouseEnter={() => handleOptionHover(option)}

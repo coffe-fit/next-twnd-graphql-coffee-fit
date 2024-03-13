@@ -15,37 +15,21 @@ interface props {
   selectedColor?: boolean,
   onclick?: (e: CalendarDayInterface)=>void
   onSelect?: () => void;
-  onMouseDown?: () => void;
-  onMouseUp?: () => void;
-  onMouseMove?: () => void;
-  onMouseEnter?: () => void;
 }
 
 export const Calendar = ({
   size,
   selectedColor,
   onclick,
-  onMouseDown,
-  onMouseUp,
-  onMouseMove,
-  onMouseEnter
 }:props) => {
   const [month, setmonth] = useState<number>(new Date().getMonth()+1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const _language = language('español');
   const today = new Date().toLocaleString("en-ZA", {timeZone: "America/Bogota"}).replaceAll('/','-').split(',')[0];
   const monthString = `${month.toString().length === 1 ? `0${month}`: month}`
-  
-
-  const [selectedOptions, setSelectedOptions] = useState<any[]>([]);
-  const [isSelecting, setIsSelecting] = useState(false);
-  const startOptionRef = useRef<any>(null);
 
   let matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
-    // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
-    useEffect(() => {
-      matrizDays= getDaysInMonth(month, year);
-    }, [selectedOptions]);
+
   const handleChangemonth = (m: number) => setmonth(m);
   const handleChangeYear = (y: number) => setYear(y);
 
@@ -57,46 +41,6 @@ export const Calendar = ({
     }
   }
 
-  const handleMouseDown = (option: any) => {
-    setIsSelecting(true);
-    startOptionRef.current = option;
-    setSelectedOptions([option.dayFull]);
-  };
-
-  const handleMouseMove = (option: any) => {
-    if (isSelecting && startOptionRef.current) {
-      if(selectedOptions && !selectedOptions?.includes(option.dayFull)){
-        const dayDate = new Date(option.dayFull);
-        const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-        _selectedOptions.push(dayDate);
-
-        const _compareDate = (date1: Date, date2: Date) => {
-          return date1.getTime() - date2.getTime();
-        };
-        _selectedOptions.sort(_compareDate);
-        const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-        setSelectedOptions(orderDates);
-      }
-      // const startIndex = options.findIndex((opt) => opt.id === startOptionRef.current!.id);
-      // const endIndex = options.findIndex((opt) => opt.id === option.id);
-      // const selectedOpts = options.slice(Math.min(startIndex, endIndex), Math.max(startIndex, endIndex) + 1);
-      // setSelectedOptions(selectedOpts);
-    }
-  };
-  
-
-  const handleMouseUp = () => {
-    setIsSelecting(false);
-    startOptionRef.current = null;
-  };
-
-  const isSelected = (day: any) => {
-    // console.log(selectedOptions);
-    const dayDate = new Date(day.dayFull);
-    const dateIni = new Date(selectedOptions[0]);
-    const dateEnd = new Date(selectedOptions[selectedOptions.length-1]);
-    return dateIni <= dayDate && dateEnd >= dayDate
-  };
   return (
     <>
       <HeaderMonths
@@ -156,12 +100,7 @@ export const Calendar = ({
               >
                 <DayBox
                   size={size}
-                  onMouseDown={onMouseDown}
-                  onMouseEnter={onMouseEnter}
-                  onMouseUp={onMouseUp}
-                  onMouseMove={onMouseMove}
                   // onMouseEnter={()=>{return console.log(day)}}
-                  selected={selectedColor && isSelected(day)}
                   numberDay={day.dayNumber}
                   partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
                   disabled={!day.isCurrentMonth}

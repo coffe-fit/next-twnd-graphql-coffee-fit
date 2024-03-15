@@ -3,59 +3,140 @@ import { useState, useEffect } from "react";
 import Image from 'next/image';
 
 import { language } from '@/lib/lenguage';
-import { CalendarDouble, DropdownList } from "@/app/components/atoms";
+import { Button, CalendarDouble, DropdownList } from "@/app/components/atoms";
 import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
-import { Option } from "@/app/components/atoms/DropdownList";
+import { DayBox } from "@/app/components/atoms/Calendar/DayBox";
+import { CalendarByDay } from "@/app/components/atoms/CalendarByDay";
 
-export const Client = ({ user
+export const Client = ({ user, rutineTypes
 }:any) => {
+  const buttonNextStates = [
+    "Calendar",
+    "WeekBox",
+    "DayBox",
+    "End"
+  ]
+  
   const [days, setDays] = useState(0);
+  const [buttonNext, setButtonNext] = useState<string>(buttonNextStates[0]);
+  const [showButtonNext, setShowButtonNext] = useState<boolean>(false);
+  const [dateIni, setDateIni] = useState("");
+  const [dateEnd, setDateEnd] = useState("");
+  const [dayWeekComponentSelectes, setDayWeekComponentSelectes] = useState("");
+  const [sizeShedule, setSizeShedule] = useState<"sm"|"xs">("xs");
 
   const _language = language('español');
+console.log(rutineTypes);
+
+  const sortDaysOfWeek = (startDate: string, daysOfWeek: string[]) => {
+    const startDay = new Date(startDate);
+    const startDayIndex = startDay.getDay(); // Obtiene el índice del día de la semana (0 para Domingo, 1 para Lunes, etc.)
+    
+    // Mueve los días de la semana para que comiencen desde el día especificado
+    const sortedDays = [...daysOfWeek.slice(startDayIndex), ...daysOfWeek.slice(0, startDayIndex)];
+    
+    return sortedDays;
+}
+
+  useEffect(() => {
+    if (buttonNext === 'WeekBox') {
+      setSizeShedule('xs');
+    }
+  }, [buttonNext]);
 
   const handleClickCalendar = (day: CalendarDayInterface) => {
     console.log("termino fijo");
-    
-  }
-
-  const handleClickDropDownList= (option: Option) => {
-    console.log(option);
   }
 
   const handleNumDays= (numDays: number) => {
-    if(numDays) {setDays(numDays)}
-    else setDays(0)
+    if(numDays) {
+      setDays(numDays);
+      numDays && numDays > 1 && setShowButtonNext(true);
+    }
+    else {
+      setDays(0);
+      setShowButtonNext(false);
+    }
+  }
+
+  const handleSelectedDates= (Days: string[]) => {
+    if(Days && Days[0]) setDateIni(Days[0])
+    if(Days && Days[1]) setDateEnd(Days[1]);
+    sortDaysOfWeek(dateIni, _language.daysArray)
+  }
+
+  const handleButtonNext = () => {
+    const index = buttonNextStates.indexOf(buttonNext);
+    setButtonNext(buttonNextStates[index+1]);
+    setShowButtonNext(false);
+  }
+
+  const handleClickDayOfWeek = (day:string) =>{
+    setButtonNext('DayBox');
+    setDayWeekComponentSelectes(day)
   }
   return (
     <div className={`
       flex flex-col items-center h-full md:pt-20
     `}>
-      <span className="flex flex-col items-center w-full text-2xl pt-4 pb-4">
-        {_language.users}
-      </span>
+      {buttonNext === 'Calendar' && <span className="flex flex-col items-center w-full text-xl pt-4 pb-4">
+        {_language.rutineDateSelect}
+      </span>}
 
       <span>
         <CalendarDouble
           onclick={handleClickCalendar}
-          size="sm"
+          size={sizeShedule}
           selectedColor={true}
           numDaysSelected={handleNumDays}
+          selectedDates={handleSelectedDates}
+          dateIni={dateIni}
+          dateEnd={dateEnd}
+          showAll={buttonNext === "Calendar" ? 'twoTables' : undefined}
         />
       </span>
-      <span className="pt-4 w-48">
-        <DropdownList 
-          textIni= {`${days === 0 ? _language.rutineTime : days + ' ' +_language.days}`} 
-          classNameInput="w-48"
-          onSelect={handleClickDropDownList}
-          options = {
-          [
-            { id: '0', name: `${days === 0 ? _language.select : days} ${_language.days}`},
-            { id: '1', name: `20 ${_language.days}`},
-            { id: '2', name: `40 ${_language.days}`},
-            { id: '3', name: `60 ${_language.days}`},
-          ]
-        }/>
-      </span>
+      {buttonNext === 'DayBox' && !showButtonNext && <span className=" flex justify-center">
+        <CalendarByDay dayName={dayWeekComponentSelectes}>
+          <div className="jsdgfkajsfk">
+            {rutineTypes && rutineTypes.map((type: any, index:number)=>(
+              
+                <li className="
+                  flex
+                  flex-col
+                  items-start
+                  w-full
+                  text-lg
+                  pl-2
+
+                ">
+                  {type.name}
+                </li>
+            ))}
+          </div>
+        </CalendarByDay>
+      </span>}
+      {buttonNext !== 'Calendar' && !showButtonNext && <span className=" flex justify-center absolute bottom-4">
+        {sortDaysOfWeek(dateIni, _language.daysArray).map((day, indexD: number)=>(
+          <div key={indexD}>
+            <div className="flex justify-center">{indexD+1}</div>
+            <DayBox
+              size={'sm'}
+              numberDay={day.split('')[0]}
+              arrayColors={[]}
+              onClick={()=>handleClickDayOfWeek(day)}
+              ></DayBox>
+          </div> 
+        ))}
+      </span>}
+      {showButtonNext && (
+        <Button
+          size="lg"
+          className="!absolute bottom-0"
+          bg_color={true}
+          onclick={handleButtonNext}
+        >{`${_language.nextStep}`}
+        </Button>
+      )}
     </div>
   );
 };

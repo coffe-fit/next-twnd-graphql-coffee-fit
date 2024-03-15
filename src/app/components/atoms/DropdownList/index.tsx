@@ -48,7 +48,7 @@ export const DropdownList: React.FC<DropdownListProps> = ({
         className={`${classNameInput} bg-gray-300 dark:bg-neutral-800 border border-gray-300 px-4 py-2 rounded-md flex justify-between items-center`}
         onClick={handleToggle}
       >
-        <span className="mr-2">{selectedOption ? selectedOption.name : textIni}</span>
+        <span className="mr-2">{selectedOption && selectedOption.name === textIni? selectedOption.name : textIni}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className={`h-4 w-4 transition-transform duration-300 transform ${

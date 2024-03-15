@@ -1,28 +1,35 @@
 'use client'
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { getDaysInMonth } from "@/lib/util";
+import { getDateFromNumDays, getDaysInMonth } from "@/lib/util";
 import { language } from '@/lib/lenguage';
 
 import { DayBox } from "@/app/components/atoms/Calendar/DayBox";
 import { HeaderMonths } from "@/app/components/atoms/Calendar/HeaderMonths";
 import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
+import { DropdownList } from "..";
 
 
 interface props {
-  size: 'sm' | 'md' | 'lg' | 'xl',
+  size: 'sm' | 'md' | 'lg' | 'xl'| 'xs',
   selectedColor?: boolean,
   onclick?: (e: CalendarDayInterface)=>void,
   selectedDates?: (dates:any)=> void ,
   numDaysSelected?: (numDays: number)=> void,
+  dateIni?: string,
+  dateEnd?: string,
+  showAll?: string,
 }
 
 export const CalendarDouble = ({
   size,
   selectedColor,
   onclick,
+  dateIni,
+  dateEnd,
   selectedDates,
-  numDaysSelected
+  numDaysSelected,
+  showAll
 }:props) => {
 
   const actualMonth = new Date().getMonth()+1
@@ -34,8 +41,9 @@ export const CalendarDouble = ({
   const today = new Date().toLocaleString("en-ZA", {timeZone: "America/Bogota"}).replaceAll('/','-').split(',')[0];
   const monthString = `${month.toString().length === 1 ? `0${month}`: month}`
   const actualMonthString = `${actualMonth.toString().length === 1 ? `0${actualMonth}`: actualMonth}`
+  const initalSelction = dateIni && dateEnd? [dateIni, dateEnd] : [];
   
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(initalSelction);
   const [isSelecting, setIsSelecting] = useState(false);
   const touchStartPosition = useRef<number | null>(null);
   const startOptionRef = useRef<any>(null);
@@ -49,20 +57,20 @@ export const CalendarDouble = ({
     const diferenciaEnMS = fechaFinal.getTime() - fechaInicial.getTime();
 
     // Calcular el número de días redondeando hacia abajo
-    return Math.floor(diferenciaEnMS / (1000 * 60 * 60 * 24));
+    return selectedOptions[0] ? Math.floor(diferenciaEnMS / (1000 * 60 * 60 * 24)) + 1 : 0;
   }
 
   useEffect(() => {
     if( selectedDates ) selectedDates(selectedOptions);
     if( numDaysSelected ) numDaysSelected(numDays()+1);
   }, [selectedOptions]);
-  
-  let actualMatrizDays: CalendarDayInterface[][] = getDaysInMonth(actualMonth, actualYear);
-  let matrizDays: CalendarDayInterface[][] = getDaysInMonth(month, year);
+
+  const actualMatrizDays = useMemo(() => getDaysInMonth(actualMonth, actualYear), [actualMonth, actualYear]);
+  const matrizDays = useMemo(() => getDaysInMonth(month, year), [month, year]);
+
 
   // // recuerda que el codigo de la autenticacion esta en el hook useAuth 
   const handleChangemonth = (m: number) => {
-    // if (year > actualYear || (year === actualYear && m >= actualMonth)) {
     setmonth(m)
   }
   const handleChangeYear = (y: number) => {
@@ -71,17 +79,20 @@ export const CalendarDouble = ({
 
   const pushDaySelected = (dayFull: string)=> {
     const dayDate = new Date(dayFull);
-    const _selectedOptions = selectedOptions.map(fecha => new Date(fecha));
-    _selectedOptions[1] = dayDate;
+    const today = new Date();
+    if (dayDate >= today) {
+      const _selectedOptions = selectedOptions.map((fecha) => new Date(fecha));
+      _selectedOptions[1] = dayDate;
 
-    const _compareDate = (date1: Date, date2: Date) => {
-      return date1.getTime() - date2.getTime();
-    };
-    _selectedOptions.sort(_compareDate);
-    const orderDates: string[] = _selectedOptions.map(dateOrder => dateOrder.toISOString().split('T')[0]);
-    const newDates = [orderDates[0], orderDates[orderDates.length-1]];
-    
-    setSelectedOptions(newDates);
+      const _compareDate = (date1: Date, date2: Date) => {
+        return date1.getTime() - date2.getTime();
+      };
+      _selectedOptions.sort(_compareDate);
+      const orderDates: string[] = _selectedOptions.map((dateOrder) => dateOrder.toISOString().split('T')[0]);
+      const newDates = [orderDates[0], orderDates[orderDates.length - 1]];
+
+      setSelectedOptions(newDates);
+    }
   }
 
   const onClickDay = (day: CalendarDayInterface)=>{
@@ -94,9 +105,17 @@ export const CalendarDouble = ({
   }
 
   const handleMouseDown = (day: CalendarDayInterface) => {
-    setIsSelecting(true);
-    startOptionRef.current = day;
-    setSelectedOptions([day.dayFull]);
+    const dayDate = new Date(day.dayFull);
+    const _dayDate = dayDate.toISOString().split('T')[0];
+
+    const today = new Date();
+    const _today = today.toISOString().split('T')[0];
+    
+    if (dayDate >= today || _dayDate === _today ) {
+      setIsSelecting(true);
+      startOptionRef.current = day;
+      setSelectedOptions([day.dayFull]);
+    }
   };
 
   const handleMouseMove = (day: CalendarDayInterface) => {
@@ -114,7 +133,6 @@ export const CalendarDouble = ({
 
   const handleTouchStart = (day: CalendarDayInterface, e: TouchEvent) => {
     touchStartPosition.current = e.touches[0].clientY;
-    console.log('handleTouchStart');
     setSelectedOptions([day.dayFull]);
   };
 
@@ -143,13 +161,17 @@ export const CalendarDouble = ({
     }
   };
 
-
   const isSelected = (day: CalendarDayInterface) => {
     const dayDate = new Date(day.dayFull);
     const dateIni = new Date(selectedOptions[0]);
     const dateEnd = new Date(selectedOptions[selectedOptions.length-1]);
     return dateIni <= dayDate && dateEnd >= dayDate
   };
+
+  const handleClickDropDownList= (option: any) => {
+    const autcomeDays= getDateFromNumDays(+option.id - 1);
+    setSelectedOptions([autcomeDays.dateIni, autcomeDays.dateEnd]);
+  }
 
   const customCalendar = (
     matriz: CalendarDayInterface[][],
@@ -189,6 +211,7 @@ export const CalendarDouble = ({
               ${size === 'md' && 'md:h-6 md:w-12'}
               ${size === 'sm' && 'sm:h-4 sm:w-10'}
               ${size === 'xl' && 'md:h-10 md:w-20'}
+              ${size === 'xs' && 'h-4 w-8'}
               h-6 w-10
               md:h-6 md:w-12
               md:text-lg
@@ -244,9 +267,29 @@ export const CalendarDouble = ({
     )
   }
   return (
-    <div className="md:flex md:flex-row flex-col ">
-      {customCalendar(actualMatrizDays, actualMonth, actualYear, actualMonthString, true)}
-      {customCalendar(matrizDays, month, year, monthString, false)}
+    <div >
+      <span className="pt-4 flex w-full justify-center">
+        {!showAll && numDays() + ' ' +_language.days}
+      </span>
+      <div className="md:flex md:flex-row flex-col ">
+        {customCalendar(actualMatrizDays, actualMonth, actualYear, actualMonthString, true)}
+        {showAll && customCalendar(matrizDays, month, year, monthString, false)}
+      </div>
+      {showAll && <span className="pt-4 flex w-full justify-center">
+        <DropdownList 
+          textIni= {`${numDays() === 0 ? _language.rutineTime : numDays() + ' ' +_language.days}`}
+          classNameInput="w-48"
+          onSelect={handleClickDropDownList}
+          options = {
+          [
+            { id: `${numDays()}`, name: `${numDays()} ${_language.days}`},
+            { id: '20', name: `20 ${_language.days}`},
+            { id: '40', name: `40 ${_language.days}`},
+            { id: '60', name: `60 ${_language.days}`},
+          ]
+        }/>
+      </span>}
+
     </div>
   );
 };

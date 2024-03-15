@@ -1,4 +1,4 @@
-import { findAllByRoleClient, getRutineOrderDay, getRutineOrderType } from "@/lib/services";
+import { findAllByRoleClient, getRutineOrderDay, getRutineOrderType, getRutineTypes } from "@/lib/services";
 import { Client } from "./index.client";
 import { Suspense } from "react";
 
@@ -9,10 +9,11 @@ interface props {
 export default async function User({
   searchParams: { id, user },
 }: props) {
+  const rutineTypes = await getRutineTypes(id);
   
   return (
     <Suspense fallback={<>cargando ...</>}>
-      <Client user={JSON.parse(user)}/>
+      <Client user={JSON.parse(user)} rutineTypes={rutineTypes}/>
     </Suspense>
   );
 }

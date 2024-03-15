@@ -34,5 +34,13 @@
   "days": "Días",
   "selectOption": "Seleccione una opción.", 
   "select": "Seleccione", 
-  "rutineTime": "Tiempo de Rutina"
+  "rutineTime": "Tiempo de Rutina",
+  "rutineDateSelect": "Seleccione las fechas de Rutina",
+  "nextStep": "Siguiente Paso",
+
+
+
+
+
+  "_":"_"
 }

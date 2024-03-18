@@ -211,7 +211,7 @@ export const CalendarDouble = ({
               ${size === 'md' && 'md:h-6 md:w-12'}
               ${size === 'sm' && 'sm:h-4 sm:w-10'}
               ${size === 'xl' && 'md:h-10 md:w-20'}
-              ${size === 'xs' && 'h-4 w-8'}
+              ${size === 'xs' && '!h-4 !w-8'}
               h-6 w-10
               md:h-6 md:w-12
               md:text-lg

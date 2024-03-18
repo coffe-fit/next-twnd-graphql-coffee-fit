@@ -36,7 +36,7 @@ export const DayBox: React.FC<Props> = ({
         cff-border-1
         ${size === 'lg' && 'md:h-16 md:w-16'}
         ${size === 'sm' && 'sm:h-10 sm:w-10'}
-        ${size === 'xs' && 'h-6 w-8'}
+        ${size === 'xs' && '!h-6 !w-8'}
         ${size === 'md' && 'md:h-12 md:w-12'}
         ${size === 'xl' && 'md:h-20 md:w-20'}
         h-10 w-10
@@ -52,7 +52,7 @@ export const DayBox: React.FC<Props> = ({
       style={{ userSelect: 'none' , touchAction: 'none' }}
       
     >
-      <span className={`absolute left-3 top-0.5 ${size === 'xs' ? 'text-xs md:text-lg': 'text-lg'}`}>{numberDay}</span>
+      <span className={`absolute left-3 top-0.5 ${size === 'xs' ? 'text-xs': 'text-lg'}`}>{numberDay}</span>
       <span
         className={`
           flex

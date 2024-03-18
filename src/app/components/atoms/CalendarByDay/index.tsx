@@ -16,7 +16,13 @@ export const CalendarByDay = ({
   return (
     <div className="flex flex-col items-center h-full">
       <div className="cff-border-1 w-80">
-        <span className="flex flex-col items-center w-full text-2xl">
+        <span className="
+          flex flex-col
+          items-center
+          w-full text-2xl
+          cff-bg-color-green-600
+          dark:bg-green-500
+        ">
           {dayName}
         </span>
         <div className="cff-border-1 w-auto"></div>

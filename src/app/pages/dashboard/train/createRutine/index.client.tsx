@@ -23,10 +23,10 @@ export const Client = ({ user, rutineTypes
   const [dateIni, setDateIni] = useState("");
   const [dateEnd, setDateEnd] = useState("");
   const [dayWeekComponentSelectes, setDayWeekComponentSelectes] = useState("");
-  const [sizeShedule, setSizeShedule] = useState<"sm"|"xs">("xs");
+  const [sizeShedule, setSizeShedule] = useState<"sm"|"xs">("sm");
+  const [classCalendar, setClassCalendar] = useState<string>("");
 
   const _language = language('español');
-console.log(rutineTypes);
 
   const sortDaysOfWeek = (startDate: string, daysOfWeek: string[]) => {
     const startDay = new Date(startDate);
@@ -41,11 +41,16 @@ console.log(rutineTypes);
   useEffect(() => {
     if (buttonNext === 'WeekBox') {
       setSizeShedule('xs');
+    } else if  (buttonNext === 'DayBox') {
+      setClassCalendar('absolute -translate-x-[20rem] -translate-y-[3rem] delay-150');
+    }else {
+      setSizeShedule('sm');
+      setClassCalendar('')
     }
   }, [buttonNext]);
 
   const handleClickCalendar = (day: CalendarDayInterface) => {
-    console.log("termino fijo");
+    console.log("handleClickCalendar");
   }
 
   const handleNumDays= (numDays: number) => {
@@ -77,13 +82,12 @@ console.log(rutineTypes);
   }
   return (
     <div className={`
-      flex flex-col items-center h-full md:pt-20
+      flex flex-col items-center h-full md:pt-20 relative
     `}>
       {buttonNext === 'Calendar' && <span className="flex flex-col items-center w-full text-xl pt-4 pb-4">
         {_language.rutineDateSelect}
       </span>}
-
-      <span>
+      <span className={`transition-all  ${classCalendar} duration-1000 ease-in-out`}>
         <CalendarDouble
           onclick={handleClickCalendar}
           size={sizeShedule}
@@ -95,11 +99,10 @@ console.log(rutineTypes);
           showAll={buttonNext === "Calendar" ? 'twoTables' : undefined}
         />
       </span>
-      {buttonNext === 'DayBox' && !showButtonNext && <span className=" flex justify-center">
+      {buttonNext === 'DayBox' && !showButtonNext && <span className={`transition-opacity  -translate-y-[0rem] delay-150  duration-1000 ease-in flex justify-center`}>
         <CalendarByDay dayName={dayWeekComponentSelectes}>
-          <div className="jsdgfkajsfk">
+          <div className={``}>
             {rutineTypes && rutineTypes.map((type: any, index:number)=>(
-              
                 <li className="
                   flex
                   flex-col
@@ -107,7 +110,6 @@ console.log(rutineTypes);
                   w-full
                   text-lg
                   pl-2
-
                 ">
                   {type.name}
                 </li>

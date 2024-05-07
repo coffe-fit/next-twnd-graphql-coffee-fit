@@ -26,6 +26,7 @@ export default  function trainLayout({children}:props) {
   return (
     <div className="">
       {<span className="
+          mt-3
           h-[calc(100%-2.5rem)]
           fixed top-9
           overflow-y-auto

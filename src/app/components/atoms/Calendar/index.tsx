@@ -11,7 +11,7 @@ import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 
 
 interface props {
-  size: 'sm' | 'lg' | 'xl',
+  size: 'sm' | 'md' | 'lg' | 'xl'| 'xs',
   selectedColor?: boolean,
   onclick?: (e: CalendarDayInterface)=>void
   onSelect?: () => void;
@@ -69,10 +69,13 @@ export const Calendar = ({
             className={`
             cff-flex-row-center
             flex-col
-            ${size === 'lg' && 'md:h-10 md:w-16'}
-            ${size === 'sm' && 'md:h-6 md:w-12'}
+            ${size === 'lg' && 'md:h-10 md:w-16 !w-12'}
+            ${size === 'md' && 'md:h-6 md:w-12'}
+            ${size === 'sm' && 'sm:h-4 sm:w-10'}
             ${size === 'xl' && 'md:h-10 md:w-20'}
-            h-6 w-12
+            ${size === 'xs' && '!h-4 !w-8'}
+            h-6 w-10
+            md:h-6 md:w-12
             md:text-lg
             text-xs
             `}

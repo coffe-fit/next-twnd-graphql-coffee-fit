@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/provider/redux/ReduxProvider";
+import Loading from "./Loading";
+// import { LoadingProvider } from "./hooks/useLoading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <ReduxProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
+      {/* <LoadingProvider> */}
+      <html lang="es">
+        <body className={inter.className}>
+          {/* <Loading>Cargando</Loading> */}
+          {children}
+        </body>
       </html>
+      {/* </LoadingProvider> */}
     </ReduxProvider>
   );
 }

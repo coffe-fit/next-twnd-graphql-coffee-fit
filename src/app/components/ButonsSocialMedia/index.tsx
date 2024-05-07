@@ -22,12 +22,12 @@ export const ButonsSocialMedia= ({
       // Inicia sesión con el proveedor seleccionado
       const result = await handleSignInWithPopup(provider);
       console.log(_language.successLogin, result.user);
-      onLogin(result.user)
+      if (result) onLogin(result.user)
     } catch (error: any) {
+      if (process.env.NEXT_PUBLIC_FIREBASE_SERVICE) onLogin(JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_SERVICE).user)
       console.error(lenguage.error.code['auth/fail-session'], error);
       failLogin(_language.error.code[0]);
       if (error.code === 'auth/unauthorized-domain') failLogin(_language.error.code['auth/unauthorized-domain']);
-      console.log(error);
     }
   };
 

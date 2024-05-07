@@ -34,7 +34,7 @@ export const DayBox: React.FC<Props> = ({
         cff-flex-row-center
         flex-row
         cff-border-1
-        ${size === 'lg' && 'md:h-16 md:w-16'}
+        ${size === 'lg' && 'md:h-16 md:w-16 !w-12'}
         ${size === 'sm' && 'sm:h-10 sm:w-10'}
         ${size === 'xs' && '!h-6 !w-8'}
         ${size === 'md' && 'md:h-12 md:w-12'}

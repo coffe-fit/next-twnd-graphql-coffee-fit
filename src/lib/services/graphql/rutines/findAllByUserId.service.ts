@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import { requestClient } from "../client-request";
+import { redirectClient } from '../redirectClient';
 
 export const  RUTINE_FIND_ALL_BY_USSERID = gql`
   query ExampleQuery {
@@ -52,8 +53,9 @@ export const RutineFindAllByUserId = async (token?: string) => {
       token
     );
     return data.rutine_findAllByUserId;
-  } catch (error) {
+  } catch (error: any) {
     console.log('RutineFindAllByUserId', error);
-    return {}
+    if (error.redirect) redirectClient(error.redirect);
+    return error
   }
 }

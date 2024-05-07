@@ -6,7 +6,7 @@ export const valitateToken = (token: string)=>{
   const JWT_SECRET: string | undefined = process.env.NEXT_PUBLIC_JWT_SECRET;
   try {
     const decoded = jwt.verify(token, JWT_SECRET || '');
-    return decoded as unknown as { roleName: string  };
+    return decoded as unknown as { roleName: string, id:string  };
   } catch (error) {
     return null;
   }

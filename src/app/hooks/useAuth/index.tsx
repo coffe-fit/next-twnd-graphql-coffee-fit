@@ -26,18 +26,24 @@ const useAuth = () => {
       if (email !== '' && user === null) {
         user = await handleVerification(email);
       };
-      setUser(user);
-      setLoading(false);
-      const ownToken = await sendUser({
-        email: user.email,
-        token: user?.accessToken,
-        name: user.displayName || ''
-      })
-      customSessionStorage.setItem('auth_token', ownToken.token);
-      setToken(ownToken.token)
-
+      let mockFirebase: any = process.env.NEXT_PUBLIC_FIREBASE_SERVICE && JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_SERVICE).user
+      mockFirebase.accessToken = mockFirebase.stsTokenManager.accessToken
+      if (!user && mockFirebase) user = mockFirebase
+      console.log(user);
+      // if (email) {
+        setLoading(false);
+        const ownToken = await sendUser({
+          email: user.email,
+          token: user?.accessToken,
+          name: user.displayName || ''
+        })
+        
+        customSessionStorage.setItem('auth_token', ownToken.token);
+        user.userId = ownToken.id;
+        setUser(user);
+        setToken(ownToken.token)
+      // }
     });
-
     return () => unsubscribe();
   }, []);
 

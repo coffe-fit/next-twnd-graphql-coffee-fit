@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import { requestClient } from "../client-request";
+import { redirectClient } from '../redirectClient';
 
 export const  RUTINE_FIND_EXERCISE_BY_RUTINE = gql`
 query Query {
@@ -40,8 +41,9 @@ export const exerciseFindExcerciseByRutine = async (token?: string) => {
       token
     );
     return data.exercisesByRutineType_findAllByUserIdByDay;
-  } catch (error) {
+  } catch (error:any) {
     console.log('exerciseFindExcerciseByRutine', error);
-    return {}
+    if (error.redirect) redirectClient(error.redirect);
+    return error
   }
 }

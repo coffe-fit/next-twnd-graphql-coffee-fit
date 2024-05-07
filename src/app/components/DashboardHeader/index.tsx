@@ -8,15 +8,19 @@ import { useEffect, useState } from "react";
 import urlArrow from '@/app/images/icons/flecha-izquierda-99-80s.png';
 import urlArrowWhite from '@/app/images/icons/flecha-izquierda-white-99-80s.png';
 import { getConfiPages } from '@/lib/util';
+// import { useLoading } from '@/app/hooks/useLoading';
 
 interface props {}
 export const DashboardHeader =  ({}:props) => {
   const [showBack, setShowBack] = useState<boolean>(false);
   const userData = useSelector((state: any) => state.user);
   const router = useCustomRouter();
+
+  // const { setLoading } = useLoading();
   // const path = usePathname();
   
   const handleButtonBack = () =>{
+  //   setLoading(true);
     router.back();
   }
 

@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import { requestClient } from "../client-request";
+import { redirectClient } from '../redirectClient';
 
 export const  RUTINE_TYPES = gql`
 query ExampleQuery {
@@ -16,6 +17,9 @@ export interface input {
 }
 export const getRutineTypes= async (token?: string) => {
   try {
+    console.log(token);
+
+    
     const query = RUTINE_TYPES;
     const data:{rutineType_findAll: any} = await requestClient(
       query,
@@ -23,8 +27,9 @@ export const getRutineTypes= async (token?: string) => {
       token
     );
     return data.rutineType_findAll;
-  } catch (error) {
+  } catch (error: any) {
     console.log('getRutineTypes', error);
-    return {}
+    if (error.redirect) redirectClient(error.redirect);
+    return error
   }
 }

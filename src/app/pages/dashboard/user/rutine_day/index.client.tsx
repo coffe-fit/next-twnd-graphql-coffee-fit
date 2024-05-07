@@ -5,13 +5,19 @@ import { language } from "@/lib/lenguage";
 import { RutineTypeTodo } from "@/app/components/RutineTypeTodo";
 
 import sentadilla from '@/app/images/exercises/sentadilla.png';
+import { useLoading } from "@/app/hooks/useLoading";
+import { useEffect } from "react";
 
 export const ClientRutineDay = ({
   day
 }:any) => {
-
   const _language = language('español');
   let rutines = useSelector((state: any) => state.user.rutines);
+  
+  const { setLoading } = useLoading();
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const dayNumber = _language.daysArray.indexOf(day);
   const rutinesDay = rutines && rutines.filter((item: { day: number; }) => item.day === dayNumber);

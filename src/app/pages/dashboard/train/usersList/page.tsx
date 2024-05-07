@@ -12,8 +12,8 @@ export default async function User({
   const usersList = await findAllByRoleClient(id);
   
   return (
-    <Suspense fallback={<>cargando ...</>}>
-      <Client usersList={usersList}/>
+    <Suspense fallback={<>cargando userList...</>}>
+      <Client usersList={usersList} />
     </Suspense>
   );
 }

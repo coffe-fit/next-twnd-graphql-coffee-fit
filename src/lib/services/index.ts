@@ -19,6 +19,7 @@ export { getRutineTypes } from './graphql/rutines/getRutineTypes.services';
 
 // EXERCISES
 export { exerciseFindExcerciseByRutine } from './graphql/exercises/findExerciseByRutine.service';
+export { exerciseFindExcerciseByRutineTypeId } from './graphql/exercises/findExerciseByRutineType.service';
 
 // USERS
 export { findAllByRoleClient } from './graphql/users/findAllByRoleClient.service';

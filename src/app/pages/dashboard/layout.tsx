@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { DashboardHeader as Header } from '@/app/components';
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 import useCustomRouter from "@/app/hooks/useCustomRouter";
+// import { useLoading } from "@/app/hooks/useLoading";
 
 interface props {
   children: ReactNode
@@ -15,12 +16,9 @@ export default function DashboardLayout({children}:props) {
 
   const customSessionStorage = CustomSessionStorage();
   
-
   useEffect(() => {
     if(customSessionStorage.getItem('auth_token') === undefined) {
-      // router.push('/');
-      console.log('error');
-      
+      router.push(`/pages/errorPage?id=AUTH_TOKEN_FAIL`);
     } else { 
       setShowPage(true);
     }
@@ -30,7 +28,7 @@ export default function DashboardLayout({children}:props) {
       <Header></Header>
       {showPage && <span className="
           h-[calc(100%-2.5rem)]
-          fixed top-9
+          relative top-9
           overflow-y-auto
           w-full
         ">{children}</span>}

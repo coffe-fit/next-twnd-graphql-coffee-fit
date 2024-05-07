@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 
 
 
-const initialState: UserInterface = {
+export const initialState: UserInterface = {
   age: 0,
   campany: {
     email: '',

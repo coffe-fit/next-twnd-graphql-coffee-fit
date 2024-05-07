@@ -66,10 +66,10 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 export const client = new ApolloClient({
-    // link: from([
-    //   errorLink,
-    //   responseMiddleware.concat(authLink).concat(httpLink),
-    // ]),
+    link: from([
+      errorLink,
+      responseMiddleware.concat(authLink).concat(httpLink),
+    ]),
     uri,
     cache: new InMemoryCache(),
   });

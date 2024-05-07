@@ -8,14 +8,11 @@ import { addUser } from '@/provider/redux/userSlice';
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 import { language } from '@/lib/lenguage';
 
-import { ButonsSocialMedia } from '../';
+import { ButonsSocialMedia } from '@/app/components/ButonsSocialMedia';
 import { SendEmail } from './SendEmail';
 import useAuth from '@/app/hooks/useAuth';
 
-
-interface props {}
-
-export const LoginForm = ({}:props) => {
+export const ClientLogin = ({}:any) => {
   const [messageError, setMessageError] = useState('');
   const [successText, setSuccessText] = useState('');
   const { user, token } = useAuth();
@@ -50,16 +47,20 @@ export const LoginForm = ({}:props) => {
     photoUrl?: string,
     photoURL?: string,
     displayName?: string,
-    accessToken: string
+    accessToken: string,
+    userId: string
   })=>{
     try {
+      
       if(!user.email) throw user
       dispatch(addUser({
-        id: user.uid,
+        id: user.userId,
         email: user.email,
         imgUser: user.photoUrl || user.photoURL,
-        username: user.displayName || user.email
+        username: user.displayName || user.email,
       }));
+      console.log(user);
+      
       const url = format({
         pathname: '/pages/dashboard',
         query: {id: customSessionStorage.getItem('auth_token')}
@@ -82,14 +83,14 @@ export const LoginForm = ({}:props) => {
 
   return (
     <>
-      <Suspense>
+      <Suspense fallback={<div>cargando ButonsSocialMedia...</div>}>
         <ButonsSocialMedia
           lenguage={_language}
           onLogin={onHandleLogin}
           failLogin={onHandleFailLogin}
         />
       </Suspense>
-      <Suspense fallback={<div>cargando...</div>}>
+      <Suspense fallback={<div>cargando sendEmail...</div>}>
         <SendEmail onFail={handleSendEmailFail} onSuccess={handleSendEmailSuccess}/>
       </Suspense>
       {messageError && 

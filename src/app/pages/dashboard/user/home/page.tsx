@@ -12,6 +12,9 @@ export default async function User({
   
   const rutineByType = await getRutineOrderType(id);
   const rutineByDays = await getRutineOrderDay(id);
+  console.log(rutineByType);
+  console.log('rutineByDays1');
+  
   
   return (
     <Suspense fallback={<>cargando ...</>}>

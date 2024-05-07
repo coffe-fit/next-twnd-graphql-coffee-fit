@@ -3,11 +3,11 @@ import { language } from "@/lib/lenguage";
 interface props {
   id: string,
   exerciseName: string,
-  serie: number,
-  amountMax: number[],
+  serie?: number,
+  amountMax?: number[],
   urlVideo: string,
   urlImageIntroduce: any,
-  breakOwn: string
+  breakOwn?: string
 }
 
 import Image from 'next/image';
@@ -35,7 +35,6 @@ export const RutineTypeTodo = ({
     <div className={`
       h-auto
       w-auto
-      cff-bg-color-green-700
       flex-col
       relative
     `}>
@@ -47,7 +46,7 @@ export const RutineTypeTodo = ({
         <Image src={urlImageIntroduce} alt={'alt'} width={70} height={70}/>
         <span className="flex flex-col relative w-full pl-2 pr-2">
           <div>{_language.series}: {serie}</div>
-          <div>{_language.amountMax}: {amountMax.map((item, index)=><span key={index}>{item} </span>)}</div>
+          <div>{_language.amountMax}: {amountMax?.map((item, index)=><span key={index}>{item} </span>)}</div>
           <div>{_language.break}: {breakOwn}</div>
           <Image className={"absolute right-0 -top-2 pl-1 pr-1 cff-button block dark:hidden"} src={urlVideoImg} alt={'alt'} width={40} height={40} onClick={handleButton}/>
           <Image className={"absolute right-0 -top-2 pl-1 pr-1 cff-button hidden dark:block"} src={urlVideoWhiteImg} alt={'alt'} width={40} height={40} onClick={handleButton}/>

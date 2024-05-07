@@ -4,7 +4,7 @@ interface props {
   children: ReactNode,
   image?: ReactNode,
   onclick?: () => void, 
-  bg_color?: boolean,
+  bgColor?: boolean,
   className?: string,
   disabled?: boolean,
   size?: 'sm' | 'lg' | 'xs'
@@ -15,7 +15,7 @@ export const Button = ({
   children,
   image,
   onclick,
-  bg_color,
+  bgColor,
   size,
   className,
   disabled,
@@ -29,7 +29,7 @@ export const Button = ({
       className={
         `
           ${className} 
-          ${bg_color ? 'cff-bg-color-green-600 dark:cff-bg-color-gray-600' : ''}
+          ${bgColor ? 'cff-bg-color-green-600 dark:cff-bg-color-gray-600' : ''}
           ${!size && 'h-9 w-40'}
           ${size === 'sm' && 'h-9 w-40'}
           ${size === 'lg' && 'h-12 w-60'}

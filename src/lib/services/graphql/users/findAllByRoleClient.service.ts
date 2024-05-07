@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import { requestClient } from "../client-request";
+import { redirectClient } from '../redirectClient';
 
 export const  USERS_BY_ROLE_CLIENT = gql`
   query Query {
@@ -14,6 +15,7 @@ export const  USERS_BY_ROLE_CLIENT = gql`
       gender
       document
       age
+      userId
       rutines {
         rutineTypeName
       }
@@ -35,8 +37,9 @@ export const findAllByRoleClient = async (token?: string) => {
       token
     );
     return data.user_findAllByRoleClient;
-  } catch (error) {
+  } catch (error:any) {
     console.log('findAllByRoleClient', error);
-    return {}
+    if (error.redirect) redirectClient(error.redirect);
+    return error
   }
 }

@@ -1,11 +1,13 @@
 import { request, gql } from 'graphql-request';
 import {  graphQLClient } from "../client-request";
+import { redirectClient } from '../redirectClient';
 
 
 export const  AUTH_FORANY_TOKEN = gql`
   mutation Mutation($signInAuthInput: AuthForanyToken!) {
     auth_signInForanyToken(signInAuthInput: $signInAuthInput) {
-      token
+      token,
+      id
     }
   }
 `;
@@ -29,8 +31,9 @@ export const AuthForanyToken = async ({email, token, name}:input) => {
     );
     
     return data.auth_signInForanyToken;
-  } catch (error) {
+  } catch (error: any) {
     console.log('findAll', error);
-    return {}
+    if (error.redirect) redirectClient(error.redirect);
+    return error
   }
 }

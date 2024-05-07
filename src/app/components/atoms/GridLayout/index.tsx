@@ -108,7 +108,7 @@ export const GridLayout = ({
       <div className=' flex justify-end'>
         <Input
           size='sm'
-          bg_color={true}
+          bgColor={true}
           type="text"
           value={inputValue.toLowerCase()}
           onChange={handleInput}

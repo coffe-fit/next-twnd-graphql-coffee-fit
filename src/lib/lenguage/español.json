@@ -5,7 +5,10 @@
       "auth/invalid-email": "Email Invalido",
       "auth/quota-exceeded": "Número de intentos excedido.",
       "auth/unauthorized-domain": "Dominio no autorizado",
-      "auth/fail-session": "Error al iniciar sesión:"
+      "auth/fail-session": "Error al iniciar sesión:",
+      "UNAUTHENTICATED": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar.",
+      "AUTH_TOKEN_FAIL": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar.",
+      "ECONNREFUSED": "Lo sentimos, actualmente tenemos inconvenientes con el servidor pronto estará disponible nuestra plataforma"
     }
   },
   "success": {
@@ -15,13 +18,13 @@
       "100": "Correo de verificación enviado. Revise su bandeja de entrada."
     }
   },
-
+  "goToBegin": "Ir al inicio",
   "register": "registrar",
   "continue": "continuar",
   "successLogin": "Inicio de sesión exitoso:",
   
   "SomethingIsWrong": "Por favor revisa el campo:",
-  "daysArray":["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"],
+  "daysArray":["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado"],
   "monthsArray":["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
   "singOut": "salir",
   "series": "Series",
@@ -32,11 +35,51 @@
   "client": "Clientes",
   "users": "Usuarios",
   "days": "Días",
+  "min": "Minutos",
   "selectOption": "Seleccione una opción.", 
   "select": "Seleccione", 
   "rutineTime": "Tiempo de Rutina",
   "rutineDateSelect": "Seleccione las fechas de Rutina",
   "nextStep": "Siguiente Paso",
+  "resume": "Resumen",
+  "obs": "Observaiciones",
+  "heartRate" : "Frecuencia Cardiaca",
+  "rutineType": {
+    "LEG": "PIERNA",
+    "BACK": "DORSO",
+    "CHEST": "ESPALDA",
+    "ABDOMEN": "ABDOMEN",
+    "BICEPS": "BÍCEPS",
+    "DELTOID": "DELTOIDES",
+    "TRAP": "TRAPECIO",
+    "LATERAL": "LATERAL",
+    "DORSAL": "DORSAL",
+    "PECTORAL": "PECTORAL",
+    "TRICEPS": "TRÍCEPS",
+    "SHOULDERS": "HOMBROS"
+  },
+  "exercises": {
+    "BARBELL_SQUATS": "Sentadillas con barra",
+    "PULL_UPS": "Dominadas",
+    "BENCH_PRESS": "Press de banca",
+    "CRUNCHES": "Crunches",
+    "DUMBBELL_BICEP_CURLS": "Curls de biceps con mancuernas",
+    "DEAD_LIFTS": "Levantamiento de peso muerto",
+    "DIPS": "Fondos",
+    "MILITARY_PRESS": "Press militar",
+    "RUSSIAN_TWISTS": "Giros rusos",
+    "LUNGES": "Zancadas",
+    "LEG_PRESS": "Prensa de piernas",
+    "LAT_PULLDOWNS": "Dominadas al pecho",
+    "INCLINE_BENCH_PRESS": "Press de banca inclinado",
+    "LEG_CURLS": "Curls de piernas",
+    "PLANKS": "Planchas",
+    "HAMMER_CURLS": "Curls de martillo",
+    "ROMANIAN_DEAD_LIFTS": "Peso muerto rumano",
+    "TRICEP_DIPS": "Fondos de triceps",
+    "FRONT_RAISES": "Levantamientos frontal de hombros",
+    "SIT_UPS": "Abdominales"
+  },
 
 
 

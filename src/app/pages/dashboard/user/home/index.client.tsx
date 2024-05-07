@@ -12,18 +12,24 @@ import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 
 import { addRutineSelected } from "@/provider/redux/userSlice";
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
+import { useLoading } from '@/app/hooks/useLoading';
+import { useEffect } from 'react';
 
 export const ClientHome = ({
   rutineType, rutineDay
 }:any) => {
+console.log(rutineType, rutineDay);
 
   const router = useCustomRouter();
   const dispatch = useDispatch();
   const todayreal = new Date().toLocaleString("en-ZA", {timeZone: "America/Bogota"}).replaceAll('/','-').split(',')[0]
-  const todayNum = new Date(todayreal).getUTCDay();
-
-  
+  const todayNum = new Date(todayreal).getUTCDay()
   const customSessionStorage = CustomSessionStorage();
+
+  const { setLoading } = useLoading();
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
   const handleClickCalendar = (day: CalendarDayInterface) => {
     dispatch(addRutineSelected({

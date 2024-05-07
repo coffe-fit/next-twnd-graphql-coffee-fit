@@ -65,7 +65,7 @@ export const DropdownList: React.FC<DropdownListProps> = ({
         </svg>
       </button>
       {isOpen && (
-        <div className={`absolute top-full left-0 mt-1  border bg-gray-300 dark:bg-neutral-700 rounded-md shadow-lg`}>
+        <div className={`absolute top-full left-0 mt-1  border bg-gray-300 dark:bg-neutral-700 rounded-md shadow-lg z-50`}>
           {options.map((option, index) => (
             <div
               key={index}

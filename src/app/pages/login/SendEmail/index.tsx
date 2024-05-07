@@ -48,7 +48,7 @@ export const SendEmail = async ({
       <Input
         name={'email'} id={'email'}
         className='mt-14' size='lg'
-        placeholder='email' bg_color={true}
+        placeholder='email' bgColor={true}
       />
       
         <Button type={'submit'} className='mt-3' size='lg' image={

@@ -1,5 +1,7 @@
 import { gql } from 'graphql-request';
 import { requestClient } from "../client-request";
+import { redirect } from 'next/navigation';
+import { redirectClient } from '../redirectClient';
 
 export const  RUTINE_ORDER_TYPE = gql`
   query Query {
@@ -40,8 +42,9 @@ export const  getRutineOrderType = async (token?: string) => {
       token
     );
     return data.rutine_getActualRutineOrderRutineType;
-  } catch (error) {
+  } catch (error: any) {
     console.log('getRutineOrderType', error);
-    return {}
+    if (error.redirect) redirectClient(error.redirect);
+    return error
   }
 }

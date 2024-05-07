@@ -24,7 +24,6 @@ const userRegister = async (email: string, password: string): Promise<User> => {
 // Función para enviar el enlace de confirmación por correo electrónico
 const sendVerificationEmail = async (email:any) => {
   try {
-    
     await sendSignInLinkToEmail(auth, email, {
       url: `${process.env.NEXT_PUBLIC_URL}?email=${email}`, // La URL a la que se redirigirá al usuario después de confirmar el correo electrónico
       handleCodeInApp: true,
@@ -43,8 +42,7 @@ const sendVerificationEmail = async (email:any) => {
 };
 
 // Función para manejar la verificación después de hacer clic en el enlace
-const handleVerification = async (email:any) => {
-  
+const handleVerification = async (email:any) => {  
   if (email && isSignInWithEmailLink(auth, window.location.href)) {
     try {
       let response: any = await signInWithEmailLink(auth, email, window.location.href);
@@ -56,6 +54,7 @@ const handleVerification = async (email:any) => {
   }
 };
 const handleAuthStateChanged = (handleBack: (user:any) => void) => {
+
 
   const onSuscribe = onAuthStateChanged(auth, async (user: any) => {
     console.log(user, 'before');
@@ -70,6 +69,7 @@ const handleAuthStateChanged = (handleBack: (user:any) => void) => {
   });
 }
 const handleSignInWithPopup = async (provider: 'google'| 'facebook')=>{
+
   let _provider: any;
   if (provider === 'google') _provider = new GoogleAuthProvider();
   if (provider === 'facebook') _provider = new FacebookAuthProvider();

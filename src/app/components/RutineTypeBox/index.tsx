@@ -16,7 +16,6 @@ export const RutineTypeBox = ({
     <div className={`
       h-auto
       w-40
-      cff-bg-color-green-700
       cff-border-1
       flex-col
       pl-6 pr-1

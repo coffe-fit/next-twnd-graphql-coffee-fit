@@ -1,23 +1,27 @@
-import { ReactNode }from 'react';
-import { Placeholder } from './Placeholder';
+import { useState } from 'react';
 
-interface props {
-  onenter?: () => void,
-  onChange?: (e:any) => void, 
-  bg_color?: boolean,
+interface Props {
+  onEnter?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  bgColor?: boolean;
+  dark?: boolean;
   className?: string;
   size?: 'sm' | 'lg';
   placeholder?: string;
-  value?: any,
-  name: string,
-  id: string,
-  type?: 'text' | 'password' | 'number',
-  autoComplete?: 'off' | string 
+  value?: string;
+  name: string;
+  id: string;
+  type?: 'text' | 'password' | 'number' | 'phone';
+  autoComplete?: 'off' | string;
+  required?: boolean;
+  pattern?: string;
+  title?: string;
 }
 
 export const Input = ({
-  onenter,
-  bg_color,
+  onEnter,
+  bgColor,
+  dark,
   size,
   className,
   placeholder,
@@ -25,43 +29,50 @@ export const Input = ({
   onChange,
   name,
   id,
-  type,
-  autoComplete,
-}:props) => {
-  
+  type = 'text',
+  autoComplete = 'off',
+  required,
+  pattern,
+  title,
+}: Props) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e);
+    }
+  };
+
   return (
-    <span className='relative'>
+    <span className="relative">
       <input
         value={value}
         id={id}
         name={name}
-        type={type ? type : 'text'}
-        onChange={onChange}
-        autoComplete={autoComplete ? autoComplete : 'off'}
+        type={type}
+        onChange={handleChange}
+        autoComplete={autoComplete}
         placeholder={placeholder}
-        className={
-          `
-            ${bg_color ? 'cff-bg-color-green-600 dark:cff-bg-color-gray-600' : ''}
-            ${!size && 'h-9 w-40'}
-            ${size === 'sm' && 'h-9 w-40'}
-            ${size === 'lg' && 'h-12 w-60'}
-            cff-flex-row-center
-            cff-border-1
-            p-3
-            border-gray-400
-            dark:border-gray-700
-            dark:text-slate-100
-            relative
-            placeholder:text-gray-600
-            dark:placeholder:text-gray-400
-            focus-visible:border-green-500
-            ${className} 
-          `
-        }
-      >
-      </input>
-      {/* <Placeholder value={value} placeholder={placeholder}/> */}
+        className={`
+          ${bgColor ? 'cff-bg-color-green-600 dark:cff-bg-color-gray-600' : ''}
+          ${!size && 'h-9 w-40'}
+          ${size === 'sm' && 'h-9 w-40'}
+          ${size === 'lg' && 'h-12 w-60'}
+          ${dark === true && 'dark:!cff-bg-color-gray-600'}
+          cff-flex-row-center
+          cff-border-1
+          p-3
+          border-gray-400
+          dark:border-gray-700
+          dark:text-slate-100
+          relative
+          placeholder:text-gray-600
+          dark:placeholder:text-gray-400
+          focus-visible:border-green-500
+          ${className}
+        `}
+        required={required}
+        pattern={pattern}
+        title={title}
+      />
     </span>
-    
   );
 };

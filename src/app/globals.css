@@ -9,7 +9,7 @@
   --foreground-rgb: 0,0,0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb:  #f4f4f4 242, 243, 255;
-  --cff-green-700: 114, 197, 113;/* #72c571 */
+  --cff-green-700: rgb(114, 197, 113);/* #72c571 */
   --cff-green-600: 225,225,225, 02; /* #a1d3a1 */
   /* --cff-green-700: #72c571;#72c571 */
   --cff-green-500: #99fd98;/* #72c571 */

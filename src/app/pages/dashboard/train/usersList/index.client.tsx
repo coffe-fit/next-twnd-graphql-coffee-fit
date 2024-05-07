@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Image from 'next/image';
 
 import urlAddUserImg from '@/app/images/icons/agregar-usuario-99.png'
@@ -20,14 +20,26 @@ import { language } from '@/lib/lenguage';
 import useCustomRouter from "@/app/hooks/useCustomRouter";
 import { format } from "url";
 import CustomSessionStorage from "@/lib/util/CustomSessionStorage";
+// import { useLoading } from "@/app/hooks/useLoading";
+import { useDispatch } from "react-redux";
+import { addExerciseSelected, addUserSelected } from "@/provider/redux/trainSlice";
+import { useRouter } from "next/navigation";
 
 export const Client = ({
   usersList
 }:any) => {
+console.log(usersList);
 
   const router = useCustomRouter();
+  const nextRouter = useRouter();
   const customSessionStorage = CustomSessionStorage();
   const _language = language('español');
+  const dispatch =  useDispatch();
+
+  // const { setLoading } = useLoading();
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
   
   let usersNew = usersList.filter((
     item: { role: { name: string; }; }) => 
@@ -74,28 +86,41 @@ const btns= [
     name: 'editar',
     imgDark: urlEditUserWhiteImg,
     img: urlEditUserImg,
-    action: (e: any)=>{console.log('editar', e);}
+    action: async (e: any)=>{
+      
+      // setLoading(true);
+      console.log('editar', e);
+      await dispatch(addUserSelected({userSel: e}));
+      // nextRouter.push(
+      //   `/pages/dashboard/train/CUForm`
+      // )
+      router.push(
+        `/pages/dashboard/train/CUForm`
+      )
+    }
   },
   {
     name: 'rutine',
     imgDark: urlRutineWhite,
     img: urlRutine,
     action: (e: any)=>{
-      const url = format({
-        pathname: '/pages/dashboard/train/createRutine',
-        query: {
-          id: customSessionStorage.getItem('auth_token'),
-          user: JSON.stringify(e)
-        }
-      });
-      router.push(url);
+      // setLoading(true);
+      // dispatch(addUserSelected({user: e}));
+      router.push(
+        `/pages/dashboard/train/createRutine?id=`+
+        `${customSessionStorage.getItem('auth_token')}&`+
+        `user=${e.userId}`
+      )
     }
   },
   {
     name: 'valoracion',
     imgDark: urlGraficsWhite,
     img: urlGrafics,
-    action: (e: any)=>{console.log('valoracion', e);}
+    action: (e: any)=>{
+      dispatch(addUserSelected({userSel: e}));
+      console.log('valoracion', e);
+    }
   },
 
 ]
@@ -103,6 +128,8 @@ const showOnlyColumns = ["email", "username"];
 const filterInputBy = "email";
 
   return (
+    <Suspense fallback={<div>cargando userListClient</div>}>
+      
     <div className={`
       flex flex-col items-center h-full
       ${cols.length < 10 ? 'pt-20': 'pt-3'}
@@ -131,5 +158,6 @@ const filterInputBy = "email";
         </Button>
       </span>
     </div>
+    </Suspense>
   );
 };

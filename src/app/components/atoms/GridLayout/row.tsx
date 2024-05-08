@@ -28,7 +28,7 @@ export const Row = ({
   maskField
 }:props) => {
   const field = (key: any, value:any) => {return (
-    <div key={key} className={`
+    <div key={`field_${key}_${value}`} id={`field_${key}_${value}`} className={`
       flex-1 border-gray-400 p-2
       ${key === headers[headers.length-1] && !btns ? "" : "border-r"}
     `}>
@@ -42,7 +42,7 @@ export const Row = ({
 
   
   return (
-      <div className={`w-full`}>
+      <div className={`w-full`} key={`div_${index}`} id={`div_${index}`}>
 
         {/* Renderizar datos */}
           <div
@@ -60,13 +60,9 @@ export const Row = ({
             `}
           >
             {Object.entries(item).map(([key, value]) => (
-              <>
-                {
-                  showOnlyColumns && !showOnlyColumns.includes(key)
-                  ? null
-                  : field(key, value)
-                }
-              </>
+              !showOnlyColumns || showOnlyColumns.includes(key) 
+              ? (field(key, value))
+              : null
             ))}
             {btns && (
               <div className='flex justify-around relative'>

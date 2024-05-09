@@ -46,8 +46,9 @@ export const GridLayout = ({
   
 
   function renameKey(obj: any, oldKey: string, newKey: string) {
-    obj[newKey] = obj[oldKey];
+    if(obj[newKey] !== obj[oldKey]) obj[newKey] = obj[oldKey];
   }
+  
   colsSerch.forEach((obj: any) => renameKey(obj, filterInputBy, 'id'));
   colsSerch.forEach((obj: any) => renameKey(obj, filterInputBy, 'name'));
 
@@ -81,8 +82,8 @@ export const GridLayout = ({
       )
     }
     return (
-      <span key={index} 
-      id={JSON.stringify(index+1)}>
+      <span key={`1_${index}`} 
+      id={`1_${index}`} >
         <Row
           item={item}
           index={index}

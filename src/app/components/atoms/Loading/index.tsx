@@ -1,13 +1,17 @@
+
 'use client'
+import { useLoading } from "@/app/hooks/useLoading";
 import { ReactNode, useEffect, useState } from "react";
-import { useLoading } from "./hooks/useLoading";
+
 
 interface props {
   children: ReactNode
 }
 
-export default function Loading({children}:props) {
-  const { loading, setLoading } = useLoading();
+export default function Loading({}:props) {
+  const { loading } = useLoading();
+  console.log('loading true', loading);
+  
   return (
     <>
     {loading && 

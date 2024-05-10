@@ -31,7 +31,7 @@ const useAuth = () => {
       if (!user && mockFirebase) user = mockFirebase
       console.log(user);
       // if (email) {
-        setLoading(false);
+        // setLoading(false);
         const ownToken = await sendUser({
           email: user.email,
           token: user?.accessToken,

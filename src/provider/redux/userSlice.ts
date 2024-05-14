@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 
 export const initialState: UserInterface = {
   age: 0,
-  campany: {
+  company: {
     email: '',
     id: '',
     logo: '',
@@ -19,7 +19,10 @@ export const initialState: UserInterface = {
   gender: '',
   id: '',
   phone: '',
-  role: '',
+  role: {
+    id: '',
+    name:''
+  },
   username: '',
   imgUser: '',
   rutines: ''

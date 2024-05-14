@@ -26,7 +26,7 @@ export const Popup2 = ({
   return (
     <>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-60">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-60 mx-10">
           <div className="bg-white flex dark:bg-gray-800 dark:bg-opacity-90 shadow-lg rounded-lg !rounded-tl-xl p-6 max-w-sm w-full relative">
             <div className='absolute w-full top-0 right-0 bg-gray-100 dark:bg-gray-800 flex justify-end rounded-tr-lg rounded-tl-lg'>
               <span className="w-full flex justify-center text-lg mt-1 mb-1">

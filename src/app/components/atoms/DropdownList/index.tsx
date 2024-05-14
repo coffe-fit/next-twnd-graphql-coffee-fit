@@ -1,4 +1,5 @@
 'use client'
+import { language, translateString } from '@/lib/lenguage';
 import { useState } from 'react';
 
 export interface Option {
@@ -13,6 +14,7 @@ interface DropdownListProps {
   classNameOption?: string;
   onSelect?: (option: Option) => void;
   onHover?: (option: Option) => void;
+  size?: 'sm' | 'lg';
 }
 
 export const DropdownList: React.FC<DropdownListProps> = ({
@@ -21,12 +23,15 @@ export const DropdownList: React.FC<DropdownListProps> = ({
   classNameInput,
   classNameOption,
   onSelect,
-  onHover
+  onHover,
+  size
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [hoveredOption, setHoveredOption] = useState<Option | null>(null);
 
+  const _language = language('español');
+  
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
@@ -45,7 +50,12 @@ export const DropdownList: React.FC<DropdownListProps> = ({
   return (
     <div className="relative">
       <button
-        className={`${classNameInput} bg-gray-300 dark:bg-neutral-800 border border-gray-300 px-4 py-2 rounded-md flex justify-between items-center`}
+        className={`
+        
+        ${!size && 'h-9 w-40'}
+        ${size === 'sm' && 'h-9 w-40'}
+        ${size === 'lg' && 'h-12 w-60'}
+        ${classNameInput} bg-gray-300 dark:bg-neutral-800 border border-gray-300 px-4 py-2 rounded-md flex justify-between items-center`}
         onClick={handleToggle}
       >
         <span className="mr-2">{selectedOption && selectedOption.name === textIni? selectedOption.name : textIni}</span>
@@ -69,13 +79,19 @@ export const DropdownList: React.FC<DropdownListProps> = ({
           {options.map((option, index) => (
             <div
               key={index}
-              className={` ${classNameOption} px-4 py-2 cursor-pointer w-48 ${
-                hoveredOption && option.id === hoveredOption.id ? 'bg-gray-300 dark:bg-neutral-800' : ''
-              }`}
+              className={`
+                ${!size && 'h-9 w-40'}
+                ${size === 'sm' && 'h-9 w-40'}
+                ${size === 'lg' && 'h-12 w-60'}
+                ${classNameOption} px-4 py-2 cursor-pointer w-48
+                ${
+                  hoveredOption && option.id === hoveredOption.id ? 'bg-gray-300 dark:bg-neutral-800' : ''
+                }
+              `}
               onClick={() => handleOptionClick(option)}
               onMouseEnter={() => handleOptionHover(option)}
             >
-              {option.name}
+              {translateString(_language, option.name)}
             </div>
           ))}
         </div>

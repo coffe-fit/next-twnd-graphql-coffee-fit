@@ -5,8 +5,9 @@ import { language } from "@/lib/lenguage";
 import { RutineTypeTodo } from "@/app/components/RutineTypeTodo";
 
 import sentadilla from '@/app/images/exercises/sentadilla.png';
-import { useLoading } from "@/app/hooks/useLoading";
-import { useEffect } from "react";
+import MainLayout from "@/app/layouts/MainWithLoading";
+// import { useLoading } from "@/app/hooks/useLoading";
+// import { useEffect } from "react";
 
 export const ClientRutineDay = ({
   day
@@ -14,16 +15,17 @@ export const ClientRutineDay = ({
   const _language = language('español');
   let rutines = useSelector((state: any) => state.user.rutines);
   
-  const { setLoading } = useLoading();
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  // const { setLoading } = useLoading();
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
 
   const dayNumber = _language.daysArray.indexOf(day);
   const rutinesDay = rutines && rutines.filter((item: { day: number; }) => item.day === dayNumber);
   const rutinesByType = rutinesDay && rutinesDay[0] && rutinesDay[0].rutineType;
 
   return (
+    <MainLayout>
     <div className="flex flex-col items-center h-full">
       <div className="cff-border-1 w-80">
         <span className="flex flex-col items-center w-full text-2xl">
@@ -64,5 +66,6 @@ export const ClientRutineDay = ({
         ))}
       </div>
     </div>
+    </MainLayout>
   );
 };

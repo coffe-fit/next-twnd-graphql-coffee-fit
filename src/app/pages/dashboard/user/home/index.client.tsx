@@ -12,8 +12,9 @@ import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 
 import { addRutineSelected } from "@/provider/redux/userSlice";
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
-import { useLoading } from '@/app/hooks/useLoading';
+// import { useLoading } from '@/app/hooks/useLoading';
 import { useEffect } from 'react';
+import MainLayout from '@/app/layouts/MainWithLoading';
 
 export const ClientHome = ({
   rutineType, rutineDay
@@ -26,10 +27,10 @@ console.log(rutineType, rutineDay);
   const todayNum = new Date(todayreal).getUTCDay()
   const customSessionStorage = CustomSessionStorage();
 
-  const { setLoading } = useLoading();
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+  // const { setLoading } = useLoading();
+  // useEffect(() => {
+  //   setLoading(false);
+  // }, []);
 
   const handleClickCalendar = (day: CalendarDayInterface) => {
     dispatch(addRutineSelected({
@@ -48,6 +49,7 @@ console.log(rutineType, rutineDay);
   
   
   return (
+    <MainLayout>
     <div className="flex flex-col items-center h-full">
       <span className="
         cff-flex-row-center
@@ -127,5 +129,6 @@ console.log(rutineType, rutineDay);
         <ExerciseType name="Pierna" id="123"/>
       </span>
     </div>
+    </MainLayout>
   );
 };

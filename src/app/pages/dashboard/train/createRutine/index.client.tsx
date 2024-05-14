@@ -35,6 +35,7 @@ import customSessionStorage from "@/lib/util/CustomSessionStorage";
 import { rutineCreateWithExercises } from "@/lib/services/graphql/rutines/createWithExercises.services";
 import useCustomRouter from "@/app/hooks/useCustomRouter";
 import { format } from "url";
+import MainLayout from "@/app/layouts/MainWithLoading";
 // import { useLoading } from "@/app/hooks/useLoading";
 
 interface Props {
@@ -69,10 +70,6 @@ export const Client = ({ idPage, userSelected, rutineTypes, firstExercises }: Pr
   const dispatch = useDispatch();
 
   const router = useCustomRouter();
-  // const { setLoading } = useLoading();
-  // useEffect(() => {
-  //   setLoading(false);
-  // }, []);
   
 
   const _language = language('español');
@@ -237,18 +234,16 @@ export const Client = ({ idPage, userSelected, rutineTypes, firstExercises }: Pr
       }) : null
     } 
     try {
-      // se deja abierto para que la otra pantalla lo sierre
-      // setLoading(true);
       const rutine = await rutineCreateWithExercises(queryId.getItem('auth_token'), dataSend);
       if (rutine.id) router.push(`/pages/dashboard/train/usersList?id=${idPage}`);
     } catch (error) {
       console.error(error);
-      
     }
     
   }
 
   return (
+    <MainLayout>
     <Suspense fallback={<div>cargando ButonsSocialMedia...</div>}>
     <div className="h-[calc(100%-1.5rem)]">
       <div className={`
@@ -384,5 +379,6 @@ export const Client = ({ idPage, userSelected, rutineTypes, firstExercises }: Pr
 
       
     </Suspense>
+    </MainLayout>
   );
 };

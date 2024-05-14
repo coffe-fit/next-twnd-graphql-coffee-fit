@@ -1,15 +1,16 @@
-import { CompanyInterface } from "./";
+import { CompanyInterface, RoleInterface } from "./";
 
 export interface UserInterface {
   age: number,
-  campany: CompanyInterface,
+  company: CompanyInterface,
   document: string,
   email:string,
   gender:string,
-  role:string,
+  role:RoleInterface,
   id: string,
   phone: string,
   username: string,
   imgUser: string,
   rutines?: any,
+  userId?: string
 }

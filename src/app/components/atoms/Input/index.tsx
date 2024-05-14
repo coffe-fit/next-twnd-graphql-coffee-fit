@@ -16,6 +16,7 @@ interface Props {
   required?: boolean;
   pattern?: string;
   title?: string;
+  disable?: boolean
 }
 
 export const Input = ({
@@ -34,6 +35,7 @@ export const Input = ({
   required,
   pattern,
   title,
+  disable
 }: Props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -52,7 +54,8 @@ export const Input = ({
         autoComplete={autoComplete}
         placeholder={placeholder}
         className={`
-          ${bgColor ? 'cff-bg-color-green-600 dark:cff-bg-color-gray-600' : ''}
+          ${disable && 'opacity-35'}
+          ${bgColor ? 'bg-neutral-100 dark:cff-bg-color-gray-600' : ''}
           ${!size && 'h-9 w-40'}
           ${size === 'sm' && 'h-9 w-40'}
           ${size === 'lg' && 'h-12 w-60'}
@@ -72,6 +75,7 @@ export const Input = ({
         required={required}
         pattern={pattern}
         title={title}
+        disabled={disable}
       />
     </span>
   );

@@ -44,6 +44,17 @@
   "resume": "Resumen",
   "obs": "Observaiciones",
   "heartRate" : "Frecuencia Cardiaca",
+  "email": "Email",
+  "documentdId": "Cédula",
+  "gender": "Género",
+  "genderList": [{"id": "M", "name":"Masculino"}, {"id": "F", "name":"Femenino"}],
+  "phone": "Celular",
+  "age": "Edad",
+  "messageValidInput": "Por favor ingrese un valor de:",
+  "digit": "dígitos",
+  "role": "Rol",
+  "company": "Compañia",
+
   "rutineType": {
     "LEG": "PIERNA",
     "BACK": "DORSO",
@@ -79,6 +90,15 @@
     "TRICEP_DIPS": "Fondos de triceps",
     "FRONT_RAISES": "Levantamientos frontal de hombros",
     "SIT_UPS": "Abdominales"
+  },
+  "roles": {
+    "CLIENT": "Cliente",
+    "NEW_CLIENT": "Nuevo Cliente",
+    "INACTIVE_CLIENT": "Cliente Inactivo",
+    "TRAIN": "Entrenador",
+    "PHSIO": "Phisioterapeuta",
+    "COMPANY": "Compañia",
+    "SUPER_ADMIN": "Super Admin"
   },
 
 

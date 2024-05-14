@@ -24,6 +24,7 @@ export default function DashboardLayout({children}:props) {
     }
   }, []);
   return (
+    
     <div className="flex flex-col items-center h-screen">
       <Header></Header>
       {showPage && <span className="

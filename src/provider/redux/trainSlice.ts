@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: trainInterface = {
     newUserSelected:{age: 0,
-      campany: {
+      company: {
         email: '',
         id: '',
         logo: '',

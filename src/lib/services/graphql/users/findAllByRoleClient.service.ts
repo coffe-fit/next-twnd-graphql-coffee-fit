@@ -7,6 +7,7 @@ export const  USERS_BY_ROLE_CLIENT = gql`
     user_findAllByRoleClient {
       id
       role {
+        id
         name
       }
       email

@@ -6,7 +6,7 @@ import { language } from '@/lib/lenguage';
 import useCustomRouter from "@/app/hooks/useCustomRouter";
 import CustomSessionStorage from "@/lib/util/CustomSessionStorage";
 import { useDispatch } from "react-redux";
-import { addUserSelected } from "@/provider/redux/trainSlice";
+import { addUserSelected, resetUserSelected } from "@/provider/redux/trainSlice";
 import { useRouter } from "next/navigation";
 import { useLoading } from "@/app/hooks/useLoading";
 
@@ -95,7 +95,7 @@ export const Client = ({
       img: urlGrafics,
       action: (e: any)=>{
         dispatch(addUserSelected({userSel: e}));
-        console.log('valoracion', e);
+        router.push(`/pages/dashboard/train/progressCharts?id=${customSessionStorage.getItem('auth_token')}&user=${e.userId}`);
       }
     }
   ];
@@ -130,7 +130,14 @@ export const Client = ({
             classNameGrid=" h-[calc(100vh-15rem)] overflow-y-auto"
           />
           <span className="absolute bottom-1 flex justify-between ">
-            <Button size="lg" className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-20 !w-20">
+            <Button  
+              onclick ={()=>{
+                dispatch(resetUserSelected());
+                router.push(`/pages/dashboard/train/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
+              }}
+              size="lg"
+              className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-20 !w-20"
+            >
               <Image className={"block dark:hidden"} src={urlAddUserImg} alt={'alt'} width={40} height={40}/>
               <Image className={"hidden dark:block"} src={urlAddUserWhiteImg} alt={'alt'} width={40} height={40}/>
             </Button>

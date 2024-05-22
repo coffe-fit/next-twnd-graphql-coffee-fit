@@ -24,3 +24,8 @@ export { exerciseFindExcerciseByRutineTypeId } from './graphql/exercises/findExe
 // USERS
 export { findAllByRoleClient } from './graphql/users/findAllByRoleClient.service';
 
+// PROGRESS
+export {  progress_create } from './graphql/progress/create.service';
+export { progress_find_by_user_id } from './graphql/progress/findByUserId.service';
+export { progress_update } from './graphql/progress/update.service';
+

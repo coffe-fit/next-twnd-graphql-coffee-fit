@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState: trainInterface = {
-    newUserSelected:{age: 0,
+    newUserSelected:{
+      age: 0,
       company: {
         email: '',
         id: '',
@@ -20,7 +21,7 @@ const initialState: trainInterface = {
       role: '',
       username: '',
       imgUser: '',
-      rutines: ''
+      rutines: '',
     },
     exerciseSelected: {
       dayneme: '',
@@ -44,10 +45,10 @@ export const trainSlice = createSlice({
     },
     addUserSelected: (state, action) => {
       const { userSel } = action.payload;
-      
       state.newUserSelected = userSel;
-      console.log(state);
-
+    },
+    resetUserSelected: (state) => {
+      state.newUserSelected = initialState;
     },
   }
 });
@@ -55,6 +56,7 @@ export const trainSlice = createSlice({
 export const {
   addExerciseSelected,
   addRutineSelected,
-  addUserSelected
+  addUserSelected,
+  resetUserSelected
 } = trainSlice.actions;
 export default trainSlice.reducer;

@@ -24,6 +24,7 @@ export const UserForm = ({
 }: Props) => {
   
   const [formData, setFormData] = useState<any>(userData || userInitialData);
+  console.log(formData);
   
   const _language = language('español');
   
@@ -42,17 +43,29 @@ export const UserForm = ({
   const handleChangeDrop = (
     e: {name: string, option: Option}
   ) => {
+    console.log(e);
     const { name, option } = e;
     
     setFormData({ ...formData, [name]: option});
   };
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log(e);
+    
     e.preventDefault();
     const { gender, ..._formData} = formData;
-    onClickButton1({gender: gender.id || gender, ..._formData});
+    // onClickButton1({gender: gender.id || gender, ..._formData});
   };
 
+
+  const handleClickButtonSave = () => {
+    const { gender, ..._formData} = formData;
+
+    onClickButton1({
+      gender: gender.id || gender,
+       ..._formData
+    });
+  };
   return (
     <BoxToFormLayout >
     <form onSubmit={handleSubmit} className="min-h-80 flex justify-between items-center flex-col">
@@ -70,7 +83,7 @@ export const UserForm = ({
           id={""}
           size={'lg'}
           bgColor={true}
-          disable={userData?.email !== '' ? true: false}
+          disable={userData?.email ? true: false}
         />
       </span>
       <span>
@@ -141,7 +154,7 @@ export const UserForm = ({
         <Input
           type="number"
           name="age"
-          value={formData.age.toString()}
+          value={formData.age}
           onChange={handleChangeInput}
           placeholder={_language.age}
           required
@@ -153,7 +166,7 @@ export const UserForm = ({
       </span>
       {buttonText1 && (
         <span className="absolute -bottom-8 flex w-[calc(100%+0.2rem)] justify-evenly">
-          <button type="submit" className=" w-full px-4 py-2 cff-bg-color-green-600 dark:cff-bg-color-green-700 dark:text-white text-gray-500 rounded hover:bg-opacity-20">
+          <button type={"button"} onClick={handleClickButtonSave} className=" w-full px-4 py-2 cff-bg-color-green-600 dark:cff-bg-color-green-700 dark:text-white text-gray-500 rounded hover:bg-opacity-20">
             {buttonText1}
           </button>
         </span>

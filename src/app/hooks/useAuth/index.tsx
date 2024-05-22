@@ -29,7 +29,7 @@ const useAuth = () => {
       let mockFirebase: any = process.env.NEXT_PUBLIC_FIREBASE_SERVICE && JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_SERVICE).user
       mockFirebase.accessToken = mockFirebase.stsTokenManager.accessToken
       if (!user && mockFirebase) user = mockFirebase
-      console.log(user);
+      console.log(JSON.stringify(user));
       // if (email) {
         // setLoading(false);
         const ownToken = await sendUser({

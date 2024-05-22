@@ -13,7 +13,8 @@ const useCustomRouter = () => {
     setHistory(prevHistory => [...prevHistory, path]);
   }, [path]);
 
-  const push = (path: string) => {setLoading(true);
+  const push = (path: string) => {
+    setLoading(true);
     nextRouter.push(path);
   };
 

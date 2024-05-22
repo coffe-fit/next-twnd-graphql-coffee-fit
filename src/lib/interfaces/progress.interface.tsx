@@ -1,0 +1,29 @@
+export interface  ProgressInterface {
+  id?: string;
+  weight?: string;
+  rightShoulder?: string;
+  leftShoulder?: string;
+  rightBicep?: string;
+  leftBicep?: string;
+  rightLeg?: string;
+  leftLeg?: string;
+  chest?: string;
+  rightCalf?: string;
+  leftCalf?: string;
+  waist?: string;
+  rightForearm?: string;
+  leftForearm?: string;
+  diet?: string;
+  height?: string;
+  age?: string;
+  bodyFatPercentage?: string;
+  muscleMass?: string;
+  restingHeartRate?: string;
+  bloodPressure?: string;
+  endurance?: string;
+  flexibility?: string;
+  strengthLevel?: string;
+  injuryHistory?: string;
+  fitnessGoals?: string;
+  userId?: string;
+}

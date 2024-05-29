@@ -1,105 +1,94 @@
+import { language, translateString } from '@/lib/lenguage';
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'tailwindcss/tailwind.css';
 
-interface DataItem {
-  diet: string;
-  chest: string;
-  bodyFatPercentage: string;
-  bloodPressure: string;
-  flexibility: string;
-  leftBicep: string;
-  leftCalf: string;
-  leftShoulder: string;
-  leftForearm: string;
-  muscleMass: string;
-  restingHeartRate: string;
-  rightBicep: string;
-  rightCalf: string;
-  rightForearm: string;
-  rightShoulder: string;
-  rightLeg: string;
-  strengthLevel: string;
-  waist: string;
-  weight: string;
-  obs: string;
-  injuryHistory: string;
-  height: string;
-  fitnessGoals: string;
-  age: string;
-}
+
+type DataItem = {
+  [key: string]: string;
+};
 
 interface LineChartProps {
   data: DataItem[];
-  xField: keyof DataItem;
-  yField: keyof DataItem;
-  labelField?: keyof DataItem;
+  __bodyPartsOrder?: string[],
+  classNameContainer: String
 }
 
-const LineChartExt: React.FC<LineChartProps> = ({ data, xField, yField, labelField }) => {
-  const xData = data.map(item => item[xField] || data.indexOf(item).toString());
-  const yData = data.map(item => parseFloat(item[yField]));
 
-  const datasets = [
-    {
-      label: yField as string,
-      data: yData,
-      fill: false,
-      borderColor: 'rgba(34,197,94,1)', // Verde para el primer registro
-      borderWidth: 3,
-      pointBackgroundColor: 'rgba(34,197,94,1)',
-      pointBorderColor: 'rgba(34,197,94,1)',
-    },
-    ...yData.slice(1).map((_, index) => {
-      const grayValue = 200 - (index * 10);
-      return {
-        data: [yData[0], ...yData.slice(1, index + 2)], // Puntos previos + actual
-        fill: false,
-        borderColor: `rgba(${grayValue},${grayValue},${grayValue},1)`, // Tonalidades de gris
-        borderWidth: 1,
-        pointBackgroundColor: `rgba(${grayValue},${grayValue},${grayValue},1)`,
-        pointBorderColor: `rgba(${grayValue},${grayValue},${grayValue},1)`,
-      };
-    }),
-  ];
+const _bodyPartsOrder = [
+  'height', 'age', 'diet', 'fitnessGoals',
+  'chest', 'waist', 'bodyFatPercentage',
+  'bloodPressure', 'restingHeartRate',
+  'flexibility', 'strengthLevel',
+  'muscleMass',
+  'leftBicep', 'rightBicep', 'leftForearm', 'rightForearm', 'leftShoulder', 'rightShoulder',
+  'leftCalf', 'rightCalf', 'rightLeg',
+  'obs', 'injuryHistory'
+];
+
+const LineChartExt: React.FC<LineChartProps> = ({ data, __bodyPartsOrder, classNameContainer }) => {
+  const bodyPartsOrder = __bodyPartsOrder ||  _bodyPartsOrder;
+  
+  const _language = language('español');
+  const reversedData = data.slice().reverse(); // Invertir el orden de los datos
+  
+  // const xData = data.map(item => item[xField] || data.indexOf(item).toString());
+  // const yData = data.map(item => parseFloat(item[yField]));
+
+  const numDatasets = reversedData.length;
+  const opacityIncrement = 1 / (numDatasets + 1); // Incremento de opacidad entre conjuntos de datos
 
   const chartData = {
-    labels: xData,
-    datasets: datasets,
+    labels: bodyPartsOrder.map(key => translateString(_language, key)), 
+    datasets: reversedData.map((item, index) => {
+      const opacity = 1 - (index * opacityIncrement);
+      const color = index === 0
+        ? 'rgba(75, 192, 192, 1)' // Primer conjunto de datos en verde
+        : `rgba(100, 100, 100, ${opacity})`; // Gris con opacidad variable para los siguientes conjuntos
+
+      return {
+        label: `Dataset ${index + 1}`,
+        data: bodyPartsOrder.map((key) => Number(item[key])),
+        backgroundColor: color,
+        borderColor: color,
+        borderWidth: 1,
+      };
+    }),
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false, // Permitir que el gráfico sea flexible en su altura
+    plugins: {
+      legend: {
+        position: 'top' as const, // Mover la leyenda al fondo para ahorrar espacio
+      },
+      title: {
+        display: true,
+        text: 'Chart',
+      },
+    },
     scales: {
       x: {
         title: {
           display: true,
-          text: xField as string,
+          text: 'Categorías',
         },
       },
       y: {
+        beginAtZero: true,
         title: {
           display: true,
-          text: yField as string,
-        },
-      },
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function (context: any) {
-            const label = context.dataset.label || '';
-            const value = context.raw || '';
-            const customLabel = labelField ? data[context.dataIndex][labelField] : '';
-            return `${label}: ${value} ${customLabel}`;
-          },
+          text: 'Values',
         },
       },
     },
   };
 
   return (
-    <div className="w-full h-full p-4">
+    <div className={`${classNameContainer}`}>
       <Line data={chartData} options={options} />
     </div>
   );
 };
+export default LineChartExt;

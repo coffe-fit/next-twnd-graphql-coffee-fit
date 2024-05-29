@@ -1,4 +1,5 @@
 'use client'
+import { language, translateString } from "@/lib/lenguage";
 interface props {
   name: string,
   id: string,
@@ -12,6 +13,7 @@ export const RutineTypeBox = ({
   rutines,
   bgColor
 }:props) => {
+  const _language = language('español');
   return (
     <div className={`
       h-auto
@@ -24,14 +26,14 @@ export const RutineTypeBox = ({
       ${bgColor ? `cff-bg-color-green-600 dark:bg-green-500`: ''}
     `}>
       <span className="cff-flex-row-center"id='title'>
-        {name}
+        {translateString(_language,name)}
       </span>
       <span id='text' className={`
         text-xs
         overflow-auto
       `}>
         {rutines && rutines.map((item, index) =>(
-          <li key={index}> {item.exercise.name} </li>
+          <li className ={`truncate`} key={index}> {translateString(_language,item.exercise.name)} </li>
         ))}
       </span>
       

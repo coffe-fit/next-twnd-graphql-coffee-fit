@@ -25,6 +25,18 @@ export const errorCodes = {
     onRetry: null,
     children: null
   },
+  "RUTINE_LESS": {
+    image: null,
+    errorMessage: null,
+    buttonMessage: '',
+    onRetry: null,
+    children: (<span className="!w-96">
+      <p>{_language.hi},</p>
+      <p>{_language.error.code.RUTINE_LESS}</p>
+      <br></br>
+      <p>{_language.thanks1}</p>
+    </span>)
+  }
 
 }
 

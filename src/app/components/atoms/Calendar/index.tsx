@@ -8,6 +8,7 @@ import { Input } from "../Input";
 import { language } from '@/lib/lenguage';
 import { HeaderMonths } from "./HeaderMonths";
 import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
+// Imágenes
 
 
 interface props {
@@ -15,12 +16,14 @@ interface props {
   selectedColor?: boolean,
   onclick?: (e: CalendarDayInterface)=>void
   onSelect?: () => void;
+  bgImage?:boolean;
 }
 
 export const Calendar = ({
   size,
   selectedColor,
   onclick,
+  bgImage
 }:props) => {
   const [month, setmonth] = useState<number>(new Date().getMonth()+1);
   const [year, setYear] = useState<number>(new Date().getFullYear());
@@ -40,7 +43,6 @@ export const Calendar = ({
       console.log('Calendar', error);
     }
   }
-
   return (
     <>
       <HeaderMonths
@@ -50,10 +52,7 @@ export const Calendar = ({
         onChangeYear={handleChangeYear}/>
       <div
         id="1"
-        className="
-          flex
-          flex-col
-        "
+        className={`flex flex-col`}
       >
         <div className="
           flex
@@ -72,7 +71,7 @@ export const Calendar = ({
             ${size === 'lg' && 'md:h-10 md:w-16 !w-12'}
             ${size === 'md' && 'md:h-6 md:w-12'}
             ${size === 'sm' && 'sm:h-4 sm:w-10'}
-            ${size === 'xl' && 'md:h-10 md:w-20'}
+            ${size === 'xl' && 'md:h-10 md:w-20 max-md:h-6 max-md:w-12'}
             ${size === 'xs' && '!h-4 !w-8'}
             h-6 w-10
             md:h-6 md:w-12
@@ -86,39 +85,41 @@ export const Calendar = ({
             ))
           }
         </div>
-        
-        {matrizDays.map((week, indexW)=>(
-          <div 
-            id="2"
-            key={`week_${indexW}`}
-            className="
-              flex
-              flex-row
-            "
-          >
-            {week.map((day, indexD)=>(
-              <div
-                key={`day_${indexD}`}
-                onClick={()=>onClickDay(day)}
-              >
-                <DayBox
-                  size={size}
-                  // onMouseEnter={()=>{return console.log(day)}}
-                  numberDay={day.dayNumber}
-                  partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
-                  disabled={!day.isCurrentMonth}
-                  borderColor={`${year}-${monthString}-${day.dayNumber.toString().length === 1 ? `0${day.dayNumber}`: day.dayNumber}` === today ? 'cff-bg-color-green-600' : null}
-                  arrayColors={[
-                  // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
-                  // (month%2 === 0 ? 'blue' : 'blue'),
-                  // (month%2 === 0 ? 'red' : 'green'),
-                  ]}
-                  
-                  ></DayBox>
-              </div> 
-            ))}
-          </div>
-        ))}
+        <span className="relative" >
+          <span className={`${bgImage && 'cff-bg-image-white dark:cff-bg-image-dark'} absolute h-full w-full rounded-lg`}> </span>
+          {matrizDays.map((week, indexW)=>(
+            <div 
+              id="2"
+              key={`week_${indexW}`}
+              className="
+                flex
+                flex-row
+              "
+            >
+              {week.map((day, indexD)=>(
+                <div
+                  key={`day_${indexD}`}
+                  onClick={()=>onClickDay(day)}
+                >
+                  <DayBox
+                    size={size}
+                    // onMouseEnter={()=>{return console.log(day)}}
+                    numberDay={day.dayNumber}
+                    partyDay={(day.dayName === _language.daysArray[0] || day.dayName === 'partyDay')}
+                    disabled={!day.isCurrentMonth}
+                    borderColor={`${year}-${monthString}-${day.dayNumber.toString().length === 1 ? `0${day.dayNumber}`: day.dayNumber}` === today ? 'cff-bg-color-green-600' : null}
+                    arrayColors={[
+                    // (month%2 === 0 || indexD%2 === 0 ? 'red' : 'blue'),
+                    // (month%2 === 0 ? 'blue' : 'blue'),
+                    // (month%2 === 0 ? 'red' : 'green'),
+                    ]}
+                    
+                    ></DayBox>
+                </div> 
+              ))}
+            </div>
+          ))}
+        </span>
       </div>
     </>
   );

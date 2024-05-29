@@ -1,5 +1,6 @@
 import request, { GraphQLClient } from 'graphql-request';
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
+import { redirectClient } from './redirectClient';
 
 const uri = process.env.NEXT_PUBLIC_APP_GRAPH_URI;
 console.log(uri, 'uri');
@@ -28,15 +29,22 @@ export const requestClient: any = async (query: string, data?: any, token?: stri
     return response
 
   } catch (error: any) {
-    
-    if (error?.response?.errors[0]?.extensions?.code === 'UNAUTHENTICATED') {
-      throw {redirect: 'UNAUTHENTICATED'};
+    console.log('requestClient', error);
+    const _error =  error?.response?.error || error?.response || error;
+    const httpStatusCode = _error?.statusCode || _error?.status ;
+    if (/^40[0-9]$/.test(httpStatusCode)) {
+      // retorna al servicio
+      if (_error?.code === 'UNAUTHENTICATED') throw {redirect: 'UNAUTHENTICATED', error:_error};
+      throw _error
     }
-    if (error?.response?.errors[0]?.extensions) throw error.response.errors[0].extensions
-    if (error?.response?.errors[0]) throw error.response.errors[0]
-    if (error?.response) throw error.response
-    if (error?.code) throw {redirect: 'ECONNREFUSED'};
-    throw error
+    if (/^50[0-9]$/.test(httpStatusCode)) {
+      throw {redirect: 'ECONNREFUSED', error:_error};
+    }
+    // Manejar errores específicos
+    if (_error?.message === 'Network request failed') {
+      throw {redirect: 'ECONNREFUSED', error:_error?.message};
+    } 
+    throw {redirect: 'ECONNREFUSED', error:_error};
   }
   
 }

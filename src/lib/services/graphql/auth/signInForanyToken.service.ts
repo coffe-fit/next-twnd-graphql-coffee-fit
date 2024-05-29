@@ -1,5 +1,5 @@
 import { request, gql } from 'graphql-request';
-import {  graphQLClient } from "../client-request";
+import {  graphQLClient, requestClient } from "../client-request";
 import { redirectClient } from '../redirectClient';
 
 
@@ -19,7 +19,7 @@ export interface input {
 export const AuthForanyToken = async ({email, token, name}:input) => {
   try {
     const query = AUTH_FORANY_TOKEN;
-    const data:{auth_signInForanyToken: any} = await graphQLClient.request(
+    const data:{auth_signInForanyToken: any} = await requestClient(
       query,
       {
         "signInAuthInput": {

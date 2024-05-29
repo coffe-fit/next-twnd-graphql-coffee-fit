@@ -28,8 +28,8 @@ export default function DashboardLayout({children}:props) {
     <div className="flex flex-col items-center h-screen">
       <Header></Header>
       {showPage && <span className="
-          h-[calc(100%-2.5rem)]
-          relative top-9
+          h-[calc(100%-40px)]
+          absolute top-9
           overflow-y-auto
           w-full
         ">{children}</span>}

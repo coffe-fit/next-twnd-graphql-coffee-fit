@@ -74,7 +74,7 @@ const handleSignInWithPopup = async (provider: 'google'| 'facebook')=>{
   if (provider === 'google') _provider = new GoogleAuthProvider();
   if (provider === 'facebook') _provider = new FacebookAuthProvider();
   const result = await signInWithPopup(auth, _provider)
-  console.log(result);
+  console.log('userRegister-handleSignInWithPopup',result);
   
   return result
 }

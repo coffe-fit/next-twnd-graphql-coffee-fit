@@ -14,6 +14,7 @@ const useCustomRouter = () => {
   }, [path]);
 
   const push = (path: string) => {
+    console.log('push');
     setLoading(true);
     nextRouter.push(path);
   };
@@ -23,6 +24,7 @@ const useCustomRouter = () => {
   };
 
   const back = () => {
+    console.log('back');
     setLoading(true);
     nextRouter.back();
     // Elimina el último elemento del historial al retroceder

@@ -59,7 +59,6 @@ export const ClientLogin = ({}:any) => {
         imgUser: user.photoUrl || user.photoURL,
         username: user.displayName || user.email,
       }));
-      console.log(user);
       
       const url = format({
         pathname: '/pages/dashboard',

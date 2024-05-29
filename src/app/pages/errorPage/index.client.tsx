@@ -34,7 +34,7 @@ export const ClientErrorPage = ({
   return (
     <MainLayout>
       <div className="flex justify-center items-center h-screen">
-        <div className="text-center">
+        <div className="text-center flex">
           {image && <img src={image} alt="Error" width={200} height={200} />}
           {errorMessage && <p className="mt-4">{errorMessage}</p>}
           {onRetry && (

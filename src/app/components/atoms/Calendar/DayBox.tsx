@@ -38,13 +38,13 @@ export const DayBox: React.FC<Props> = ({
         ${size === 'sm' && 'sm:h-10 sm:w-10'}
         ${size === 'xs' && '!h-6 !w-8'}
         ${size === 'md' && 'md:h-12 md:w-12'}
-        ${size === 'xl' && 'md:h-20 md:w-20'}
+        ${size === 'xl' && 'md:h-20 md:w-20 max-md:h-10 max-md:w-12'}
         h-10 w-10
         md:h-12 md:w-12
         relative
         ${borderColor ? `${borderColor} dark:bg-green-500` : ''}
         ${selected && !borderColor && !disabled && selected === true && 'bg-green-200 dark:bg-green-300'}
-        ${partyDay && !borderColor && !selected && partyDay === true && 'bg-gray-300 dark:bg-neutral-700'}
+        ${partyDay && !borderColor && !selected && partyDay === true && 'cff-bg-color-gray-200 dark:bg-neutral-700'}
         ${disabled && !borderColor && disabled === true && 'text-neutral-200 dark:text-neutral-800'}
         cff-button
         

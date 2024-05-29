@@ -31,7 +31,7 @@ export const SendEmail = async ({
       onFail(_language.error.code[0]);
       if (error.code === 'auth/invalid-email') onFail(_language.error.code['auth/invalid-email']);
       if (error.code === 'auth/quota-exceeded') onFail(_language.error.code['auth/quota-exceeded']);
-      console.log(error);
+      console.log('sendEmail-handleSubmit',error);
     }
   }
 

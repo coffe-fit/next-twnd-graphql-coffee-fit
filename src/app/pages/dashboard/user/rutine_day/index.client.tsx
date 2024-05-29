@@ -1,7 +1,7 @@
 'use client'
 import { useSelector } from "react-redux";
 
-import { language } from "@/lib/lenguage";
+import { language,translateString } from "@/lib/lenguage";
 import { RutineTypeTodo } from "@/app/components/RutineTypeTodo";
 
 import sentadilla from '@/app/images/exercises/sentadilla.png';
@@ -26,40 +26,40 @@ export const ClientRutineDay = ({
 
   return (
     <MainLayout>
-    <div className="flex flex-col items-center h-full">
-      <div className="cff-border-1 w-80">
-        <span className="flex flex-col items-center w-full text-2xl">
+    <div className="cff-border-1 !rounded-3xl flex flex-col items-center h-auto pb-4">
+      <div className=" w-80">
+        <span className=" flex flex-col items-center w-full text-2xl font-semibold">
           {day}
         </span>
-        <div className="cff-border-1 w-auto"></div>
         {rutinesByType && rutinesByType.map((item: any, index: number) =>(
           <span key={`${index}_${item.id}`}>
             <span className="
               flex
               flex-col
               items-start
-              w-full
-              text-2xl
-              pl-2
-
+              w-auto
+              text-xl
+             text-black
             dark:bg-green-500
               cff-bg-color-green-600
+              !rounded-md
+              mx-1
+              px-2
             ">
-              {item.rutineTypeName}
+              {translateString(_language, item.rutineTypeName)}
             </span>
-            <hr />
             {item.exercises && item.exercises.map((itemRutine: any, index: number) =>(
               <span key={`${index}_${item.id}`}>
                 <RutineTypeTodo 
                   id={`${itemRutine.id}`}
-                  exerciseName={itemRutine.exercise.name}
+                  exerciseName={translateString(_language, itemRutine.exercise.name)}
                   serie={itemRutine.series}
                   amountMax={itemRutine.amountRepeat}
                   urlVideo={itemRutine.exercise.movie}
-                  urlImageIntroduce={sentadilla}
-                  breakOwn={itemRutine.break}   
+                  urlImageIntroduce={itemRutine.exercise.imgGood || sentadilla}
+                  breakOwn={itemRutine.break}  
+                 
                 />
-                <hr />
               </span>
             ))}
           </span>

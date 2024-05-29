@@ -27,8 +27,8 @@ export default  function trainLayout({children}:props) {
     <div className="">
       {<span className="
           mt-3
-          h-[calc(100%-2.5rem)]
-          fixed top-9
+          h-[calc(100%-40px)]
+          absolute top-9
           overflow-y-auto
           w-full
         ">{children}</span> }

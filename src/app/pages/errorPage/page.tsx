@@ -4,10 +4,11 @@ import { getDataErrorCode } from "./ErrorCodes";
 
 
 export default  function ErrorPage({
-  searchParams: { id },
+  searchParams: { id, error },
 }: {
-  searchParams: { id: string }
+  searchParams: { id: string, error: string }
 }) {
+  console.warn('page/error',id,error, new Date().toISOString());
   
   const {
     image,

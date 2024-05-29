@@ -1,132 +1,95 @@
 'use client'
 
 import useCustomRouter  from '@/app/hooks/useCustomRouter';
-import { format } from "url";
-import { useDispatch } from "react-redux"; 
-
-import { ExerciseType } from "@/app/components";
-import { RutineTypeBox } from "@/app/components/RutineTypeBox";
-import { Calendar } from "@/app/components/atoms";
+import Image from 'next/image';
+import { useDispatch, useSelector } from "react-redux"; 
+import { Button, Calendar } from "@/app/components/atoms";
 
 import { CalendarDayInterface } from "@/lib/interfaces/calendarDay.interface";
 
 import { addRutineSelected } from "@/provider/redux/userSlice";
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 // import { useLoading } from '@/app/hooks/useLoading';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import MainLayout from '@/app/layouts/MainWithLoading';
+import { ClientRutineDay } from '../rutine_day/index.client';
+import { language } from '@/lib/lenguage';
+
+
+import urlGrafics from '@/app/images/icons/barra-grafica-99-80s.png';
+import urlGraficsWhite from '@/app/images/icons/barra-grafica-white-99.png';
 
 export const ClientHome = ({
   rutineType, rutineDay
 }:any) => {
-console.log(rutineType, rutineDay);
 
   const router = useCustomRouter();
+
   const dispatch = useDispatch();
   const todayreal = new Date().toLocaleString("en-ZA", {timeZone: "America/Bogota"}).replaceAll('/','-').split(',')[0]
-  const todayNum = new Date(todayreal).getUTCDay()
-  const customSessionStorage = CustomSessionStorage();
+  
+  const todayNum = new Date(todayreal).getUTCDay();
+  const [stateTodayNum, setStateTodayNum] = useState<string>(todayNum.toString());
 
+  let user = useSelector((state: any) => state.user);
+  
+  const customSessionStorage = CustomSessionStorage();
+  const _language = language('español');
   // const { setLoading } = useLoading();
   // useEffect(() => {
   //   setLoading(false);
   // }, []);
-
+  dispatch(addRutineSelected({
+    rutines: rutineDay 
+  }));
   const handleClickCalendar = (day: CalendarDayInterface) => {
     dispatch(addRutineSelected({
       rutines: rutineDay 
     }));
-    const url = format({
-      pathname: '/pages/dashboard/user/rutine_day',
-      query: {
-        id: customSessionStorage.getItem('auth_token'),
-        day:  day.dayName
-      }
-    });
-    router.push(url);
+    console.log(day, todayNum);
+    
+    setStateTodayNum(_language.daysArray.indexOf(day.dayName).toString())
+    // const url = format({
+    //   pathname: '/pages/dashboard/user/rutine_day',
+    //   query: {
+    //     id: customSessionStorage.getItem('auth_token'),
+    //     day:  day.dayName
+    //   }
+    // });
+    // router.push(url);
   }
 
   
   
   return (
     <MainLayout>
-    <div className="flex flex-col items-center h-full">
+    <div className="flex flex-col overflow-y-auto items-center h-full">
       <span className="
         cff-flex-row-center
         flex-col
         md:flex-row
       ">
         <span>
-          <Calendar onclick={handleClickCalendar} size="lg" />
+          <Calendar onclick={handleClickCalendar} size="xl" bgImage={true} />
         </span>
-        <span className="
-          flex
-          justify-start
-          h-full
-          flex-row
-          md:flex-col
-          flex-wrap
-        ">
-          <span className="
-            max-sm:hidden
-            h-20
-          ">
+      </span>
+      <span className="my-3">
 
-          </span>
-          {rutineType.slice(0,3).map((item:any, index: number)=>(
-            <span className="max-sm:hidden" key={index}>
-              <RutineTypeBox
-                rutines={item.exercises}
-                name={item.rutineTypeName}
-                id="123"
-                bgColor={item.days.includes(todayNum) ? 'cff-bg-color-green-600': '' }
-                keyProp={0}/>
-            </span>
-          ))}
-        </span>
       </span>
-      <span className="
-        flex
-        justify-center
-        flex-row
-        flex-wrap
-        max-sm:hidden
-      ">
-        {rutineType.slice(3).map((item:any, index: number)=>(
-          <span key={index}>
-            <RutineTypeBox
-              rutines={item.exercises}
-              name={item.rutineTypeName}
-              id="123"
-              bgColor={item.days.includes(todayNum) ? 'cff-bg-color-green-600': '' }
-              keyProp={index}
-            />
-          </span>
-        ))}
-        <ExerciseType name="Pierna" id="123"/>
-        <ExerciseType name="Pierna" id="123"/>
-      </span>
-      {/* se repite la seccion anterior para lograr sincronia con el tamaño de las cajas*/}
-      <span className="
-        flex
-        justify-center
-        flex-row
-        flex-wrap
-        sm:hidden
-      ">
-        {rutineType.map((item:any, index: number)=>(
-          <span key={index}>
-            <RutineTypeBox
-              rutines={item.exercises}
-              name={item.rutineTypeName}
-              id="123"
-              bgColor={item.days.includes(todayNum) ? 'cff-bg-color-green-600': '' }
-              keyProp={index}
-            />
-          </span>
-        ))}
-        <ExerciseType name="Pierna" id="123"/>
-        <ExerciseType name="Pierna" id="123"/>
+      <ClientRutineDay day={_language.daysArray[+stateTodayNum]}></ClientRutineDay>
+      <span className="m-14"></span>
+      <span className="absolute bottom-1 flex justify-center w-full ">
+        <Button size="lg"
+          className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 "
+          onclick={()=>{
+            console.log(user);
+            
+            router.push(`/pages/dashboard/user/progressCharts?id=${customSessionStorage.getItem('auth_token')}&user=${user.id}`);
+          }}
+        >
+          <Image className={"block dark:hidden "} src={urlGrafics} alt={'alt'} width={45} height={45}/>
+          <Image className={"hidden dark:block "} src={urlGraficsWhite} alt={'alt'} width={45} height={45}/>
+        </Button>
       </span>
     </div>
     </MainLayout>

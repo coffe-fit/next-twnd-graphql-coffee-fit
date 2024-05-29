@@ -32,6 +32,7 @@ const useAuth = () => {
       console.log(JSON.stringify(user));
       // if (email) {
         // setLoading(false);
+        
         const ownToken = await sendUser({
           email: user.email,
           token: user?.accessToken,

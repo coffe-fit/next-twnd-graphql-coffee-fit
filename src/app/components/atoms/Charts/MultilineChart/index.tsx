@@ -11,6 +11,7 @@ import {
   Legend
 } from 'chart.js';
 import { language, translateString } from '@/lib/lenguage';
+import { timestampToString } from '@/lib/util/dateFunctions';
 
 ChartJS.register(
   CategoryScale,
@@ -28,10 +29,12 @@ type DataItem = {
 
 interface ChartProps {
   data: DataItem[];
+  __bodyPartsOrder?: string[],
+  classNameContainer: String
 }
 
 
-const bodyPartsOrder = [
+const _bodyPartsOrder = [
   'height', 'age', 'diet', 'fitnessGoals',
   'chest', 'waist', 'bodyFatPercentage',
   'bloodPressure', 'restingHeartRate',
@@ -42,12 +45,13 @@ const bodyPartsOrder = [
   'obs', 'injuryHistory'
 ];
 
-const MultiLineChart: React.FC<ChartProps> = ({ data }) => {
+const MultiLineChart: React.FC<ChartProps> = ({ data, __bodyPartsOrder, classNameContainer }) => {
+  const bodyPartsOrder = __bodyPartsOrder ||  _bodyPartsOrder;
   if (!data.length) return null;
   const _language = language('español');
   const numericKeys = Object.keys(data[0])
   .filter((key) => key !== 'id' && !isNaN(Number(data[0][key])))
-  .sort((a, b) => bodyPartsOrder.indexOf(a) - bodyPartsOrder.indexOf(b));
+  .sort((a, b) => bodyPartsOrder?.indexOf(a) - bodyPartsOrder.indexOf(b));
 
   const reversedData = data.slice().reverse(); // Invertir el orden de los datos
 
@@ -55,7 +59,7 @@ const MultiLineChart: React.FC<ChartProps> = ({ data }) => {
   const opacityIncrement = 1 / (numDatasets + 1); // Incremento de opacidad entre conjuntos de datos
 
   const chartData = {
-    labels: numericKeys.map(key => translateString(_language, key)), 
+    labels: bodyPartsOrder.map(key => translateString(_language, key)), 
     datasets: reversedData.map((item, index) => {
       const opacity = 1 - (index * opacityIncrement);
       const color = index === 0
@@ -63,8 +67,8 @@ const MultiLineChart: React.FC<ChartProps> = ({ data }) => {
         : `rgba(100, 100, 100, ${opacity})`; // Gris con opacidad variable para los siguientes conjuntos
 
       return {
-        label: `Dataset ${index + 1}`,
-        data: numericKeys.map((key) => Number(item[key])),
+        label: `${timestampToString(item.dateCreated)}`,
+        data: bodyPartsOrder.map((key) => Number(item[key])),
         backgroundColor: color,
         borderColor: color,
         borderWidth: 1,
@@ -80,29 +84,29 @@ const MultiLineChart: React.FC<ChartProps> = ({ data }) => {
         position: 'top' as const, // Mover la leyenda al fondo para ahorrar espacio
       },
       title: {
-        display: true,
+        display: false,
         text: 'Chart',
       },
     },
     scales: {
       x: {
         title: {
-          display: true,
+          display: false,
           text: 'Categorías',
         },
       },
       y: {
         beginAtZero: true,
         title: {
-          display: true,
-          text: 'Values',
+          display: false,
+          text: '',
         },
       },
     },
   };
 
   return (
-    <div className="p-4" style={{ height: '400px', width: '100%' }}>
+    <div className={`${classNameContainer}`}>
       <Line data={chartData} options={options} />
     </div>
   );

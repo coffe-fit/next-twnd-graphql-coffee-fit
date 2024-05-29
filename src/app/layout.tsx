@@ -22,7 +22,7 @@ export default function RootLayout({
     <ReduxProvider>
       <LoadingProvider>
       <html lang="es">
-        <body className={inter.className}>
+        <body >
           {/* <MainWithLoading> */}
 
             <Loading>Cargando</Loading>

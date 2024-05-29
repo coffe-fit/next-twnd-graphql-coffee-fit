@@ -8,7 +8,8 @@
       "auth/fail-session": "Error al iniciar sesión:",
       "UNAUTHENTICATED": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar.",
       "AUTH_TOKEN_FAIL": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar.",
-      "ECONNREFUSED": "Lo sentimos, actualmente tenemos inconvenientes con el servidor pronto estará disponible nuestra plataforma"
+      "ECONNREFUSED": "Lo sentimos, actualmente tenemos inconvenientes con el servidor pronto estará disponible nuestra plataforma",
+      "RUTINE_LESS": "Actualmente no tienes rutinas asignadas. Por favor, espera a que uno de nuestros entrenadores las cree para ti. Te enviaremos un correo cuando tus rutinas estén listas para que puedas comenzar."
     }
   },
   "success": {
@@ -58,18 +59,18 @@
   "cancel": "Cancelar",
   "id": "ID",
   "weight": "Peso",
-  "rightShoulder": "Hombro Derecho",
-  "leftShoulder": "Hombro Izquierdo",
-  "rightBicep": "Bíceps Derecho",
-  "leftBicep": "Bíceps Izquierdo",
-  "rightLeg": "Pierna Derecha",
-  "leftLeg": "Pierna Izquierda",
+  "rightShoulder": "Hombro Der",
+  "leftShoulder": "Hombro Izq",
+  "rightBicep": "Bíceps Der",
+  "leftBicep": "Bíceps Izq",
+  "rightLeg": "Pierna Der",
+  "leftLeg": "Pierna Izq",
   "chest": "Pecho",
-  "rightCalf": "Pantorrilla Derecha",
-  "leftCalf": "Pantorrilla Izquierda",
+  "rightCalf": "Pantorrilla Der",
+  "leftCalf": "Pantorrilla Izq",
   "waist": "Cintura",
-  "rightForearm": "Antebrazo Derecho",
-  "leftForearm": "Antebrazo Izquierdo",
+  "rightForearm": "Antebrazo Der",
+  "leftForearm": "Antebrazo Izq",
   "diet": "Dieta",
   "height": "Altura",
   "bodyFatPercentage": "Porcentaje de Grasa Corporal",
@@ -82,6 +83,8 @@
   "injuryHistory": "Historial de Lesiones",
   "fitnessGoals": "Metas de Fitness",
   "userId": "ID de Usuario",
+  "hi": "Hola",
+  "thanks1": "Gracias por tu paciencia y comprensión.",
 
   "rutineType": {
     "LEG": "PIERNA",

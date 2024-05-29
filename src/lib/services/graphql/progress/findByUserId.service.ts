@@ -30,6 +30,7 @@ export const  PROGRESS_FIND_BY_USER_ID = gql`
       height
       fitnessGoals
       age
+      dateCreated
     }
   }
 `;
@@ -40,6 +41,8 @@ export interface input {
 }
 export const progress_find_by_user_id = async ({token, _data}: input ) => {
   try {
+    console.log(_data);
+    
     const query = PROGRESS_FIND_BY_USER_ID;
     const data:{progress_findByUserId: any} = await requestClient(
       query,

@@ -57,7 +57,7 @@ export const DataForm = ({
     <BoxToFormLayout >
     <form onSubmit={handleSubmit} className="min-h-80 flex flex-row flex-wrap content-around justify-around">
       {resultado.map((item:string, _index: any)=>(
-        <span className="mt-4">
+        <span  key = {`resultado_${_index}`}className="mt-4">
           <Input
             type="number"
             name={item}

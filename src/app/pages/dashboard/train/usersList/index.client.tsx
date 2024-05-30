@@ -23,14 +23,18 @@ import urlRutine from '@/app/images/icons/rutina-de-ejercicios-99.png';
 import urlRutineWhite from '@/app/images/icons/rutina-de-ejercicios-white-99.png';
 import MainWithLoading from "@/app/layouts/MainWithLoading";
 import MainLayout from "@/app/layouts/MainWithLoading";
+import { findAllByRoleClient } from "@/lib/services";
+
 
 interface Props {
-  usersList: any;
+  _usersList: any;
 }
 
 export const Client = ({
-  usersList
+  _usersList
 }:Props) => {
+  const [usersList, setUsersList] = useState(_usersList);
+  const [cols2, setCols2] = useState<any>([]);
   const router = useCustomRouter();
   const customSessionStorage = CustomSessionStorage();
   const _language = language('español');
@@ -40,16 +44,7 @@ export const Client = ({
   useEffect(() => {
     setLoading(false);
   }, []);
-  // Filtrar usuarios nuevos y activos
-  let usersNew = usersList.filter((item: { role: { name: string; }; }) => 
-    item.role.name === "NEW_CLIENT" 
-  );
-
-  const usersActive = usersList.filter((item: { role: { name: string; }; }) => 
-    item.role.name === "CLIENT" || item.role.name === "TRAIN"
-  );
-
-  const cols2: any = [...usersNew, ...usersActive];
+  
 
   // Calcular si la fila o el botón va resaltado
   useEffect(() => {
@@ -110,14 +105,35 @@ export const Client = ({
     }
   }, [rendered]);
 
+
+  const findNewUsers = async ()=>{
+    setLoading(true);
+    const newUsersList = await findAllByRoleClient(customSessionStorage.getItem('auth_token'));
+    setUsersList(newUsersList);
+    // Filtrar usuarios nuevos y activos
+    let usersNew = usersList.filter((item: { role: { name: string; }; }) => 
+      item.role.name === "NEW_CLIENT" 
+    );
+
+    const usersActive = usersList.filter((item: { role: { name: string; }; }) => 
+      item.role.name === "CLIENT" || item.role.name === "TRAIN"
+    );
+
+    setCols2([...usersNew, ...usersActive]);
+    setLoading(false);
+  }
+  useEffect(() => {
+    findNewUsers();
+  }, []);
+
+
   return (
     <MainLayout>
       {rendered && cols2 && (
         <div className={`
-          flex flex-col items-center h-full
-          ${cols2.length < 10 ? 'pt-20': 'pt-3'}
+          flex flex-col items-center h-full px-3 pt-3'}
         `}>
-          <span className="flex flex-col items-center w-full text-2xl pt-4 pb-4">
+          <span className="flex flex-col items-center w-full h-full text-2xl pt-4 pb-4">
             {_language.users}
           </span>
           <GridLayout 
@@ -126,8 +142,8 @@ export const Client = ({
             hideHeader={true}
             showOnlyColumns={showOnlyColumns}
             filterInputBy={filterInputBy}
-            classNameContainer="h-[calc(100vh-15rem)]"
-            classNameGrid=" h-[calc(100vh-15rem)] overflow-y-auto"
+            classNameContainer="h-[calc(100vh-9rem)] "
+            classNameGrid="h-[calc(100vh-13rem)] overflow-y-auto"
           />
           <span className="absolute bottom-1 flex justify-between ">
             <Button  
@@ -136,12 +152,12 @@ export const Client = ({
                 router.push(`/pages/dashboard/train/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
               }}
               size="lg"
-              className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-20 !w-20"
+              className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 "
             >
               <Image className={"block dark:hidden"} src={urlAddUserImg} alt={'alt'} width={40} height={40}/>
               <Image className={"hidden dark:block"} src={urlAddUserWhiteImg} alt={'alt'} width={40} height={40}/>
             </Button>
-            <Button size="lg" className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-20 !w-20">
+            <Button size="lg" className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 ">
               <Image className={"block dark:hidden"} src={urlPesa} alt={'alt'} width={40} height={40}/>
               <Image className={"hidden dark:block"} src={urlPesaWhite} alt={'alt'} width={40} height={40}/>
             </Button>

@@ -28,7 +28,7 @@ export default  function ErrorPage({
           buttonMessage={buttonMessage}
           onRetry={onRetry}
           urlRetry={urlRetry}
-          children={children}
+          _children={children}
         />
       </Suspense>
     </div>

@@ -13,7 +13,7 @@ export default async function User({
   
   return (
     <Suspense fallback={<>cargando userList...</>}>
-      <Client usersList={usersList} />
+      <Client _usersList={usersList} />
     </Suspense>
   );
 }

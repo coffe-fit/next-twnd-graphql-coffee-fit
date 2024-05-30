@@ -73,11 +73,7 @@ export const ClientHome = ({
           <Calendar onclick={handleClickCalendar} size="xl" bgImage={true} />
         </span>
       </span>
-      <span className="my-3">
-
-      </span>
       <ClientRutineDay day={_language.daysArray[+stateTodayNum]}></ClientRutineDay>
-      <span className="m-14"></span>
       <span className="absolute bottom-1 flex justify-center w-full ">
         <Button size="lg"
           className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 "

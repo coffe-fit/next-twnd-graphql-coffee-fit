@@ -245,11 +245,10 @@ export const Client = ({ idPage, userSelected, rutineTypes, firstExercises }: Pr
   return (
     <MainLayout>
     <Suspense fallback={<div>cargando ButonsSocialMedia...</div>}>
-    <div className="h-[calc(100%-1.5rem)]">
+    <div className="">
       <div className={`
         mt-2
-        flex flex-col items-center 
-        h-[calc(100%-45px)]
+        flex flex-col items-center
         overflow-auto md:pt-10 relative
       `}>
         {showCalendar && 

@@ -35,7 +35,7 @@ export const requestClient: any = async (query: string, data?: any, token?: stri
     if (/^40[0-9]$/.test(httpStatusCode)) {
       // retorna al servicio
       if (_error?.code === 'UNAUTHENTICATED') throw {redirect: 'UNAUTHENTICATED', error:_error};
-      throw _error
+      if (_error?.code === 'BAD_REQUEST') throw {redirect: 'BAD_REQUEST', error:_error};
     }
     if (/^50[0-9]$/.test(httpStatusCode)) {
       throw {redirect: 'ECONNREFUSED', error:_error};

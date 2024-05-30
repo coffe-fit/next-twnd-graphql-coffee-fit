@@ -13,7 +13,7 @@ interface ErrorComponentProps {
   buttonMessage?:string;
   onRetry?: () => void;
   urlRetry: string;
-  children?: React.ReactNode;
+  _children?: React.ReactNode;
 }
 export const ClientErrorPage = ({
   image,
@@ -21,7 +21,7 @@ export const ClientErrorPage = ({
   buttonMessage,
   onRetry,
   urlRetry,
-  children
+  _children
 }:ErrorComponentProps) => {
   const router = useCustomRouter();
   const _language = language('español');
@@ -53,7 +53,7 @@ export const ClientErrorPage = ({
               </Button>
             </span>
           )}
-          {children}
+          {_children}
         </div>
       </div>
     </MainLayout>

@@ -39,8 +39,8 @@ export const Resume = ({className}:props) => {
           {rutineByDays && rutineByDays[_index] && rutineByDays[_index].length !==0 && (
             <div className="pl-2">
               <p>{day.toUpperCase()}</p>
-              {rutineByDays[_index].map((rutine: { exercises: { name: string }; }) => (
-                <li className="pl-3">{translateString(rutine?.exercises?.name)}</li>
+              {rutineByDays[_index].map((rutine: { exercises: { name: string }; }, index: number) => (
+                <li key={`rutineByDays_${index}`}className="pl-3">{translateString(rutine?.exercises?.name)}</li>
               ))}
             </div>
           )}

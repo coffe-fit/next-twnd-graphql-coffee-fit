@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { DashboardHeader as Header } from '@/app/components';
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 import useCustomRouter from "@/app/hooks/useCustomRouter";
+import { useSelector } from "react-redux";
 // import { useLoading } from "@/app/hooks/useLoading";
 
 interface props {
@@ -11,7 +12,7 @@ interface props {
 
 export default function DashboardLayout({children}:props) {
   const [showPage, setShowPage] = useState<boolean>(false);
-
+  let layout = useSelector((state: any) => state.layout);
   const router = useCustomRouter();
 
   const customSessionStorage = CustomSessionStorage();
@@ -25,15 +26,20 @@ export default function DashboardLayout({children}:props) {
   }, []);
   return (
     
-    <div className="flex flex-col items-center h-screen">
-      <Header></Header>
+    <div className="flex flex-col items-center h-screen relative">
+      {layout.headerDisplay && (
+        <>
+        <span className="mb-10"></span>
+        <Header></Header>
+        </>
+      )}
       {showPage && <span className="
-          h-[calc(100%-40px)]
-          absolute top-9
           overflow-y-auto
           w-full
         ">{children}</span>}
-      
+      {layout.footerDisplay && (
+        <span className="mb-14"></span>
+      )}
     </div>
   );
 }

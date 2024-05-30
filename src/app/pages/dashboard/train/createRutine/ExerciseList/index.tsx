@@ -73,7 +73,7 @@ export const ExerciseList = ({ dayName, rutineTypes, firstExercises }: Props) =>
 
   return (
     <BoxWithTitle title={dayName}>
-      <div className="relative overflow-x-hidden h-[calc(100%-40px)]">
+      <div className="relative overflow-x-hidden h-[calc(100vh-14rem)]">
         {_rutineTypes.map((type, index) => (
           <li
             key={type.id}
@@ -95,6 +95,7 @@ export const ExerciseList = ({ dayName, rutineTypes, firstExercises }: Props) =>
             {type.open && type.exercises && (
               type.exercises.map((exercise, index) => (
                 <div
+                  key={`exercice_${index}`}
                   className=""
                   onClick={()=>{
                     dispatch(openPopup());

@@ -28,8 +28,9 @@ export const errorCodes = {
   "RUTINE_LESS": {
     image: null,
     errorMessage: null,
-    buttonMessage: '',
+    buttonMessage: _language.goToBegin,
     onRetry: null,
+    urlRetry: '/',
     children: (<span className="!w-96">
       <p>{_language.hi},</p>
       <p>{_language.error.code.RUTINE_LESS}</p>

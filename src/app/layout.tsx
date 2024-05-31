@@ -1,10 +1,9 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/provider/redux/ReduxProvider";
-import { LoadingProvider} from "./hooks/useLoading";
-import MainWithLoading from "./layouts/MainWithLoading";
-import Loading from "./components/atoms/Loading";
+import { LoadingProvider } from "@/app/hooks/useLoading";
+import Loading from "@/app/components/atoms/Loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,22 +14,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <ReduxProvider>
-      <LoadingProvider>
-      <html lang="es">
-        <body >
-          {/* <MainWithLoading> */}
-
+    <html lang="es">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
+      <body className={inter.className}>
+        <ReduxProvider>
+          <LoadingProvider>
             <Loading>Cargando</Loading>
             {children}
-          {/* </MainWithLoading> */}
-        </body>
-      </html>
-      </LoadingProvider>
-    </ReduxProvider>
+          </LoadingProvider>
+        </ReduxProvider>
+      </body>
+    </html>
   );
 }

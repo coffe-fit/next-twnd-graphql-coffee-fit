@@ -36,11 +36,12 @@ export default function DashboardLayout({children}:props) {
       {showPage && <span className="
           overflow-y-auto
           w-full
-          fixed
-          bottom-0
         ">{children}</span>}
       {layout.footerDisplay && (
-        <span className="mb-14"></span>
+        <span className="
+        mb-14 
+        fixed
+        bottom-0"></span>
       )}
     </div>
   );

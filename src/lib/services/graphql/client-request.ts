@@ -44,7 +44,7 @@ export const requestClient: any = async (query: string, data?: any, token?: stri
     if (_error?.message === 'Network request failed') {
       throw {redirect: 'ECONNREFUSED', error:_error?.message};
     } 
-    throw {redirect: 'ECONNREFUSED', error:_error};
+    throw {redirect: 'ECONNREFUSED', error:{..._error}};
   }
   
 }

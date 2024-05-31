@@ -9,17 +9,15 @@ interface props {
 export default async function User({
   searchParams: { id },
 }: props) {
-  
-  const rutineByType = await getRutineOrderType(id);
+
   const rutineByDays = await getRutineOrderDay(id);
-  console.log(rutineByType);
   console.log(rutineByDays);
   console.log('rutineByDays1');
   
   
   return (
     <Suspense fallback={<>cargando ...</>}>
-      <ClientHome rutineType={rutineByType} rutineDay={rutineByDays}/>
+      <ClientHome  rutineDay={rutineByDays}/>
     </Suspense>
   );
 }

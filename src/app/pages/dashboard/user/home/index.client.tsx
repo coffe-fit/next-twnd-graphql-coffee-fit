@@ -20,7 +20,7 @@ import urlGrafics from '@/app/images/icons/barra-grafica-99-80s.png';
 import urlGraficsWhite from '@/app/images/icons/barra-grafica-white-99.png';
 
 export const ClientHome = ({
-  rutineType, rutineDay
+  rutineDay
 }:any) => {
 
   const router = useCustomRouter();

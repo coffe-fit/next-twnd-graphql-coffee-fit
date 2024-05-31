@@ -43,7 +43,7 @@ export const  getRutineOrderDay = async (token?: string) => {
   } catch (error: any) {
     console.log('getRutineOrderDay', error);
     if (error.code === 'NOT_FOUND') redirectClient('RUTINE_LESS', error?.message) 
-    if (error.redirect) redirectClient(error.redirect);
+    if (error.redirect) redirectClient(error.redirect,'cliente');
     return error
   }
 }

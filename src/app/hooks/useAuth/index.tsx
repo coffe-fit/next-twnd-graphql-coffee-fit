@@ -30,7 +30,7 @@ const useAuth = () => {
       // mockFirebase.accessToken = mockFirebase.stsTokenManager.accessToken
       // if (!user && mockFirebase) user = mockFirebase
       console.log(JSON.stringify(user));
-      // if (email) {
+      if (email) {
         // setLoading(false);
         
         const ownToken = await sendUser({
@@ -43,7 +43,7 @@ const useAuth = () => {
         user.userId = ownToken.id;
         setUser(user);
         setToken(ownToken.token)
-      // }
+      }
     });
     return () => unsubscribe();
   }, []);

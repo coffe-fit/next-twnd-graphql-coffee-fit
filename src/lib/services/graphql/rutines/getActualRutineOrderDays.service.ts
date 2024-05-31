@@ -42,8 +42,8 @@ export const  getRutineOrderDay = async (token?: string) => {
     return data.rutine_getActualRutineOrderDays;
   } catch (error: any) {
     console.log('getRutineOrderDay', error);
-    redirectClient('RUTINE_LESS', error?.message) 
-    if (error.redirect) redirectClient(error.redirect,'cliente');
+    if (error.code === 'NOT_FOUND') redirectClient('RUTINE_LESS', error?.message) 
+    if (error.redirect) redirectClient(error.redirect, error);
     return error
   }
 }

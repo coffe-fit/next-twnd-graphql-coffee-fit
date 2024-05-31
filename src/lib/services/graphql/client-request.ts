@@ -34,17 +34,17 @@ export const requestClient: any = async (query: string, data?: any, token?: stri
     const httpStatusCode = _error?.statusCode || _error?.status ;
     if (/^40[0-9]$/.test(httpStatusCode)) {
       // retorna al servicio
-      if (_error?.code === 'UNAUTHENTICATED') throw {redirect: 'UNAUTHENTICATED', error:_error};
-      if (_error?.code === 'BAD_REQUEST') throw {redirect: 'BAD_REQUEST', error:_error};
+      if (_error?.code === 'UNAUTHENTICATED') throw {redirect: 'UNAUTHENTICATED',  ..._error};
+      if (_error?.code === 'BAD_REQUEST') throw {redirect: 'BAD_REQUEST',  ..._error};
     }
     if (/^50[0-9]$/.test(httpStatusCode)) {
-      throw {redirect: 'ECONNREFUSED', error:_error};
+      throw {redirect: 'ECONNREFUSED',  ..._error};
     }
     // Manejar errores específicos
     if (_error?.message === 'Network request failed') {
-      throw {redirect: 'ECONNREFUSED', error:_error?.message};
+      throw {redirect: 'ECONNREFUSED',  ..._error};
     } 
-    throw {redirect: 'ECONNREFUSED', error:{..._error}};
+    throw {redirect: 'ECONNREFUSED', ..._error};
   }
   
 }

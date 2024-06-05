@@ -5,7 +5,7 @@
   outline: none;
 }
 :root {
-  height: 100%;
+  height: 100dvh;
   --foreground-rgb: 0,0,0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb:  #f4f4f4 242, 243, 255;
@@ -27,6 +27,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    height: 100vh;
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb:65, 65, 65;
     --background-end-rgb: 0, 0, 0;
@@ -34,8 +35,8 @@
 }
 
 body {
+  height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
-  height: 100%;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,

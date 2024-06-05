@@ -1,5 +1,5 @@
 import { ReactNode }from 'react';
-
+export type SizeType = 'sm' | 'lg' | 'xs';
 interface props {
   children: ReactNode,
   image?: ReactNode,
@@ -7,7 +7,7 @@ interface props {
   bgColor?: boolean,
   className?: string,
   disabled?: boolean,
-  size?: 'sm' | 'lg' | 'xs'
+  size?: SizeType
   type?: 'button' | 'submit' | 'reset'
 }
 

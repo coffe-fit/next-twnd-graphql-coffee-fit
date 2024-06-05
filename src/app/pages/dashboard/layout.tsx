@@ -4,7 +4,7 @@ import { DashboardHeader as Header } from '@/app/components';
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 import useCustomRouter from "@/app/hooks/useCustomRouter";
 import { useSelector } from "react-redux";
-// import { useLoading } from "@/app/hooks/useLoading";
+import FooterLayout from "@/app/layouts/FooterLayout";
 
 interface props {
   children: ReactNode
@@ -26,7 +26,7 @@ export default function DashboardLayout({children}:props) {
   }, []);
   return (
     
-    <div className="flex flex-col items-center h-screen relative">
+    <div className="flex flex-col items-center max-h-screen relative">
       {layout.headerDisplay && (
         <>
         <span className="mb-10"></span>
@@ -34,14 +34,16 @@ export default function DashboardLayout({children}:props) {
         </>
       )}
       {showPage && <span className="
-          overflow-y-auto
-          w-full
-        ">{children}</span>}
+        overflow-y-auto
+        w-full
+        "
+      >{children}</span>}
       {layout.footerDisplay && (
         <span className="
-        mb-14 
         fixed
-        bottom-0"></span>
+        bottom-0">
+          <FooterLayout/>
+        </span>
       )}
     </div>
   );

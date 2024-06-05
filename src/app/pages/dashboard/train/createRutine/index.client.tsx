@@ -17,16 +17,6 @@ import { ExerciseList } from './ExerciseList';
 import { Resume } from "./Resume";
 import { PopUpExercise } from "./PopUpExercise";
 
-// Imágenes
-import urlCalendar from '@/app/images/icons/calendar-99-80s.png';
-import urlCalendarWhite from '@/app/images/icons/calendar-white-99-80s.png';
-import urlResume from '@/app/images/icons/lista-99-80s.png';
-import urlResumeWhite from '@/app/images/icons/lista-white-99-80s.png';
-import urlSave from '@/app/images/icons/salvar-99-80s.png';
-import urlSaveWhite from '@/app/images/icons/salvar-white-99-80s.png';
-import urlList from '@/app/images/icons/lista-imgs-99-80s.png';
-import urlListWhite from '@/app/images/icons/lista-imgs-white-99-80s.png';
-
 // Métodos propios
 import { closePopup } from "@/provider/redux/popupSlice";
 import { addRutineSelected } from "@/provider/redux/userSlice"; 
@@ -36,6 +26,7 @@ import { rutineCreateWithExercises } from "@/lib/services/graphql/rutines/create
 import useCustomRouter from "@/app/hooks/useCustomRouter";
 import { format } from "url";
 import MainLayout from "@/app/layouts/MainWithLoading";
+import { FooterButtons } from "./FooterControls/index.buttons";
 // import { useLoading } from "@/app/hooks/useLoading";
 
 interface Props {
@@ -325,46 +316,14 @@ export const Client = ({ idPage, userSelected, rutineTypes, firstExercises }: Pr
         </span>
       )}
       
+      {/* boton siguiente despues de seleccionar un ejercicio toda la logica que que boton mostrar esta en el componente*/}
       {showButtonsEndPage && 
-        <>
-          {/* boton siguiente despues de seleccionar un ejercicio */}
-          <span className="absolute bottom-1 flex justify-center w-full ">
-            <Button size="lg"
-              className="md:hidden bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14"
-              onclick={()=>setStatePage(0)}
-            >
-              <Image className={"block dark:hidden"} src={urlCalendar} alt={'alt'} width={45} height={45}/>
-              <Image className={"hidden dark:block"} src={urlCalendarWhite} alt={'alt'} width={45} height={45}/>
-            </Button>
-            {statePage !== 4 && <Button size="lg"
-              className="md:hidden bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 relative"
-              onclick={()=>setStatePage(4)}
-            >
-              <Image className={"block dark:hidden"} src={urlResume} alt={'alt'} width={45} height={45}/>
-              <Image className={"hidden dark:block"} src={urlResumeWhite} alt={'alt'} width={45} height={45}/>
-              <div className="absolute -top-2 right-1">
-                <p className="text-sm">{numFilterEjeAllWeek(rutineByDays)}</p>
-              </div>
-            </Button>}
-            {statePage === 4 && <Button size="lg"
-              className="md:hidden bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 relative"
-              onclick={()=>setStatePage(2)}
-            >
-              <Image className={"block dark:hidden"} src={urlList} alt={'alt'} width={45} height={45}/>
-              <Image className={"hidden dark:block"} src={urlListWhite} alt={'alt'} width={45} height={45}/>
-              <div className="absolute -top-2 right-1">
-                <p className="text-sm">{numFilterEjeAllWeek(rutineByDays)}</p>
-              </div>
-            </Button>}
-            <Button size="lg"
-              className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 "
-              onclick={()=>{setShowPopupSave(true)}}
-            >
-              <Image className={"block dark:hidden animate-pulse"} src={urlSave} alt={'alt'} width={45} height={45}/>
-              <Image className={"hidden dark:block animate-pulse"} src={urlSaveWhite} alt={'alt'} width={45} height={45}/>
-            </Button>
-          </span>
-        </>
+        <FooterButtons
+          statePage={statePage}
+          setStatePage={setStatePage}
+          setShowPopupSave={setShowPopupSave}
+          indicatorNumber={numFilterEjeAllWeek(rutineByDays)}
+        />
       }
       {/* se abre en el ExerciseList */}
       <PopUpExercise />
@@ -375,8 +334,6 @@ export const Client = ({ idPage, userSelected, rutineTypes, firstExercises }: Pr
         onSendService={handleSendService}
       />
     </div>
-
-      
     </Suspense>
     </MainLayout>
   );

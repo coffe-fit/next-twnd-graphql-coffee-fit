@@ -1,29 +1,24 @@
 'use client'
 import { useState, useEffect } from "react";
-import Image from 'next/image';
-import { Button, GridLayout } from '@/app/components/atoms';
+import {GridLayout } from '@/app/components/atoms';
 import { language } from '@/lib/lenguage';
 import useCustomRouter from "@/app/hooks/useCustomRouter";
 import CustomSessionStorage from "@/lib/util/CustomSessionStorage";
 import { useDispatch } from "react-redux";
 import { addUserSelected, resetUserSelected } from "@/provider/redux/trainSlice";
-import { useRouter } from "next/navigation";
 import { useLoading } from "@/app/hooks/useLoading";
 
 // Importar las imágenes necesarias
-import urlAddUserImg from '@/app/images/icons/agregar-usuario-99.png';
-import urlAddUserWhiteImg from '@/app/images/icons/agregar-usuario-white-99.png';
-import urlPesa from '@/app/images/icons/pesa-99.png';
-import urlPesaWhite from '@/app/images/icons/pesa-white-99.png';
 import urlEditUserImg from '@/app/images/icons/editar-usuario-99-80s.png';
 import urlEditUserWhiteImg from '@/app/images/icons/editar-usuario-white-99-80s.png';
 import urlGrafics from '@/app/images/icons/barra-grafica-99-80s.png';
 import urlGraficsWhite from '@/app/images/icons/barra-grafica-white-99.png';
 import urlRutine from '@/app/images/icons/rutina-de-ejercicios-99.png';
 import urlRutineWhite from '@/app/images/icons/rutina-de-ejercicios-white-99.png';
-import MainWithLoading from "@/app/layouts/MainWithLoading";
 import MainLayout from "@/app/layouts/MainWithLoading";
 import { findAllByRoleClient } from "@/lib/services";
+import { ButtonItem} from "@/app/hooks/useFooter";
+import { FooterButtons } from "./FooterControls/index.buttons";
 
 
 interface Props {
@@ -40,7 +35,7 @@ export const Client = ({
   const _language = language('español');
   const dispatch = useDispatch();
   const [rendered, setRendered] = useState(false);
-  const { setLoading } = useLoading();
+  const { setLoading, setButtonsList, registerAction  } = useLoading();
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -50,7 +45,6 @@ export const Client = ({
   useEffect(() => {
     if (cols2.length > 0 ) {
       cols2.forEach((user: any) => {
-        console.log(user);
         if (user.role.name === 'NEW_CLIENT' && (!user.resalt)) {
           user.resalt = true;
         } else {
@@ -145,25 +139,9 @@ export const Client = ({
             classNameContainer="h-[calc(100vh-9rem)] "
             classNameGrid="h-[calc(100vh-13rem)] overflow-y-auto"
           />
-          <span className="absolute bottom-1 flex justify-between ">
-            <Button  
-              onclick ={()=>{
-                dispatch(resetUserSelected());
-                router.push(`/pages/dashboard/train/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
-              }}
-              size="lg"
-              className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 "
-            >
-              <Image className={"block dark:hidden"} src={urlAddUserImg} alt={'alt'} width={40} height={40}/>
-              <Image className={"hidden dark:block"} src={urlAddUserWhiteImg} alt={'alt'} width={40} height={40}/>
-            </Button>
-            <Button size="lg" className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 ">
-              <Image className={"block dark:hidden"} src={urlPesa} alt={'alt'} width={40} height={40}/>
-              <Image className={"hidden dark:block"} src={urlPesaWhite} alt={'alt'} width={40} height={40}/>
-            </Button>
-          </span>
         </div>
       )}
+      <FooterButtons/>
     </MainLayout>
   );
 };

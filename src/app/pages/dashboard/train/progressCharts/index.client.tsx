@@ -8,9 +8,7 @@ import { language } from "@/lib/lenguage";
 import { progress_create, progress_find_by_user_id, progress_update } from "@/lib/services";
 import customSessionStorage from "@/lib/util/CustomSessionStorage";
 import { Button } from "@/app/components/atoms";
-
-import urlGrafics from '@/app/images/icons/barra-grafica-99-80s.png';
-import urlGraficsWhite from '@/app/images/icons/barra-grafica-white-99.png';
+import { FooterButtons } from "./FooterControls/index.buttons";
 
 interface Props {progressList: any, userSelected: string}
 
@@ -101,19 +99,7 @@ export const Client = ({
             onDataFrom={()=>{}}
           ></Chart>
 
-          <span className="m-14"></span>
-          <span className="absolute bottom-1 flex justify-center w-full ">
-            <Button size="lg"
-              className="bottom-0 cff-bg-color-green-600 dark:bg-green-500 !h-14 !w-14 "
-              onclick={()=>{setShowDataForm(true);setShowChart(false);}}
-            >
-              <Image className={"block dark:hidden "} src={urlGrafics} alt={'alt'} width={45} height={45}/>
-              <Image className={"hidden dark:block "} src={urlGraficsWhite} alt={'alt'} width={45} height={45}/>
-              <div className="absolute -top-2 right-1">
-                <p className="text-sm">+</p>
-              </div>
-            </Button>
-          </span>
+          <FooterButtons setShowDataForm={setShowDataForm} setShowChart={setShowChart}/>
         </div>
       }
     </MainLayout>

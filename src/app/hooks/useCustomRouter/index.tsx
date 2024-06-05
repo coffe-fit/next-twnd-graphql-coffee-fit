@@ -7,7 +7,7 @@ const useCustomRouter = () => {
   const nextRouter = useRouter();
   const [history, setHistory] = useState<string[]>([]);
   
-  const { setLoading } = useLoading();
+  const { setLoading, setButtonsList } = useLoading();
 
   useEffect(() => {
     setHistory(prevHistory => [...prevHistory, path]);
@@ -16,6 +16,7 @@ const useCustomRouter = () => {
   const push = (path: string) => {
     console.log('push');
     setLoading(true);
+    setButtonsList([])
     nextRouter.push(path);
   };
 

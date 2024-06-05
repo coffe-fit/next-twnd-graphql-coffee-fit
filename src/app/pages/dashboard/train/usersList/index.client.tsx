@@ -19,6 +19,7 @@ import MainLayout from "@/app/layouts/MainWithLoading";
 import { findAllByRoleClient } from "@/lib/services";
 import { ButtonItem} from "@/app/hooks/useFooter";
 import { FooterButtons } from "./FooterControls/index.buttons";
+import { UserInterface } from "@/lib/interfaces";
 
 
 interface Props {
@@ -29,7 +30,7 @@ export const Client = ({
   _usersList
 }:Props) => {
   const [usersList, setUsersList] = useState(_usersList);
-  const [cols2, setCols2] = useState<any>([]);
+  const [cols2, setCols2] = useState<UserInterface[]>([]);
   const router = useCustomRouter();
   const customSessionStorage = CustomSessionStorage();
   const _language = language('español');
@@ -41,24 +42,6 @@ export const Client = ({
   }, []);
   
 
-  // Calcular si la fila o el botón va resaltado
-  useEffect(() => {
-    if (cols2.length > 0 ) {
-      cols2.forEach((user: any) => {
-        if (user.role.name === 'NEW_CLIENT' && (!user.resalt)) {
-          user.resalt = true;
-        } else {
-          if(user.rutines.length === 0&& (!user.resaltBtn0)) {
-            user.resaltBtn0 = true;
-          }
-          if (user.email, user.username, user.phone, user.document === '' || user.age === 0 && (!user.resaltBtn2)) {
-            user.resaltBtn2 = true;
-          }
-        }
-      });
-    }
-
-  }, [cols2]);
 
   const btns= [
     {
@@ -119,6 +102,25 @@ export const Client = ({
   useEffect(() => {
     findNewUsers();
   }, []);
+
+  // Calcular si la fila o el botón va resaltado
+  useEffect(() => {
+    if (cols2.length > 0 ) {
+      cols2.forEach((user: UserInterface) => {
+        if (user.role.name === 'NEW_CLIENT' && (!user.resalt)) {
+          user.resalt = true;
+        } else {
+          if(user.rutines.length === 0&& (!user.resaltBtn0)) {
+            user.resaltBtn0 = true;
+          }
+          if (user.email, user.username, user.phone, user.document === '' || user.age === 0 && (!user.resaltBtn2)) {
+            user.resaltBtn2 = true;
+          }
+        }
+      });
+    }
+
+  }, [cols2]);
 
 
   return (

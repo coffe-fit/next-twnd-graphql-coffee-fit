@@ -13,4 +13,7 @@ export interface UserInterface {
   imgUser: string,
   rutines?: any,
   userId?: string
+  resalt?: boolean,
+  resaltBtn0?: boolean,
+  resaltBtn2?: boolean
 }

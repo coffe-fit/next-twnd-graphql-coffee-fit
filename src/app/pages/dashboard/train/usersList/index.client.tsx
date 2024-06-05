@@ -105,20 +105,26 @@ export const Client = ({
 
   // Calcular si la fila o el botón va resaltado
   useEffect(() => {
-    if (cols2.length > 0 ) {
-      cols2.forEach((user: UserInterface) => {
-        if (user.role.name === 'NEW_CLIENT' && (!user.resalt)) {
-          user.resalt = true;
-        } else {
-          if(user.rutines.length === 0&& (!user.resaltBtn0)) {
-            user.resaltBtn0 = true;
+    try {
+      if (cols2.length > 0 ) {
+        cols2.forEach((user: UserInterface) => {
+          if (user.role.name === 'NEW_CLIENT' && (!user.resalt)) {
+            user.resalt = true;
+          } else {
+            if(user.rutines.length === 0&& (!user.resaltBtn0)) {
+              user.resaltBtn0 = true;
+            }
+            if (user.email, user.username, user.phone, user.document === '' || user.age === 0 && (!user.resaltBtn2)) {
+              user.resaltBtn2 = true;
+            }
           }
-          if (user.email, user.username, user.phone, user.document === '' || user.age === 0 && (!user.resaltBtn2)) {
-            user.resaltBtn2 = true;
-          }
-        }
-      });
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      
     }
+    
 
   }, [cols2]);
 

@@ -7,7 +7,7 @@
       "auth/unauthorized-domain": "Dominio no autorizado",
       "auth/fail-session": "Error al iniciar sesión:",
       "UNAUTHENTICATED": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar.",
-      "AUTH_TOKEN_FAIL": "Tu sesión ha expirado. Por favor, vuelve a iniciar sesión para continuar.",
+      "AUTH_TOKEN_FAIL": "Actualmente no tienes rutinas asignadas. Por favor, espera a que uno de nuestros entrenadores las cree para ti. Te enviaremos un correo cuando tus rutinas estén listas para que puedas comenzar.",
       "ECONNREFUSED": "Lo sentimos, actualmente tenemos inconvenientes con el servidor pronto estará disponible nuestra plataforma",
       "RUTINE_LESS": "Actualmente no tienes rutinas asignadas. Por favor, espera a que uno de nuestros entrenadores las cree para ti. Te enviaremos un correo cuando tus rutinas estén listas para que puedas comenzar."
     }
@@ -35,6 +35,9 @@
   "seekEmail": "Buscar Email",
   "client": "Clientes",
   "users": "Usuarios",
+  "exersicesText": "Ejercicios",
+  "seekExercise": "Buscar Ejercicio",
+  "seekUsers": "Buscar Usuario",
   "days": "Días",
   "min": "Minutos",
   "selectOption": "Seleccione una opción.", 

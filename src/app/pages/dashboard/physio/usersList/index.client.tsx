@@ -41,20 +41,12 @@ export const Client = ({ _usersList }: Props) => {
 
   const btns = [
     {
-      name: 'editar',
+      name: 'historiaClinica',
       imgDark: urlEditUserWhiteImg,
       img: urlEditUserImg,
       action: (e: any) => {
         dispatch(addUserSelected({ userSel: e }));
-        router.push(`/pages/dashboard/train/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
-      }
-    },
-    {
-      name: 'rutine',
-      imgDark: urlRutineWhite,
-      img: urlRutine,
-      action: (e: any) => {
-        router.push(`/pages/dashboard/train/createRutine?id=${customSessionStorage.getItem('auth_token')}&user=${e.userId}`);
+        router.push(`/pages/dashboard/physio/clinicalHistory?id=${customSessionStorage.getItem('auth_token')}`);
       }
     },
     {
@@ -72,7 +64,6 @@ export const Client = ({ _usersList }: Props) => {
 
   useEffect(() => {
     if (!rendered) {
-      console.log("Componente Client renderizado por primera vez");
       setRendered(true);
     }
   }, [rendered]);
@@ -87,7 +78,7 @@ export const Client = ({ _usersList }: Props) => {
     );
 
     const usersActive = usersList.filter((item: { role: { name: string; }; }) => 
-      item.role.name === "CLIENT" || item.role.name === "TRAIN"
+      item.role.name === "CLIENT" || item.role.name === "TRAIN" 
     );
 
     setCols2([...usersNew, ...usersActive]);

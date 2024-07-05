@@ -56,6 +56,7 @@ export const Input = ({
         autoComplete={autoComplete}
         placeholder={classTransition === '-z-50 opacity-10' ? placeholder : ''}
         className={`
+          ${className}
           ${disable && 'opacity-35'}
           ${bgColor ? 'bg-neutral-100 dark:cff-bg-color-gray-600' : ''}
           ${!size && 'h-9 w-40'}
@@ -72,7 +73,6 @@ export const Input = ({
           placeholder:text-gray-600
           dark:placeholder:text-gray-400
           focus-visible:border-green-500
-          ${className}
         `}
         required={required}
         pattern={pattern}

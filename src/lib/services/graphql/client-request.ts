@@ -29,22 +29,23 @@ export const requestClient: any = async (query: string, data?: any, token?: stri
     return response
 
   } catch (error: any) {
+    debugger;
     console.log('requestClient', error);
     const _error =  error?.response?.error || error?.response || error;
     const httpStatusCode = _error?.statusCode || _error?.status ;
-    if (/^40[0-9]$/.test(httpStatusCode)) {
-      // retorna al servicio
-      if (_error?.code === 'UNAUTHENTICATED') throw {redirect: 'UNAUTHENTICATED',  ..._error};
-      if (_error?.code === 'BAD_REQUEST') throw {redirect: 'BAD_REQUEST',  ..._error};
-    }
-    if (/^50[0-9]$/.test(httpStatusCode)) {
-      throw {redirect: 'ECONNREFUSED',  ..._error};
-    }
-    // Manejar errores específicos
-    if (_error?.message === 'Network request failed') {
-      throw {redirect: 'ECONNREFUSED',  ..._error};
-    } 
-    throw {redirect: 'ECONNREFUSED', ..._error};
+    // if (/^40[0-9]$/.test(httpStatusCode)) {
+    //   // retorna al servicio
+    //   if (_error?.code === 'UNAUTHENTICATED') throw {redirect: 'UNAUTHENTICATED',  ..._error};
+    //   if (_error?.code === 'BAD_REQUEST') throw {redirect: 'BAD_REQUEST',  ..._error};
+    // }
+    // if (/^50[0-9]$/.test(httpStatusCode)) {
+    //   throw {redirect: 'ECONNREFUSED',  ..._error};
+    // }
+    // // Manejar errores específicos
+    // if (_error?.message === 'Network request failed') {
+    //   throw {redirect: 'ECONNREFUSED',  ..._error};
+    // } 
+    // throw {redirect: 'ECONNREFUSED', ..._error};
   }
   
 }

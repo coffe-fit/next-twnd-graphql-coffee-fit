@@ -24,22 +24,6 @@ export const DataForm = ({
     "rightShoulder": "",
     "leftShoulder": "",
     "rightBicep": "",
-    "leftBicep": "",
-    "rightLeg": "",
-    "leftLeg": "",
-    "rightCalf": "",
-    "leftCalf": "",
-    "rightForearm": "",
-    "leftForearm": "",
-    "waist": "",
-    "diet": "",
-    "bodyFatPercentage": "",
-    "muscleMass": "",
-    "restingHeartRate": "",
-    "bloodPressure": "",
-    "endurance": "",
-    "flexibility": "",
-    "strengthLevel": "",
   });
   const _language = language('español');
 

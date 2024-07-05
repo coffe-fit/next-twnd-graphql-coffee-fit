@@ -29,7 +29,7 @@ export const FooterButtons = ({ statePage, setStatePage, setShowPopupSave,indica
     registerAction('ADD_USER', (data) => {
       dispatch(resetUserSelected());
       setButtonsList(newButtonsList);
-      router.push(`/pages/dashboard/train/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
+      router.push(`/pages/dashboard/physio/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
     });
 
     registerAction('PESA_ACTION', (data) => {

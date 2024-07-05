@@ -109,8 +109,8 @@ export const PopUpExercise: React.FC<Props> = () => {
     };
   
     if (validateData()) {
-      const { dayneme, exercise, type } = stateTrain.exerciseSelected;
-      addExcercise( dayneme, exercise, type);
+      const { dayname, exercise, type } = stateTrain.exerciseSelected;
+      addExcercise( dayname, exercise, type);
     } else {
       setErroMessage(`${wrong} ${errorMessage}`);
     }

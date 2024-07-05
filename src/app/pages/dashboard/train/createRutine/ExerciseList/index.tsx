@@ -101,7 +101,7 @@ export const ExerciseList = ({ dayName, rutineTypes, firstExercises }: Props) =>
                     dispatch(openPopup());
                     //Se usará en el popoup
                     dispatch(addExerciseSelected({exerciseSelected: {
-                      dayneme: dayName,
+                      dayname: dayName,
                       type: type.id,
                       exercise
                     }}));

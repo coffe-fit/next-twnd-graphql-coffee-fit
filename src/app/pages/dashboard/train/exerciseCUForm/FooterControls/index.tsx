@@ -5,7 +5,7 @@ import useCustomRouter from '@/app/hooks/useCustomRouter';
 import { ButtonItem } from '@/app/hooks/useFooter';
 import { useDispatch } from 'react-redux';
 import { useLoading } from '@/app/hooks/useLoading';
-import { resetUserSelected } from '@/provider/redux/trainSlice';
+import { resetExerciseSelected} from '@/provider/redux/trainSlice';
 import CustomSessionStorage from '@/lib/util/CustomSessionStorage';
 
 
@@ -20,21 +20,21 @@ export const FooterButtons = ({ statePage, setStatePage, setShowPopupSave,indica
   }, []);
 
   const createButtonsFooter = ()=>{
+    //recuerda que las imahgenes estan en el layout FooterLayout
     const newButtonsList: ButtonItem[] = [
-      { urlImage: 'addUser', actionType: 'ADD_USER', size: 'lg', className: '' },
+      { urlImage: 'addUser', actionType: 'USER_ACTION', size: 'lg', className: '' },
       { urlImage: 'pesa', actionType: 'PESA_ACTION', size: 'lg', className: '' }
     ];
     setButtonsList(newButtonsList);
 
-    registerAction('ADD_USER', (data) => {
-      dispatch(resetUserSelected());
+    registerAction('USER_ACTION', (data) => {
+      dispatch(resetExerciseSelected());
       setButtonsList(newButtonsList);
-      router.push(`/pages/dashboard/train/userCUForm?id=${customSessionStorage.getItem('auth_token')}`);
+      router.push(`/pages/dashboard/train/usersList?id=${customSessionStorage.getItem('auth_token')}`);
     });
 
     registerAction('PESA_ACTION', (data) => {
-      console.log('PESA_ACTION');
-      // lógica específica para 'PESA_ACTION' con datos adicionales
+      dispatch(resetExerciseSelected());
       setButtonsList(newButtonsList);
       router.push(`/pages/dashboard/train/exerciseList?id=${customSessionStorage.getItem('auth_token')}`);
     });

@@ -60,6 +60,7 @@
   "company": "Compañia",
   "create": "Crear",
   "cancel": "Cancelar",
+  "save": "Guardar",
   "id": "ID",
   "weight": "Peso",
   "rightShoulder": "Hombro Der",
@@ -88,7 +89,23 @@
   "userId": "ID de Usuario",
   "hi": "Hola",
   "thanks1": "Gracias por tu paciencia y comprensión.",
-
+  "muscularGroup": "Grupo Muscular",
+  "exerciseMeasurementUnits": "Unidades de Medida",
+  "inputUrl":"Por favor ingresa una URL para ",
+  "video": "video",
+  "image": "imagen",
+  "measureList": [
+    {"id": "LBS", "name":"lbs", "label": "Peso"},
+    {"id": "REPS", "name":"#", "label": "Repeticiones"},
+    {"id": "TIME", "name":"s", "label": "Tiempo"},
+    {"id": "MTS", "name":"mts", "label": "Distancia"}
+  ],
+  "name": "Nombre",
+  "urlImagenFail": "La URL de la imagen no es válida",
+  "urlVideoFail": "La URL del video no es válida",
+  "nameFail": "El nombre no debe contener caracteres especiales",
+  "muscleGroupFail": "Debe seleccionar un tipo de rutina",
+  "measureFail": "Debe seleccionar una unidad de medida",
   "rutineType": {
     "LEG": "PIERNA",
     "BACK": "DORSO",

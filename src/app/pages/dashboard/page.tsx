@@ -10,9 +10,8 @@ export default function dashboard({
   const decodeToken = valitateToken(id);
   const role = decodeToken?.roleName;
 
-  if (role === "TRAIN") {
-    redirect(`/pages/dashboard/train/usersList?id=${id}`)
-  } else {
-    redirect(`/pages/dashboard/user/home?id=${id}`)
-  }
+  if (role === "PHSIO") redirect(`/pages/dashboard/physio/usersList?id=${id}`)
+  if (role === "TRAIN") redirect(`/pages/dashboard/train/usersList?id=${id}`)
+  if (role === "CLIENT") redirect(`/pages/dashboard/user/home?id=${id}`)
+  redirect(`/`);
 }

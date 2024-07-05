@@ -2,7 +2,7 @@ import { trainInterface } from '@/lib/interfaces/train.Interface';
 import { createSlice } from '@reduxjs/toolkit';
 
 
-const initialState: trainInterface = {
+export const initialState: trainInterface = {
     newUserSelected:{
       age: 0,
       company: {
@@ -24,11 +24,22 @@ const initialState: trainInterface = {
       rutines: '',
     },
     exerciseSelected: {
-      dayneme: '',
+      dayname: '',
       type: '',
       exercise: undefined
     },
-    newRutine: [[]]
+    newRutine: [[]],
+    exerciseList: {
+      exerciseSelected: {
+        name:'',
+        rutineType: {
+          id: '',
+          name: ''
+        },
+        metrics:[]
+      }
+    }
+
 }
 
 export const trainSlice = createSlice({
@@ -47,8 +58,18 @@ export const trainSlice = createSlice({
       const { userSel } = action.payload;
       state.newUserSelected = userSel;
     },
+    addExerciseSelectedFromEList: (state, action) => {
+      const { exerciseSelected } = action.payload;
+      state.exerciseList.exerciseSelected = exerciseSelected;
+    },
     resetUserSelected: (state) => {
-      state.newUserSelected = initialState;
+      state.newUserSelected = initialState.newUserSelected;
+    },
+    resetExerciseSelected: (state) => {
+      state.exerciseSelected = initialState.exerciseSelected;
+    },
+    resetExerciseSelectedFromEList: (state) => {
+      state.exerciseList.exerciseSelected = initialState.exerciseList.exerciseSelected;
     },
   }
 });
@@ -57,6 +78,9 @@ export const {
   addExerciseSelected,
   addRutineSelected,
   addUserSelected,
-  resetUserSelected
+  addExerciseSelectedFromEList,
+  resetUserSelected,
+  resetExerciseSelected,
+  resetExerciseSelectedFromEList
 } = trainSlice.actions;
 export default trainSlice.reducer;

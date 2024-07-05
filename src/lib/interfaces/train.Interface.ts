@@ -3,9 +3,12 @@
 export interface trainInterface {
   newUserSelected: any;
   exerciseSelected: {
-    dayneme: string
+    dayname: string
     type: string,
     exercise: any
   }
-  newRutine: [any[]]
+  newRutine: [any[]],
+  exerciseList: {
+    exerciseSelected: any
+  }
 }

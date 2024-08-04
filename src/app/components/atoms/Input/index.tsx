@@ -97,7 +97,7 @@ export const Input = ({
         {classTransition !== '-z-50 opacity-10' &&
           <span className={` absolute -top-[18px] ml-3 w-full ${bgColor ? ' text-neutral-100 dark:text-zinc-700' : ''} w-3`}>{arrayPlaceholder?.map(()=><>_</>)}</span>
         }
-        <span className={`  truncate w-full absolute bottom-0 ml-3 mb-2 transition-all ${classTransition} duration-700 ease-out`}>{placeholder}</span>
+        <span className={`  truncate w-full absolute bottom-0 ml-3 mb-2 transition-all ${classTransition} duration-700 ease-out${bgColor ? ' text-neutral-100 dark:text-neutral-400' : ''}`}>{placeholder}</span>
         </>
       }
       </>

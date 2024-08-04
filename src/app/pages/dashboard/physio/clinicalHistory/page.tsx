@@ -11,7 +11,8 @@ export default async function userCUForm({
   searchParams: { id },
 }: props) {
 
-  const roleList = await findAllRole(id);
+  // const roleList = await findAllRole(id);
+  const roleList = {};
   
   return (
     // <MainLayout>

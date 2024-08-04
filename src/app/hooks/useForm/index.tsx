@@ -1,13 +1,11 @@
 import React from 'react';
 
-// Custom Hook para gestionar el estado del formulario
-
-interface props {
-  initialState: any
-  onSubmit: (value:any)=> void
+interface Props {
+  initialState: any;
+  onSubmit: (value: any) => void;
 }
 
-export const useForm = ({initialState, onSubmit}:props) => {
+export const useForm = ({ initialState, onSubmit }: Props) => {
   const [values, setValues] = React.useState(initialState);
 
   const handleChange = (e: any) => {
@@ -18,7 +16,7 @@ export const useForm = ({initialState, onSubmit}:props) => {
     }));
   };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     onSubmit(values);
   };
@@ -29,38 +27,3 @@ export const useForm = ({initialState, onSubmit}:props) => {
     handleSubmit,
   };
 };
-
-// // Componente de formulario que utiliza el custom hook
-// const MyForm = () => {
-//   // Define la lógica que se ejecutará al enviar el formulario
-//   const handleFormSubmit = (formData) => {
-//     // Aquí puedes realizar acciones como enviar los datos al servidor
-//     console.log('Datos del formulario:', formData);
-//   };
-
-//   // Usa el custom hook para gestionar el estado del formulario
-//   const { values, handleChange, handleSubmit } = useForm(
-//     { name: '', email: '', message: '' },
-//     handleFormSubmit
-//   );
-
-//   return (
-//     <form onSubmit={handleSubmit}>
-//       <label>
-//         Nombre:
-//         <input type="text" name="name" value={values.name} onChange={handleChange} />
-//       </label>
-//       <label>
-//         Correo Electrónico:
-//         <input type="email" name="email" value={values.email} onChange={handleChange} />
-//       </label>
-//       <label>
-//         Mensaje:
-//         <textarea name="message" value={values.message} onChange={handleChange} />
-//       </label>
-//       <button type="submit">Enviar</button>
-//     </form>
-//   );
-// };
-
-// export default MyForm;
